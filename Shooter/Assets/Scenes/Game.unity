@@ -1339,6 +1339,14 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_Mass
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+      propertyPath: m_MouseLook.smooth
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
 --- !u!4 &152060287 stripped
@@ -1775,7 +1783,7 @@ GameObject:
   - component: {fileID: 193342429}
   m_Layer: 0
   m_Name: Plank (11)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1822,7 +1830,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 2
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -1830,7 +1838,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &193342430
 BoxCollider:
@@ -1859,7 +1867,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!1001 &197153163
 PrefabInstance:
@@ -2806,7 +2814,7 @@ GameObject:
   - component: {fileID: 278981851}
   m_Layer: 0
   m_Name: Plank (7)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2825,7 +2833,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &278981851
 HingeJoint:
@@ -2852,7 +2860,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 4
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -2860,7 +2868,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &278981852
 BoxCollider:
@@ -4514,6 +4522,7 @@ MonoBehaviour:
   isAlive: 1
   shieldPoints: 6
   healthPoints: 18
+  waterDrops: 20
   stock: {fileID: 11400000, guid: 988589e3a66e261ce8bd095b4c5f31bf, type: 2}
 --- !u!4 &424526639
 Transform:
@@ -4523,7 +4532,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 424526637}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.27, y: 21.73, z: 22.03}
+  m_LocalPosition: {x: 0.05, y: 23.84, z: 27.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 152060287}
@@ -5175,7 +5184,7 @@ GameObject:
   - component: {fileID: 453491164}
   m_Layer: 0
   m_Name: Plank (10)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5194,7 +5203,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &453491164
 HingeJoint:
@@ -5221,7 +5230,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 2
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -5229,7 +5238,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &453491165
 BoxCollider:
@@ -7160,7 +7169,7 @@ GameObject:
   - component: {fileID: 676676410}
   m_Layer: 0
   m_Name: Plank (3)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7179,7 +7188,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &676676410
 HingeJoint:
@@ -7206,7 +7215,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 2
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -7214,7 +7223,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &676676411
 BoxCollider:
@@ -7910,7 +7919,7 @@ GameObject:
   - component: {fileID: 735655214}
   m_Layer: 0
   m_Name: Plank (12)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7957,7 +7966,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 1
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -7965,7 +7974,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &735655215
 BoxCollider:
@@ -7994,7 +8003,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!1001 &754804562
 PrefabInstance:
@@ -10174,7 +10183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 915724538}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.4317824, y: 3.3945446, z: -1.14}
+  m_LocalPosition: {x: -1.4317824, y: 3.3945446, z: -1.08}
   m_LocalScale: {x: 5.7079997, y: 0.14943168, z: 2.1900592}
   m_Children: []
   m_Father: {fileID: 1553886888}
@@ -10998,7 +11007,7 @@ GameObject:
   - component: {fileID: 996493489}
   m_Layer: 0
   m_Name: Plank (6)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11017,7 +11026,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &996493489
 HingeJoint:
@@ -11044,7 +11053,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 4
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -11052,7 +11061,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &996493490
 BoxCollider:
@@ -11238,7 +11247,7 @@ GameObject:
   - component: {fileID: 1023995583}
   m_Layer: 0
   m_Name: Plank (8)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11285,7 +11294,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 4
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -11293,7 +11302,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &1023995584
 BoxCollider:
@@ -11322,7 +11331,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!1001 &1039806088
 PrefabInstance:
@@ -15925,7 +15934,7 @@ Rigidbody:
   m_Mass: 0.2
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
@@ -16110,17 +16119,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5e901e39bfeb4b6e2b01683e1004580e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.206
+      value: -0.158
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e901e39bfeb4b6e2b01683e1004580e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.096
+      value: -0.072
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e901e39bfeb4b6e2b01683e1004580e,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.432
+      value: 0.492
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e901e39bfeb4b6e2b01683e1004580e,
         type: 3}
@@ -17451,7 +17460,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 126
@@ -18700,7 +18709,7 @@ GameObject:
   - component: {fileID: 1553886891}
   m_Layer: 0
   m_Name: Plank (1)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18731,8 +18740,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.7442894, y: 0.1826725, z: 2.2457237}
-  m_Center: {x: -1.4292955, y: 3.3950891, z: -1.1546917}
+  m_Size: {x: 5.7442894, y: 0.1826725, z: 2.1494179}
+  m_Center: {x: -1.4292955, y: 3.3950891, z: -1.1065388}
 --- !u!54 &1553886890
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18747,7 +18756,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &1553886891
 HingeJoint:
@@ -18774,7 +18783,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 1
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -18782,7 +18791,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!1001 &1586213738
 PrefabInstance:
@@ -19232,7 +19241,7 @@ GameObject:
   - component: {fileID: 1625484203}
   m_Layer: 0
   m_Name: Plank (5)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19251,7 +19260,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &1625484203
 HingeJoint:
@@ -19278,7 +19287,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 4
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -19286,7 +19295,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &1625484204
 BoxCollider:
@@ -19915,6 +19924,25 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!1 &1716578871 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 5e9e851c0e142814dac026a256ba2ac0,
+    type: 3}
+  m_PrefabInstance: {fileID: 152060286}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1716578872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716578871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763233c323fa8d0caada9bfae633c598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushForce: 2
 --- !u!1001 &1726031435
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20933,7 +20961,7 @@ GameObject:
   - component: {fileID: 1839280407}
   m_Layer: 0
   m_Name: Plank (2)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20980,7 +21008,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 2
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -20988,7 +21016,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &1839280408
 BoxCollider:
@@ -21017,7 +21045,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!1001 &1845485147
 PrefabInstance:
@@ -21549,7 +21577,7 @@ GameObject:
   - component: {fileID: 1875096860}
   m_Layer: 0
   m_Name: Plank (9)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -21568,7 +21596,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!59 &1875096860
 HingeJoint:
@@ -21595,7 +21623,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 4
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -21603,7 +21631,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &1875096861
 BoxCollider:
@@ -22166,7 +22194,7 @@ GameObject:
   - component: {fileID: 1935677602}
   m_Layer: 0
   m_Name: Plank (4)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22213,7 +22241,7 @@ HingeJoint:
   m_UseLimits: 1
   m_Limits:
     min: 0
-    max: 5
+    max: 4
     bounciness: 0
     bounceMinVelocity: 0.2
     contactDistance: 0
@@ -22221,7 +22249,7 @@ HingeJoint:
   m_BreakTorque: Infinity
   m_EnableCollision: 0
   m_EnablePreprocessing: 1
-  m_MassScale: 1
+  m_MassScale: 0.9
   m_ConnectedMassScale: 1
 --- !u!65 &1935677603
 BoxCollider:
@@ -22250,7 +22278,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 10
   m_CollisionDetection: 0
 --- !u!4 &1936870336 stripped
 Transform:
@@ -23056,17 +23084,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: af42e6b8edfc93565b6d22a667db3064,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.255
+      value: -0.208
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: af42e6b8edfc93565b6d22a667db3064,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.298
+      value: -0.274
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: af42e6b8edfc93565b6d22a667db3064,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.4789864
+      value: 0.424
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: af42e6b8edfc93565b6d22a667db3064,
         type: 3}

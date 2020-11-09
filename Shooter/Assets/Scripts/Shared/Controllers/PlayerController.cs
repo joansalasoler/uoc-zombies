@@ -21,6 +21,9 @@ namespace Game.Shared {
         /** Current health points */
         public int healthPoints = 18;
 
+        /** Water drops that cna be shot */
+        public int waterDrops = 20;
+
         /** Inventory of this player */
         public PlayerStock stock = null;
 
