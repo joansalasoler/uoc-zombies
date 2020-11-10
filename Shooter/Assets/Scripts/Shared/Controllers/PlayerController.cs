@@ -15,27 +15,27 @@ namespace Game.Shared {
         /** Invoked when the player is killed */
         public static Action<PlayerController> playerKilled;
 
-        /** Current shield points */
-        public int shieldPoints = 6;
+        /** Current player status */
+        public PlayerStatus status = null;
 
-        /** Current health points */
-        public int healthPoints = 18;
 
-        /** Water drops that cna be shot */
-        public int waterDrops = 20;
-
-        /** Inventory of this player */
-        public PlayerStock stock = null;
+        /**
+         * Ensure the status is fresh.
+         */
+        private void Start() {
+            status.Refresh();
+        }
 
 
         /**
          * Cause damage to this player.
          */
         public override void Damage() {
-            shieldPoints -= 1;
-            healthPoints -= shieldPoints >= 0 ? 1 : 2;
-            if (healthPoints <= 0) Kill();
-            playerDamaged.Invoke(this);
+            if (status.DamagePlayer()) {
+                playerDamaged.Invoke(this);
+            } else {
+                Kill();
+            }
         }
 
 

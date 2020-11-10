@@ -27,22 +27,6 @@ namespace Game.Shared {
 
 
         /**
-         * Handles player collisions with movable objects and platforms.
-         */
-        public void OnControllerColliderHit(ControllerColliderHit hit) {
-            if (hit.collider.CompareTag("Platform")) {
-                UpdatePlayerInertia(hit);
-                return;
-            }
-
-            if (hit.collider.CompareTag("Moveable")) {
-                PushColliderBody(hit);
-                return;
-            }
-        }
-
-
-        /**
          * Updates the player position according to the velocity of the
          * platform where the player is grounded. If the player is not
          * grounded, incrementaly reduce the inertial velocity.
@@ -53,7 +37,29 @@ namespace Game.Shared {
             }
 
             if (controller.isGrounded == false) {
-                inertia -= 0.1f * inertia.normalized * Time.fixedDeltaTime;
+                inertia -= 0.05f * inertia.normalized;
+            }
+
+            if (inertia.magnitude < 0.0f) {
+                inertia = Vector3.zero;
+            }
+        }
+
+
+        /**
+         * Handles player collisions with movable objects and platforms.
+         */
+        public void OnControllerColliderHit(ControllerColliderHit hit) {
+            if (IsPlayerOnTop()) {
+                inertia = Vector3.zero;
+
+                if (hit.collider.CompareTag("Platform")) {
+                    UpdatePlayerInertia(hit);
+                }
+            } else {
+                if (hit.collider.CompareTag("Moveable")) {
+                    PushColliderBody(hit);
+                }
             }
         }
 
@@ -62,11 +68,9 @@ namespace Game.Shared {
          * Push an object if a collision happened on the sides.
          */
         private void PushColliderBody(ControllerColliderHit hit) {
-            if (controller.collisionFlags != CollisionFlags.Below) {
-                Vector3 force = pushForce * controller.velocity;
-                Rigidbody body = hit.collider.attachedRigidbody;
-                body.AddForceAtPosition(force, hit.point);
-            }
+            Vector3 force = pushForce * controller.velocity;
+            Rigidbody body = hit.collider.attachedRigidbody;
+            body.AddForceAtPosition(force, hit.point);
         }
 
 
@@ -75,10 +79,16 @@ namespace Game.Shared {
          * a moving platform.
          */
         private void UpdatePlayerInertia(ControllerColliderHit hit) {
-            if (controller.collisionFlags == CollisionFlags.Below) {
-                Rigidbody body = hit.collider.attachedRigidbody;
-                inertia = body.velocity;
-            }
+            Rigidbody body = hit.collider.attachedRigidbody;
+            inertia = body.velocity;
+        }
+
+
+        /**
+         * Checks if the player collided on the top.
+         */
+        private bool IsPlayerOnTop() {
+            return controller.collisionFlags == CollisionFlags.Below;
         }
     }
 }
