@@ -34,14 +34,11 @@ namespace Game.Shared {
         private void FixedUpdate() {
             if (inertia.magnitude > 0.01f) {
                 controller.transform.position += inertia * Time.fixedDeltaTime;
+                Physics.SyncTransforms();
             }
 
             if (controller.isGrounded == false) {
                 inertia -= 0.05f * inertia.normalized;
-            }
-
-            if (inertia.magnitude < 0.0f) {
-                inertia = Vector3.zero;
             }
         }
 

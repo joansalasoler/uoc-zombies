@@ -16,7 +16,7 @@ namespace Game.Shared {
         public float bottom = 24.4f;
 
         /** Speed of the elevator */
-        public float speed = 4.0f;
+        public float speed = 2.0f;
 
         /** If the elevator is currently moving */
         private bool isStopped = true;
