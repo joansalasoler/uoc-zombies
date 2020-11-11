@@ -9,6 +9,12 @@ namespace Game.Shared {
      */
     public class PlayerController : ActorController {
 
+        /** Character controller instance */
+        [SerializeField] private CharacterController characterController = null;
+
+        /** Weapon controller instance */
+        [SerializeField] private WeaponController weaponsController = null;
+
         /** Invoked when the player is damaged */
         public static Action<PlayerController> playerDamaged;
 
@@ -24,6 +30,20 @@ namespace Game.Shared {
          */
         private void Start() {
             status.Refresh();
+        }
+
+
+        /**
+         * Handles the player input.
+         */
+        private void Update() {
+            float currentSpeed = characterController.velocity.magnitude;
+
+            if (Input.GetButtonUp("Fire2")) {
+                weaponsController.ToggleWeapon();
+            }
+
+            weaponsController.SetSpeed(currentSpeed);
         }
 
 
