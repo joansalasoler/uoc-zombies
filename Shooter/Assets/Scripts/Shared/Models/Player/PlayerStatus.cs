@@ -13,6 +13,12 @@ namespace Game.Shared {
         /** Invoked when a property on this status changes */
         public Action<PlayerStatus> statusChanged;
 
+        /** If the player collected a golden key */
+        public bool goldKey = false;
+
+        /** If the player collected a silver key */
+        public bool silverKey = false;
+
         /** Current shield points */
         public int shieldPoints = 3;
 
@@ -36,6 +42,24 @@ namespace Game.Shared {
          * Refresh this player status.
          */
         public void Refresh() {
+            statusChanged.Invoke(this);
+        }
+
+
+        /**
+         * Collect a golden key.
+         */
+        public void CollectGoldKey() {
+            goldKey = true;
+            statusChanged.Invoke(this);
+        }
+
+
+        /**
+         * Collect a silver key.
+         */
+        public void CollectSilverKey() {
+            silverKey = true;
             statusChanged.Invoke(this);
         }
 

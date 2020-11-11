@@ -28,7 +28,7 @@ namespace Game.Shared {
 
 
         /**
-         * Checks if the player collided on the top.
+         * Obtain the player's controller from the collider.
          */
         private PlayerController GetPlayerController(Collider collider) {
             return collider.GetComponent<PlayerController>();
