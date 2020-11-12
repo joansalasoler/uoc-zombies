@@ -10,7 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee6d27292bcc9dae6a5b52b6a8b097c4, type: 3}
-  m_Name: PlayerGun
+  m_Name: PlayerRifle
   m_EditorClassIdentifier: 
-  prefab: {fileID: 5628170964417849740, guid: b1d0d186e74bf0151a67ef7515f21583, type: 3}
-  distance: 10
+  weaponPrefab: {fileID: 8792462442322511024, guid: ce68419a3b3a2fd449470c8fa5e04e99,
+    type: 3}
+  impactPrefab: {fileID: 642982528901706339, guid: b3333dcebf00e9771bd03e9acbf8c410,
+    type: 3}
+  shootDistance: 25
+  rateOfFire: 0.35
+  deviation: 0.05

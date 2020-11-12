@@ -37,13 +37,20 @@ namespace Game.Shared {
          * Handles the player input.
          */
         private void Update() {
-            float currentSpeed = characterController.velocity.magnitude;
+            Vector3 velocity = characterController.velocity;
+            float speed = velocity.magnitude;
+
+            weaponsController.SetSpeed(speed);
 
             if (Input.GetButtonUp("Fire2")) {
                 weaponsController.ToggleWeapon();
             }
 
-            weaponsController.SetSpeed(currentSpeed);
+            if (status.HasMunition() && Input.GetButton("Fire1")) {
+                if (weaponsController.ShootWeapon()) {
+                    status.DecreaseWater();
+                }
+            }
         }
 
 

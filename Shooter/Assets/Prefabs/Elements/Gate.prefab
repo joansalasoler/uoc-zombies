@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 6794822841075501582}
   - component: {fileID: 6794822841075501583}
   m_Layer: 8
-  m_Name: Floor Door
+  m_Name: Gate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -141,6 +141,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3697315a194930b61acaa31aba2a055f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  goldKey: 0
+  silverKey: 0
 --- !u!95 &6794822841075501582
 Animator:
   serializedVersion: 3
@@ -182,7 +184,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6794822841205131238}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +218,7 @@ GameObject:
   - component: {fileID: 6788170831054868371}
   - component: {fileID: 6782321981456309665}
   - component: {fileID: 6819829334420047567}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Iron Bars 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}

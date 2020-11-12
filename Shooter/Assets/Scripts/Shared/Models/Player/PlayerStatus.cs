@@ -39,6 +39,14 @@ namespace Game.Shared {
 
 
         /**
+         * Check if the player has water drops.
+         */
+        public bool HasMunition() {
+            return waterDrops > 0;
+        }
+
+
+        /**
          * Refresh this player status.
          */
         public void Refresh() {

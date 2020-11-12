@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3153b9f7c8b70c3cb951dafd4a400de1, type: 3}
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
-  goldKey: 0
-  silverKey: 0
+  goldKey: 1
+  silverKey: 1
   shieldPoints: 3
   healthPoints: 10
-  waterDrops: 5
+  waterDrops: 10000
   shieldSlots: 3
   healthSlots: 10
   waterSlots: 10

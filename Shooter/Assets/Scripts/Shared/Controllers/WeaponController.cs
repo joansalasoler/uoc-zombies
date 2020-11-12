@@ -1,19 +1,25 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Shared {
 
     /**
-     * Controller of player weapons.
+     * Controller for the player weapons. Instantiates the set of available
+     * weapons and allows toggling between them.
      */
     public class WeaponController : MonoBehaviour {
+
+        /** If shots must hit triggers */
+        [HideInInspector] public QueryTriggerInteraction hitTriggers;
+
+        /** Layers affected by player shoots */
+        [HideInInspector] public LayerMask layerMask;
 
         /** Active weapon or null while rearming */
         [HideInInspector] public PlayerWeapon activeWeapon = null;
 
         /** Available weapons for the player */
-        public PlayerWeapon[] weapons = null;
+        [SerializeField] private List<PlayerWeapon> weapons = null;
 
         /** Weapon game object instances */
         private List<GameObject> instances = null;
@@ -21,15 +27,45 @@ namespace Game.Shared {
         /** Weapon animator instance */
         private Animator animator = null;
 
+        /** Center of the camera */
+        private Vector3 center = new Vector3(0.5f, 0.5f, 0.0f);
+
+        /** Last time the weapon was shot */
+        private float lastShotTime = 0.0f;
+
         /** Active weapon index */
         private int activeIndex = -1;
 
 
         /**
-         * Switch to the next weapon.
+         * Switch to the first weapon.
          */
-        public void ToggleWeapon() {
-            animator.SetBool("rearming", true);
+        private void Start() {
+            ToggleWeapon();
+        }
+
+
+        /**
+         * Instantiate the weapons.
+         */
+        private void Awake() {
+            hitTriggers = QueryTriggerInteraction.Ignore;
+            layerMask = GetShootLayerMask();
+            animator = GetComponent<Animator>();
+            instances = new List<GameObject>();
+
+            foreach (PlayerWeapon weapon in weapons) {
+                GameObject prefab = weapon.weaponPrefab;
+                instances.Add(Instantiate(prefab, transform));
+            }
+        }
+
+
+        /**
+         * Check if a weapon is currently active.
+         */
+        public bool HasActiveWeapon() {
+            return activeWeapon != null;
         }
 
 
@@ -42,24 +78,10 @@ namespace Game.Shared {
 
 
         /**
-         * Instantiate the weapons.
+         * Switch to the next weapon.
          */
-        private void Awake() {
-            instances = new List<GameObject>();
-            animator = GetComponent<Animator>();
-
-            foreach (PlayerWeapon weapon in weapons) {
-                GameObject prefab = Instantiate(weapon.prefab, transform);
-                instances.Add(prefab);
-            }
-        }
-
-
-        /**
-         * Switch to the first weapon.
-         */
-        private void Start() {
-            ToggleWeapon();
+        public void ToggleWeapon() {
+            animator.SetBool("rearming", true);
         }
 
 
@@ -78,6 +100,89 @@ namespace Game.Shared {
         private void DisarmWeapon() {
             instances[activeIndex].SetActive(false);
             activeIndex = -1;
+        }
+
+
+        /**
+         * Checks if the weapon can be shot.
+         */
+        public bool CanShootWeapon() {
+            bool canShoot = false;
+
+            if (animator.GetBool("shooting")) {
+                canShoot = false;
+            } else if (HasActiveWeapon()) {
+                float rateOfFire = activeWeapon.rateOfFire;
+                float timeSinceShot = Time.time - lastShotTime;
+                canShoot = rateOfFire < timeSinceShot;
+            }
+
+            return canShoot;
+        }
+
+
+        /**
+         * Shoots the active weapon from the center of the camera.
+         */
+        public bool ShootWeapon() {
+            if (CanShootWeapon() == false) {
+                return false;
+            }
+
+            animator.SetBool("shooting", true);
+            Invoke("OnShootFinished", 0.35f);
+
+            RaycastHit hit;
+            Vector3 deviaiton = GetShootDeviation();
+            Ray ray = GetShootOriginRay(center + deviaiton);
+            float distance = activeWeapon.shootDistance;
+
+            if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
+                EmbedImpactDecal(hit);
+                lastShotTime = Time.time;
+            }
+
+            return true;
+        }
+
+
+        /**
+         * Origin and direction of the shoots.
+         */
+        public Ray GetShootOriginRay(Vector3 center) {
+            return Camera.main.ViewportPointToRay(center);
+        }
+
+
+        /**
+         * Deviation direction of the weapon.
+         */
+        public Vector3 GetShootDeviation() {
+            Vector3 random = Random.insideUnitCircle.normalized;
+            Vector3 deviation = activeWeapon.deviation * random;
+
+            return deviation;
+        }
+
+
+        /**
+         * Mask to use for the weapon shooting raycasts.
+         */
+        public LayerMask GetShootLayerMask() {
+            int filter = LayerMask.GetMask("Player Dome", "Monster Dome");
+            int mask = Physics.DefaultRaycastLayers & ~filter;
+
+            return mask;
+        }
+
+
+        /**
+         * Embed an impact decal into a hit position.
+         */
+        private void EmbedImpactDecal(RaycastHit hit) {
+            Vector3 position = 0.01f * hit.normal + hit.point;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
+            Instantiate(activeWeapon.impactPrefab, position, rotation);
         }
 
 
@@ -102,8 +207,17 @@ namespace Game.Shared {
          * activates the weapon.
          */
         private void OnRearmFinished() {
+            lastShotTime = 0.0f;
             activeWeapon = weapons[activeIndex];
             animator.SetBool("rearming", false);
+        }
+
+
+        /**
+         * Invoked to clear the shooting animation.
+         */
+        private void OnShootFinished() {
+            animator.SetBool("shooting", false);
         }
     }
 }
