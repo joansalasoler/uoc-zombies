@@ -16,6 +16,6 @@ MonoBehaviour:
     type: 3}
   impactPrefab: {fileID: 642982528901706339, guid: b3333dcebf00e9771bd03e9acbf8c410,
     type: 3}
-  shootDistance: 25
+  shootDistance: 40
   rateOfFire: 0.35
   deviation: 0.05

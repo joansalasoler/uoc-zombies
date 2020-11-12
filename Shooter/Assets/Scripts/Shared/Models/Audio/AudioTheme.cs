@@ -10,16 +10,9 @@ namespace Game.Shared {
     [CreateAssetMenu]
     public class AudioTheme : ScriptableObject {
         public AudioEvent[] events = {
-            new AudioEvent { name = "Game Music" },
-            new AudioEvent { name = "Player Win" },
-            new AudioEvent { name = "Player Jump" },
-            new AudioEvent { name = "Player Walk" },
-            new AudioEvent { name = "Player Run" },
-            new AudioEvent { name = "Player Hurt" },
-            new AudioEvent { name = "Player Die" },
-            new AudioEvent { name = "Player Fire" },
-            new AudioEvent { name = "Monster Hurt" },
-            new AudioEvent { name = "Monster Die" }
+            new AudioEvent { name = "Ocean" },
+            new AudioEvent { name = "Weapon Shot" },
+            new AudioEvent { name = "Weapon Impact" },
         };
     }
 }

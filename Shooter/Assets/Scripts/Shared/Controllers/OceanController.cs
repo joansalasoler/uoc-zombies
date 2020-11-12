@@ -25,6 +25,14 @@ namespace Game.Shared {
 
 
         /**
+         * Initialization.
+         */
+        private void Start() {
+            AudioService.PlayLoop(gameObject, "Ocean");
+        }
+
+
+        /**
          * Moves the ocean to create a wave effect.
          */
         private void FixedUpdate() {

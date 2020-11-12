@@ -129,8 +129,10 @@ namespace Game.Shared {
                 return false;
             }
 
+            AudioService.PlayOneShot(gameObject, "Weapon Shot");
             animator.SetBool("shooting", true);
             Invoke("OnShootFinished", 0.35f);
+            lastShotTime = Time.time;
 
             RaycastHit hit;
             Vector3 deviaiton = GetShootDeviation();
@@ -139,7 +141,6 @@ namespace Game.Shared {
 
             if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
                 EmbedImpactDecal(hit);
-                lastShotTime = Time.time;
             }
 
             return true;
