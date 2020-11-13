@@ -59,6 +59,7 @@ namespace Game.Shared {
          */
         public override void Damage() {
             if (status.DamagePlayer()) {
+                AudioService.PlayOneShot(gameObject, "Damage Player");
                 playerDamaged.Invoke(this);
             } else {
                 Kill();

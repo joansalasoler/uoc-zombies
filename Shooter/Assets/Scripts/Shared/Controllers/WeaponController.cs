@@ -9,17 +9,17 @@ namespace Game.Shared {
      */
     public class WeaponController : MonoBehaviour {
 
+        /** Available weapons for the player */
+        [SerializeField] private List<PlayerWeapon> weapons = null;
+
+        /** Active weapon or null while rearming */
+        [HideInInspector] public PlayerWeapon activeWeapon = null;
+
         /** If shots must hit triggers */
         [HideInInspector] public QueryTriggerInteraction hitTriggers;
 
         /** Layers affected by player shoots */
         [HideInInspector] public LayerMask layerMask;
-
-        /** Active weapon or null while rearming */
-        [HideInInspector] public PlayerWeapon activeWeapon = null;
-
-        /** Available weapons for the player */
-        [SerializeField] private List<PlayerWeapon> weapons = null;
 
         /** Weapon game object instances */
         private List<GameObject> instances = null;
@@ -140,7 +140,11 @@ namespace Game.Shared {
             float distance = activeWeapon.shootDistance;
 
             if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
-                EmbedImpactDecal(hit);
+                if (hit.collider.CompareTag("Monster")) {
+                    hit.collider.GetComponent<ActorController>().Damage();
+                } else {
+                    EmbedImpactDecal(hit);
+                }
             }
 
             return true;
@@ -183,7 +187,7 @@ namespace Game.Shared {
         private void EmbedImpactDecal(RaycastHit hit) {
             Vector3 position = 0.01f * hit.normal + hit.point;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
-            Instantiate(activeWeapon.impactPrefab, position, rotation);
+            Instantiate(activeWeapon.impactPrefab, position, rotation, hit.transform);
         }
 
 
