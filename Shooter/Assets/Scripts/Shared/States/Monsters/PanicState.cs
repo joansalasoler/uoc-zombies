@@ -15,7 +15,7 @@ namespace Game.Shared {
             AudioService.PlayLoop(monster.gameObject, "Monster Walk");
             Vector3 origin = monster.transform.position;
             Vector3 direction = monster.transform.forward;
-            Vector3 target = -50.0f * direction + origin;
+            Vector3 target = -25.0f * direction + origin;
 
             monster.MoveTowards(target);
             monster.animator.SetTrigger("panic");
@@ -38,7 +38,7 @@ namespace Game.Shared {
          */
         private IEnumerator ExitPanicState(MonsterController monster) {
             yield return new WaitForSeconds(5.0f);
-            monster.SetState(MonsterState.PATROL);
+            monster.context.SetState(monster.context.PATROL);
         }
     }
 }

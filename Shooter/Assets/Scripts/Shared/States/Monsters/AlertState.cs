@@ -57,11 +57,11 @@ namespace Game.Shared {
                 monster.StopLooking();
 
                 if (playerOnSight && monster.isRunner) {
-                    monster.SetState(MonsterState.PANIC);
+                    monster.context.SetState(monster.context.PANIC);
                 } else if (playerIsNear && playerOnSight) {
-                    monster.SetState(MonsterState.ATTACK);
+                    monster.context.SetState(monster.context.ATTACK);
                 } else if (!playerIsNear || monster.player.speed < 2.0f) {
-                    monster.SetState(MonsterState.PATROL);
+                    monster.context.SetState(monster.context.PATROL);
                 } else {
                     monster.LookTowards(monster.player.transform.position);
                 }

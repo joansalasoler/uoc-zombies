@@ -11,7 +11,7 @@ namespace Game.Shared {
          * Invoked when this state is activated.
          */
         public override void OnStateEnter(MonsterController monster) {
-            monster.SetState(MonsterState.PATROL);
+            monster.context.SetState(monster.context.PATROL);
         }
     }
 }

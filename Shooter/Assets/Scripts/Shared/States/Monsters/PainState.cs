@@ -13,7 +13,7 @@ namespace Game.Shared {
         public override void OnStateEnter(MonsterController monster) {
             AudioService.PlayOneShot(monster.gameObject, "Damage Monster");
             monster.animator.SetTrigger("damage");
-            monster.SetState(MonsterState.ALERT);
+            monster.context.SetState(monster.context.ALERT);
         }
     }
 }

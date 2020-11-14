@@ -45,7 +45,7 @@ namespace Game.Shared {
          */
         public override void OnTriggerExit(MonsterController monster, Collider collider) {
             if (collider.gameObject.CompareTag("Player")) {
-                monster.SetState(MonsterState.ALERT);
+                monster.context.SetState(monster.context.ALERT);
             }
         }
 

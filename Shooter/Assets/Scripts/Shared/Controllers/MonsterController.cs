@@ -11,10 +11,10 @@ namespace Game.Shared {
     public class MonsterController : ActorController {
 
         /** Current player reference */
-        public PlayerController player = null;
+        [HideInInspector] public PlayerController player = null;
 
-        /** Current state of the monser */
-        public MonsterState state = MonsterState.WAIT;
+        /** State context of the monster */
+        [HideInInspector] public MonsterContext context = null;
 
         /** Monster animator reference */
         public Animator animator;
@@ -62,7 +62,9 @@ namespace Game.Shared {
         private void Start() {
             GameObject playerObject = GameObject.FindWithTag("Player");
             player = playerObject.GetComponent<PlayerController>();
-            SetState(state);
+
+            context = new MonsterContext(this);
+            context.SetState(context.WAIT);
         }
 
 
@@ -158,7 +160,7 @@ namespace Game.Shared {
                 }
 
                 if (healthPoints > 1) {
-                    SetState(MonsterState.PAIN);
+                    context.SetState(context.PAIN);
                     healthPoints -= 1;
                 } else {
                     Kill();
@@ -173,19 +175,9 @@ namespace Game.Shared {
         public override void Kill() {
             if (isAlive) {
                 RewardPlayer();
-                SetState(MonsterState.DIE);
+                context.SetState(context.DIE);
                 base.Kill();
             }
-        }
-
-
-        /**
-         * Sets a new state for the monster.
-         */
-        public void SetState(MonsterState state) {
-            this.state.OnStateExit(this);
-            this.state = state;
-            this.state.OnStateEnter(this);
         }
 
 
@@ -194,7 +186,12 @@ namespace Game.Shared {
          */
         private void RewardPlayer() {
             if (rewardPrefab != null) {
-                Instantiate(rewardPrefab, transform);
+                Vector3 position = transform.position;
+                GameObject reward = Instantiate(rewardPrefab);
+
+                position.x += 2.75f;
+                position.y += 0.75f;
+                reward.transform.position = position;
             }
         }
 
@@ -203,7 +200,7 @@ namespace Game.Shared {
          * Invoked on each frame update.
          */
         private void Update() {
-            state.OnUpdate(this);
+            context.GetState().OnUpdate(this);
 
             if (lookAtIsActive == false) {
                 return;
@@ -222,7 +219,7 @@ namespace Game.Shared {
          * Invoked on each physics update.
          */
         private void FixedUpdate() {
-            state.OnFixedUpdate(this);
+            context.GetState().OnFixedUpdate(this);
         }
 
 
@@ -230,7 +227,7 @@ namespace Game.Shared {
          * An object entered this monster's action radius.
          */
         private void OnTriggerEnter(Collider collider) {
-            state.OnTriggerEnter(this, collider);
+            context.GetState().OnTriggerEnter(this, collider);
         }
 
 
@@ -238,7 +235,7 @@ namespace Game.Shared {
          * An object is on this monster's action radius.
          */
         private void OnTriggerStay(Collider collider) {
-            state.OnTriggerStay(this, collider);
+            context.GetState().OnTriggerStay(this, collider);
         }
 
 
@@ -246,7 +243,7 @@ namespace Game.Shared {
          * An object left this monster's action radius.
          */
         private void OnTriggerExit(Collider collider) {
-            state.OnTriggerExit(this, collider);
+            context.GetState().OnTriggerExit(this, collider);
         }
     }
 }

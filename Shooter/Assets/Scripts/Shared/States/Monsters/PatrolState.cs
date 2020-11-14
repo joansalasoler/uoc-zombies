@@ -50,7 +50,7 @@ namespace Game.Shared {
          */
         public override void OnTriggerEnter(MonsterController monster, Collider collider) {
             if (collider.gameObject.CompareTag("Player")) {
-                monster.SetState(MonsterState.ALERT);
+                monster.context.SetState(monster.context.ALERT);
             }
         }
 
@@ -59,12 +59,9 @@ namespace Game.Shared {
          * Move to the next waypoint when a target is reached.
          */
         public override void OnUpdate(MonsterController monster) {
-            if (monster.IsAtWaypoint() == false) {
-                return;
-            }
-
-            if (monster.IsPlayerOnSight()) {
-                monster.SetState(MonsterState.ALERT);
+            if (monster.navigator.velocity.magnitude < 0.5f) {
+                direction = (Direction) (-((int) direction));
+            } else if (monster.IsAtWaypoint() == false) {
                 return;
             }
 
@@ -78,6 +75,8 @@ namespace Game.Shared {
 
             waypoint = waypath.NextPoint(direction, waypoint);
             monster.MoveTowards(waypoint.transform.position);
+
+            Debug.Log($"{monster.name} moves to {waypoint.name}");
         }
 
 

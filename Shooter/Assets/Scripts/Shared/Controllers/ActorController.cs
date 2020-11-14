@@ -9,7 +9,7 @@ namespace Game.Shared {
     public class ActorController : MonoBehaviour {
 
         /** Wether the actor is dead or alive */
-        public bool isAlive = true;
+        [HideInInspector] public bool isAlive = true;
 
 
         /**
