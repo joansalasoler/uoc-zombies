@@ -75,8 +75,6 @@ namespace Game.Shared {
 
             waypoint = waypath.NextPoint(direction, waypoint);
             monster.MoveTowards(waypoint.transform.position);
-
-            Debug.Log($"{monster.name} moves to {waypoint.name}");
         }
 
 

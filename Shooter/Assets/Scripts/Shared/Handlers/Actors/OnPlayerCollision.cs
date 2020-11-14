@@ -54,6 +54,10 @@ namespace Game.Shared {
                     UpdatePlayerInertia(hit);
                 }
             } else {
+                if (hit.collider.CompareTag("Monster")) {
+                    PushColliderBody(hit);
+                }
+
                 if (hit.collider.CompareTag("Moveable")) {
                     PushColliderBody(hit);
                 }

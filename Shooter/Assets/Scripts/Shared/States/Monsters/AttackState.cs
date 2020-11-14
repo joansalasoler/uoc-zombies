@@ -56,7 +56,8 @@ namespace Game.Shared {
         private IEnumerator ShootAtPlayer(MonsterController monster) {
             float shootSeconds = monster.attackSpeed - 0.2f;
 
-            while (attacker != null) {
+            while (monster.player.isAlive) {
+                AudioService.PlayOneShot(monster.gameObject, "Monster Shot");
                 monster.animator.SetTrigger("attack");
                 yield return new WaitForSeconds(0.2f);
 

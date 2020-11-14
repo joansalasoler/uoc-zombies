@@ -198,10 +198,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.39702606
+  m_Radius: 0.38447
   m_Height: 0.98257446
   m_Direction: 2
-  m_Center: {x: -0.0000019073486, y: 0.8494358, z: -0.029571533}
+  m_Center: {x: -0.0000019073486, y: 0.74061966, z: -0.029571533}
 --- !u!82 &4349238604003753637
 AudioSource:
   m_ObjectHideFlags: 0
@@ -222,7 +222,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 0
+  MinDistance: 1
   MaxDistance: 20
   Pan2D: 0
   rolloffMode: 0
@@ -258,7 +258,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.9
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -715,7 +715,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4349238605497564213}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.37, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 4349238604205666908}

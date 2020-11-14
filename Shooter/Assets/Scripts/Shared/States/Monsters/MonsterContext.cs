@@ -56,7 +56,6 @@ namespace Game.Shared {
          * Sets a new state for the monster.
          */
         public void SetState(MonsterState state) {
-            Debug.Log($"{monster.name} has state {state}");
             this.state.OnStateExit(monster);
             this.state = state;
             this.state.OnStateEnter(monster);

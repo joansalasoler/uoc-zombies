@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   goldKey: 1
   silverKey: 1
-  shieldPoints: 3
-  healthPoints: 10
-  waterDrops: 99868
+  shieldPoints: 0
+  healthPoints: -2
+  waterDrops: 0
   shieldSlots: 3
   healthSlots: 10
   waterSlots: 10

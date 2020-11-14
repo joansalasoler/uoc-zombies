@@ -26,13 +26,6 @@ namespace Game.Shared {
         }
 
 
-        public void Print() {
-            foreach (Waypoint p in points) {
-                Debug.Log($"{p.name} -> {p.transform.position}");
-            }
-        }
-
-
         /**
          * Check if a point is the last on the path.
          */

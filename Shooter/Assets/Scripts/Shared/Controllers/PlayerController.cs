@@ -1,6 +1,7 @@
 using System;
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 namespace Game.Shared {
 
@@ -16,10 +17,10 @@ namespace Game.Shared {
         [SerializeField] private WeaponController weaponsController = null;
 
         /** Invoked when the player is damaged */
-        public static Action<PlayerController> playerDamaged;
+        public Action<PlayerController> playerDamaged;
 
         /** Invoked when the player is killed */
-        public static Action<PlayerController> playerKilled;
+        public Action<PlayerController> playerKilled;
 
         /** Current player status */
         public PlayerStatus status = null;
@@ -29,10 +30,11 @@ namespace Game.Shared {
 
 
         /**
-         * Ensure the status is fresh.
+         * Disable the character controller.
          */
-        private void Start() {
-            status.Refresh();
+        public void DisableController() {
+            GetComponent<FirstPersonController>().enabled = false;
+            characterController.enabled = false;
         }
 
 
@@ -40,6 +42,13 @@ namespace Game.Shared {
          * Handles the player input.
          */
         private void Update() {
+            if (isAlive == false) {
+                Vector3 position = Camera.main.transform.position;
+                position.y -= 0.5f * Time.deltaTime;
+                Camera.main.transform.position = position;
+                return;
+            }
+
             speed = characterController.velocity.magnitude;
             weaponsController.SetSpeed(speed);
 
@@ -59,6 +68,10 @@ namespace Game.Shared {
          * Cause damage to this player.
          */
         public override void Damage() {
+            if (isAlive == false) {
+                return;
+            }
+
             if (status.DamagePlayer()) {
                 AudioService.PlayOneShot(gameObject, "Damage Player");
 
@@ -75,6 +88,11 @@ namespace Game.Shared {
          * Kills this player.
          */
         public override void Kill() {
+            if (isAlive == false) {
+                return;
+            }
+
+            AudioService.PlayOneShot(gameObject, "Player Die");
             base.Kill();
 
             if (playerKilled != null) {

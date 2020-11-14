@@ -12,6 +12,7 @@ namespace Game.Shared {
          * Invoked when this state is activated.
          */
         public override void OnStateEnter(MonsterController monster) {
+            AudioService.PlayOneShot(monster.gameObject, "Monster Panic");
             AudioService.PlayLoop(monster.gameObject, "Monster Walk");
             Vector3 origin = monster.transform.position;
             Vector3 direction = monster.transform.forward;

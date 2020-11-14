@@ -11,9 +11,10 @@ namespace Game.Shared {
          * Invoked when this state is activated.
          */
         public override void OnStateEnter(MonsterController monster) {
-            AudioService.PlayOneShot(monster.gameObject, "Kill Monster");
-            monster.animator.SetTrigger("die");
             monster.StopMoving();
+            AudioService.PlayOneShot(monster.gameObject, "Monster Die");
+            monster.animator.SetTrigger("die");
+            monster.navigator.enabled = false;
         }
     }
 }

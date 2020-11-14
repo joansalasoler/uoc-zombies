@@ -47,9 +47,17 @@ namespace Game.Shared {
 
 
         /**
-         * Refresh this player status.
+         * Reset this player status to defaults.
          */
-        public void Refresh() {
+        public void Reset() {
+            goldKey = false;
+            silverKey = false;
+            shieldPoints = 3;
+            healthPoints = 10;
+            waterDrops = 5;
+            shieldSlots = 3;
+            healthSlots = 10;
+            waterSlots = 10;
             NotifyStatusChange();
         }
 

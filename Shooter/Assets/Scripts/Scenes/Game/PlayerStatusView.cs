@@ -41,14 +41,32 @@ public class PlayerStatusView : MonoBehaviour {
     /** Ordered water indicator controllers */
     private List<StatusIndicator> waterIcons = new List<StatusIndicator>();
 
+    /** Player controller */
+    private PlayerController player = null;
+
 
     /**
      * Initialize this overlay.
      */
     public void Awake() {
         GameObject o = GameObject.FindWithTag("Player");
-        PlayerController player = o.GetComponentInChildren<PlayerController>();
+        player = o.GetComponentInChildren<PlayerController>();
+    }
+
+
+    /**
+     * Attach the events.
+     */
+    public void OnEnable() {
         player.status.statusChanged += OnPlayerStatusChanged;
+    }
+
+
+    /**
+     * Detach the events.
+     */
+    public void OnDisable() {
+        player.status.statusChanged -= OnPlayerStatusChanged;
     }
 
 
