@@ -43,9 +43,6 @@ namespace Game.Shared {
          */
         private void Update() {
             if (isAlive == false) {
-                Vector3 position = Camera.main.transform.position;
-                position.y -= 0.5f * Time.deltaTime;
-                Camera.main.transform.position = position;
                 return;
             }
 
@@ -93,6 +90,7 @@ namespace Game.Shared {
             }
 
             AudioService.PlayOneShot(gameObject, "Player Die");
+            weaponsController.SetAliveState(false);
             base.Kill();
 
             if (playerKilled != null) {

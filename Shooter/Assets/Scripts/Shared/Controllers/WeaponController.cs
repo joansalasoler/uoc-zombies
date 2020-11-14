@@ -62,18 +62,26 @@ namespace Game.Shared {
 
 
         /**
-         * Check if a weapon is currently active.
-         */
-        public bool HasActiveWeapon() {
-            return activeWeapon != null;
-        }
-
-
-        /**
          * Sets the speed at which the weapons move.
          */
         public void SetSpeed(float speed) {
             animator.SetFloat("speed", speed);
+        }
+
+
+        /**
+         * Sets if the player is still alive.
+         */
+        public void SetAliveState(bool alive) {
+            animator.SetBool("isAlive", alive);
+        }
+
+
+        /**
+         * Check if a weapon is currently active.
+         */
+        public bool HasActiveWeapon() {
+            return activeWeapon != null;
         }
 
 
@@ -109,9 +117,7 @@ namespace Game.Shared {
         public bool CanShootWeapon() {
             bool canShoot = false;
 
-            if (animator.GetBool("shooting")) {
-                canShoot = false;
-            } else if (HasActiveWeapon()) {
+            if (HasActiveWeapon()) {
                 float rateOfFire = activeWeapon.rateOfFire;
                 float timeSinceShot = Time.time - lastShotTime;
                 canShoot = rateOfFire < timeSinceShot;
@@ -130,8 +136,7 @@ namespace Game.Shared {
             }
 
             AudioService.PlayOneShot(gameObject, "Weapon Shot");
-            animator.SetBool("shooting", true);
-            Invoke("OnShootFinished", 0.35f);
+            animator.SetTrigger("shoot");
             lastShotTime = Time.time;
 
             RaycastHit hit;
@@ -215,14 +220,6 @@ namespace Game.Shared {
             lastShotTime = 0.0f;
             activeWeapon = weapons[activeIndex];
             animator.SetBool("rearming", false);
-        }
-
-
-        /**
-         * Invoked to clear the shooting animation.
-         */
-        private void OnShootFinished() {
-            animator.SetBool("shooting", false);
         }
     }
 }
