@@ -13,6 +13,15 @@ namespace Game.Shared {
         /** Monster is attacking the player */
         public static readonly MonsterState ATTACK = new AttackState();
 
+        /** Monster was murdered by the player */
+        public static readonly MonsterState DIE = new DieState();
+
+        /** Monster was damaged by the player */
+        public static readonly MonsterState PAIN = new PainState();
+
+        /** Monster is running away from the player */
+        public static readonly MonsterState PANIC = new PanicState();
+
         /** Monster is moving around the scene */
         public static readonly MonsterState PATROL = new PatrolState();
 
@@ -27,6 +36,9 @@ namespace Game.Shared {
 
         /** Invoked each frame update */
         public virtual void OnUpdate(MonsterController monster) {}
+
+        /** Invoked on each physics update */
+        public virtual void OnFixedUpdate(MonsterController monster) {}
 
         /** Collision enter event on the monster */
         public virtual void OnTriggerEnter(MonsterController monster, Collider collider) {}

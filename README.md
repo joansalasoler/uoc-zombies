@@ -53,3 +53,7 @@ https://soundcloud.com/musicbymarcus/game-play-1
 https://freesound.org/people/Koops/sounds/17872/
 
 https://freesound.org/people/alexo400/sounds/543404/
+
+https://freesound.org/people/dersuperanton/sounds/437650/
+
+https://freesound.org/people/sonidotv/sounds/240355/

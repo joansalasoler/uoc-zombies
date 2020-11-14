@@ -24,6 +24,9 @@ namespace Game.Shared {
         /** Current player status */
         public PlayerStatus status = null;
 
+        /** Current moving speed */
+        public float speed = 0.0f;
+
 
         /**
          * Ensure the status is fresh.
@@ -37,9 +40,7 @@ namespace Game.Shared {
          * Handles the player input.
          */
         private void Update() {
-            Vector3 velocity = characterController.velocity;
-            float speed = velocity.magnitude;
-
+            speed = characterController.velocity.magnitude;
             weaponsController.SetSpeed(speed);
 
             if (Input.GetButtonUp("Fire2")) {
@@ -60,7 +61,10 @@ namespace Game.Shared {
         public override void Damage() {
             if (status.DamagePlayer()) {
                 AudioService.PlayOneShot(gameObject, "Damage Player");
-                playerDamaged.Invoke(this);
+
+                if (playerDamaged != null) {
+                    playerDamaged.Invoke(this);
+                }
             } else {
                 Kill();
             }
@@ -72,7 +76,10 @@ namespace Game.Shared {
          */
         public override void Kill() {
             base.Kill();
-            playerKilled.Invoke(this);
+
+            if (playerKilled != null) {
+                playerKilled.Invoke(this);
+            }
         }
     }
 }

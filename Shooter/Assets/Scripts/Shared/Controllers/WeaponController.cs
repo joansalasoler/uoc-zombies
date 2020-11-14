@@ -174,7 +174,7 @@ namespace Game.Shared {
          * Mask to use for the weapon shooting raycasts.
          */
         public LayerMask GetShootLayerMask() {
-            int filter = LayerMask.GetMask("Player Dome", "Monster Dome");
+            int filter = LayerMask.GetMask("Player", "Player Dome", "Monster Dome");
             int mask = Physics.DefaultRaycastLayers & ~filter;
 
             return mask;

@@ -25,6 +25,8 @@ namespace Game.Shared {
          * Invoked when this state is activated.
          */
         public override void OnStateEnter(MonsterController monster) {
+            AudioService.PlayLoop(monster.gameObject, "Monster Walk");
+
             waypath = waypath ?? monster.waypath;
             waypoint = waypath.ClosestPoint(monster.transform.position);
             monster.MoveTowards(waypoint.transform.position);
@@ -38,7 +40,18 @@ namespace Game.Shared {
          * Invoked when this state is deactivated.
          */
         public override void OnStateExit(MonsterController monster) {
+            AudioService.StopLoop(monster.gameObject);
             monster.StopCoroutine(animation);
+        }
+
+
+        /**
+         * Go into alert state if player is inside the action radius.
+         */
+        public override void OnTriggerEnter(MonsterController monster, Collider collider) {
+            if (collider.gameObject.CompareTag("Player")) {
+                monster.SetState(MonsterState.ALERT);
+            }
         }
 
 
@@ -47,6 +60,11 @@ namespace Game.Shared {
          */
         public override void OnUpdate(MonsterController monster) {
             if (monster.IsAtWaypoint() == false) {
+                return;
+            }
+
+            if (monster.IsPlayerOnSight()) {
+                monster.SetState(MonsterState.ALERT);
                 return;
             }
 

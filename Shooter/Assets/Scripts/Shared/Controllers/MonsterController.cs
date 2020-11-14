@@ -10,17 +10,60 @@ namespace Game.Shared {
      */
     public class MonsterController : ActorController {
 
-        /** Monster animator reference */
-        [SerializeField] public Animator animator;
-
-        /** Monster mesh agent reference */
-        [SerializeField] public NavMeshAgent navigator;
-
-        /** Current patrol waypath of the monster */
-        [SerializeField] public Waypath waypath;
+        /** Current player reference */
+        public PlayerController player = null;
 
         /** Current state of the monser */
-        private MonsterState state = MonsterState.WAIT;
+        public MonsterState state = MonsterState.WAIT;
+
+        /** Monster animator reference */
+        public Animator animator;
+
+        /** Monster mesh agent reference */
+        public NavMeshAgent navigator;
+
+        /** Current patrol waypath of the monster */
+        public Waypath waypath;
+
+        /** Reward for killing the monster */
+        public GameObject rewardPrefab = null;
+
+        /** Wether the monster will panic when alerted */
+        public bool isRunner = false;
+
+        /** Number of hits the monster takes before dying */
+        public int healthPoints = 1;
+
+        /** Height at which the character has the eyes */
+        public float eyesHeight = 1.5f;
+
+        /** Distance at which a player may be detected */
+        public float sightRadius = 30.0f;
+
+        /** Angle at which a player may be detected */
+        public float sightAngle = 50.0f;
+
+        /** Rotation speed in radians per second */
+        public float rotationSpeed = 6.0f;
+
+        /** Shooting speed in seconds */
+        public float attackSpeed = 1.5f;
+
+        /** Position torwards which to roate */
+        private Vector3 lookAtTarget;
+
+        /** If monster must rotate towards a target */
+        private bool lookAtIsActive = false;
+
+
+        /**
+         * State initialization.
+         */
+        private void Start() {
+            GameObject playerObject = GameObject.FindWithTag("Player");
+            player = playerObject.GetComponent<PlayerController>();
+            SetState(state);
+        }
 
 
         /**
@@ -32,20 +75,107 @@ namespace Game.Shared {
 
 
         /**
-         * Makes the monster move torwards a transform.
+         * Check if the monster is rotated toward the look at target.
          */
-        public void MoveTowards(Vector3 position) {
-            navigator.destination = position;
+        public bool IsLookingAtTarget() {
+            return Vector3.Angle(lookAtTarget, transform.forward) < 5.0f;
         }
 
 
         /**
-         * Damage this actor (kills it by default).
+         * Check if the player is visible on front of the monster.
+         *
+         * That is, if on front of the monster inside the angle of vision and a
+         * ray can be traced from the monser's eyes to the player.
+         */
+        public bool IsPlayerOnSight() {
+            Vector3 target = player.transform.position - transform.position;
+            float angle = Vector3.Angle(target, transform.forward);
+
+            if (angle > sightAngle) {
+                return false;
+            }
+
+            RaycastHit hit;
+
+            Vector3 origin = transform.position;
+            Vector3 position = eyesHeight * Vector3.up + origin;
+            Vector3 direction = -eyesHeight * Vector3.up + target;
+
+            Debug.DrawRay(position, direction);
+
+            if (Physics.Raycast(position, direction, out hit, sightRadius)) {
+                if (hit.collider.gameObject.CompareTag("Player")) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
+        /**
+         * Makes the monster look at a certain point.
+         */
+        public void LookTowards(Vector3 position) {
+            lookAtTarget = position - transform.position;
+            lookAtIsActive = true;
+        }
+
+
+        /**
+         * Makes the monster move torwards a transform.
+         */
+        public void MoveTowards(Vector3 position) {
+            navigator.destination = position;
+            navigator.isStopped = false;
+        }
+
+
+        /**
+         * Makes the monster stop rotating towards a target.
+         */
+        public void StopLooking() {
+            lookAtIsActive = false;
+        }
+
+
+        /**
+         * Makes the monster stop from moving.
+         */
+        public void StopMoving() {
+            navigator.isStopped = true;
+        }
+
+
+        /**
+         * Damage this monster.
          */
         public override void Damage() {
-            AudioService.PlayOneShot(gameObject, "Damage Monster");
-            animator.SetTrigger("damage");
-            base.Damage();
+            if (isAlive) {
+                if (healthPoints < 2 && rewardPrefab != null) {
+                    isRunner = true;
+                }
+
+                if (healthPoints > 1) {
+                    SetState(MonsterState.PAIN);
+                    healthPoints -= 1;
+                } else {
+                    Kill();
+                }
+            }
+        }
+
+
+        /**
+         * Kill this monster.
+         */
+        public override void Kill() {
+            if (isAlive) {
+                RewardPlayer();
+                SetState(MonsterState.DIE);
+                base.Kill();
+            }
         }
 
 
@@ -60,11 +190,12 @@ namespace Game.Shared {
 
 
         /**
-         * State initialization.
+         * Reward the player for killing this monster.
          */
-        private void Start() {
-            SetState(MonsterState.WAIT);
-            AudioService.PlayLoop(gameObject, "Monster Walk");
+        private void RewardPlayer() {
+            if (rewardPrefab != null) {
+                Instantiate(rewardPrefab, transform);
+            }
         }
 
 
@@ -73,6 +204,25 @@ namespace Game.Shared {
          */
         private void Update() {
             state.OnUpdate(this);
+
+            if (lookAtIsActive == false) {
+                return;
+            }
+
+            float step = rotationSpeed * Time.deltaTime;
+
+            Vector3 target = lookAtTarget;
+            Vector3 current = transform.forward;
+            Vector3 rotation = Vector3.RotateTowards(current, target, step, 0.0f);
+            transform.rotation = Quaternion.LookRotation(rotation);
+        }
+
+
+        /**
+         * Invoked on each physics update.
+         */
+        private void FixedUpdate() {
+            state.OnFixedUpdate(this);
         }
 
 

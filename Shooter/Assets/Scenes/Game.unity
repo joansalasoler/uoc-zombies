@@ -2305,7 +2305,7 @@ GameObject:
   - component: {fileID: 151963134}
   - component: {fileID: 158063070}
   - component: {fileID: 162404248}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -2328,7 +2328,7 @@ GameObject:
   - component: {fileID: 155329726}
   - component: {fileID: 158162494}
   - component: {fileID: 2438087260848718649}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -2358,7 +2358,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 152160222}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.9, y: 30.9, z: -95.7}
+  m_LocalPosition: {x: 123.12, y: 3.352, z: -30.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 152460284}
@@ -15896,7 +15896,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 912906518}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Dragon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24573,7 +24573,7 @@ GameObject:
   - component: {fileID: 1392533674}
   - component: {fileID: 1392533675}
   - component: {fileID: 1392533676}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Red Dragon
   m_TagString: Monster
   m_Icon: {fileID: 0}
@@ -24630,9 +24630,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 1
+  player: {fileID: 0}
   animator: {fileID: 95486681372394683}
   navigator: {fileID: 1392533671}
   waypath: {fileID: 194288030}
+  rewardPrefab: {fileID: 0}
+  isRunner: 0
+  healthPoints: 3
+  eyesHeight: 1.5
+  sightRadius: 30
+  sightAngle: 50
+  rotationSpeed: 6
+  attackSpeed: 1.5
 --- !u!135 &1392533674
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -24644,7 +24653,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 11.702415
+  m_Radius: 20
   m_Center: {x: -0.020488739, y: 3.3855896, z: -0.075935364}
 --- !u!136 &1392533675
 CapsuleCollider:
@@ -29958,6 +29967,7 @@ MonoBehaviour:
   characterController: {fileID: 164262430}
   weaponsController: {fileID: 1919086074}
   status: {fileID: 11400000, guid: f043eac25894e540aad63d2eb82ac37e, type: 2}
+  speed: 0
 --- !u!1001 &1724146951
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32670,7 +32680,7 @@ GameObject:
   - component: {fileID: 1919086074}
   - component: {fileID: 1919086073}
   - component: {fileID: 1919086075}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Weapons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35869,7 +35879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4252895171194733}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: root_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35885,7 +35895,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4410041924751319}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: right_wing_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35901,7 +35911,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4016695234855903}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: brows_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35917,7 +35927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4339980514167469}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: right_arm_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35933,7 +35943,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4981723028439439}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: tail_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35949,7 +35959,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4599735605111783}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: right_shoulder_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35966,7 +35976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4015393427481021}
   - component: {fileID: 95486681372394683}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: micro_dragon_fino
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35982,7 +35992,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4170767071190193}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: left_arm_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35999,7 +36009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4425595964837791}
   - component: {fileID: 137313492951098969}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: micro_dragon_fino_mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36015,7 +36025,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4438380216408233}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: left_wing_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36031,7 +36041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4957918294402525}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: left_shoulder_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36047,7 +36057,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4487478671210317}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: snout_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36063,7 +36073,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4375472654141977}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: eyes_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36079,7 +36089,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4980067848977325}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: head_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36095,7 +36105,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4358583327785103}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: body_drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36160,7 +36170,7 @@ Transform:
   - {fileID: 4358583327785103}
   m_Father: {fileID: 4015393427481021}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -5.1905785, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 29.198774, y: 0, z: 0}
 --- !u!4 &4339980514167469
 Transform:
   m_ObjectHideFlags: 0
@@ -36174,7 +36184,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4599735605111783}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.31405276, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.3140532, y: 0, z: 0}
 --- !u!4 &4358583327785103
 Transform:
   m_ObjectHideFlags: 0
@@ -36220,7 +36230,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4980067848977325}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 9.742207, y: -49.81182, z: -43.54599}
+  m_LocalEulerAnglesHint: {x: 56.734627, y: -9.484416, z: -10.805343}
 --- !u!4 &4425595964837791
 Transform:
   m_ObjectHideFlags: 0
@@ -36248,7 +36258,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4980067848977325}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 3.7602463, y: 47.192688, z: 21.426361}
+  m_LocalEulerAnglesHint: {x: 72.34721, y: -21.702553, z: 3.3163333}
 --- !u!4 &4487478671210317
 Transform:
   m_ObjectHideFlags: 0
@@ -36262,7 +36272,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4980067848977325}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -11.779812, y: -4.8147483, z: 2.0719202}
 --- !u!4 &4599735605111783
 Transform:
   m_ObjectHideFlags: 0
@@ -36277,7 +36287,7 @@ Transform:
   - {fileID: 4339980514167469}
   m_Father: {fileID: 4358583327785103}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: -20.678585, y: -1.7512192, z: -1.4869422}
+  m_LocalEulerAnglesHint: {x: -26.852047, y: 3.5417693, z: 10.399633}
 --- !u!4 &4957918294402525
 Transform:
   m_ObjectHideFlags: 0
@@ -36292,7 +36302,7 @@ Transform:
   - {fileID: 4170767071190193}
   m_Father: {fileID: 4358583327785103}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -26.506657, y: -0.049113274, z: 3.7284403}
+  m_LocalEulerAnglesHint: {x: -27.633188, y: 10.997639, z: -11.986037}
 --- !u!4 &4980067848977325
 Transform:
   m_ObjectHideFlags: 0
@@ -36311,7 +36321,7 @@ Transform:
   - {fileID: 4487478671210317}
   m_Father: {fileID: 4358583327785103}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 1.8001478, y: -1.3502742, z: -0.651264}
+  m_LocalEulerAnglesHint: {x: 5.1389, y: 3.0812764, z: 4.724477}
 --- !u!4 &4981723028439439
 Transform:
   m_ObjectHideFlags: 0
@@ -36325,7 +36335,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4358583327785103}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 18.981201, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -31.774845, y: -30.361753, z: 13.587635}
 --- !u!1001 &50281077447354419
 PrefabInstance:
   m_ObjectHideFlags: 0

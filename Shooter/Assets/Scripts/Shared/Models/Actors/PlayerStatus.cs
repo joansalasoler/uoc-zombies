@@ -50,7 +50,7 @@ namespace Game.Shared {
          * Refresh this player status.
          */
         public void Refresh() {
-            statusChanged.Invoke(this);
+            NotifyStatusChange();
         }
 
 
@@ -59,7 +59,7 @@ namespace Game.Shared {
          */
         public void CollectGoldKey() {
             goldKey = true;
-            statusChanged.Invoke(this);
+            NotifyStatusChange();
         }
 
 
@@ -68,7 +68,7 @@ namespace Game.Shared {
          */
         public void CollectSilverKey() {
             silverKey = true;
-            statusChanged.Invoke(this);
+            NotifyStatusChange();
         }
 
 
@@ -80,7 +80,7 @@ namespace Game.Shared {
 
             if (canRefill == true) {
                 healthPoints = healthSlots;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             }
 
             return canRefill;
@@ -95,7 +95,7 @@ namespace Game.Shared {
 
             if (canRefill == true) {
                 shieldPoints = shieldSlots;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             }
 
             return canRefill;
@@ -110,7 +110,7 @@ namespace Game.Shared {
 
             if (canRefill == true) {
                 waterDrops = waterSlots;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             }
 
             return canRefill;
@@ -125,7 +125,7 @@ namespace Game.Shared {
 
             if (canDecrease == true) {
                 waterDrops -= 1;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             }
 
             return canDecrease;
@@ -140,7 +140,7 @@ namespace Game.Shared {
 
             if (canIncrease == true) {
                 waterDrops += 1;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             }
 
             return canIncrease;
@@ -151,16 +151,26 @@ namespace Game.Shared {
          * Decrease the player's shield and health.
          */
         public bool DamagePlayer() {
-            if (shieldPoints == 0) {
+            if (shieldPoints < 1) {
                 healthPoints -= 2;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             } else if (healthPoints > 0) {
                 healthPoints -= 1;
                 shieldPoints -= 1;
-                statusChanged.Invoke(this);
+                NotifyStatusChange();
             }
 
             return healthPoints > 0;
+        }
+
+
+        /**
+         * Invokes the statusChanged action.
+         */
+        private void NotifyStatusChange() {
+            if (statusChanged != null) {
+                statusChanged.Invoke(this);
+            }
         }
     }
 }
