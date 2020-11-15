@@ -13,10 +13,10 @@ namespace Game.Shared {
         /** Pause screen overlay */
         [SerializeField] private GameObject overlay = null;
 
-        /** Menu scene name */
+        /** Name of the scene to load on exit */
         [SerializeField] private string menuScene = "Main";
 
-        /** Game scene name */
+        /** Name of the scene to load on restart */
         [SerializeField] private string gameScene = "Game";
 
         /** Wether the pause overlay is shown */

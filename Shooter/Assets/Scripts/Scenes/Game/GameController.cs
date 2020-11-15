@@ -8,43 +8,68 @@ using Game.Shared;
  */
 public class GameController : MonoBehaviour {
 
+    /** Player instance */
+    public PlayerController player;
+
+    /** Pause overlay controller */
+    public PauseController pause;
+
+    /** Game over overlay controller */
+    public EndgameController endgame;
+
+    /** Message overlay controller */
+    public MessageController message;
+
+
     /**
      * Initialize the game.
      */
     private void Start() {
-
+        player.status.Reset();
+        message.ShowMessage("OH, GOSH! WHAT AM I DOING HERE?");
     }
 
 
     /**
-     * Handle game restarts.
+     * Loads the main menu scene.
      */
-    public void OnGameRestart() {
-
+    public void LoadMainScene() {
+        SceneManager.LoadScene("Main");
     }
 
 
     /**
-     * Handle player respawns.
+     * Shows the game over overlay.
      */
-    public void OnGameRespawn() {
-
+    public void ShowGameOverOverlay() {
+        endgame.ShowGameOverOverlay();
     }
 
 
+    /**
+     * Attach the events.
+     */
+    private void OnEnable() {
+        player.playerKilled += OnPlayerKilled;
+    }
+
 
     /**
-     * Handle when the player wins.
+     * Detach the events.
      */
-    public void OnPlayerWon() {
-
+    private void OnDisable() {
+        player.playerKilled -= OnPlayerKilled;
     }
 
 
     /**
      * Handle when the player dies.
      */
-    public void OnPlayerDied() {
-
+    public void OnPlayerKilled(PlayerController player) {
+        pause.enabled = false;
+        player.DisableController();
+        AudioService.StopLoop(gameObject);
+        Invoke("ShowGameOverOverlay", 1.5f);
+        Invoke("LoadMainScene", 3.5f);
     }
 }
