@@ -18,4 +18,4 @@ MonoBehaviour:
     type: 3}
   shootDistance: 40
   rateOfFire: 0.35
-  deviation: 0.05
+  deviation: 0.02

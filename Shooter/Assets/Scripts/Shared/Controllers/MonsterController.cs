@@ -126,15 +126,6 @@ namespace Game.Shared {
 
 
         /**
-         * Makes the monster move torwards a transform.
-         */
-        public void MoveTowards(Vector3 position) {
-            navigator.destination = position;
-            navigator.isStopped = false;
-        }
-
-
-        /**
          * Makes the monster stop rotating towards a target.
          */
         public void StopLooking() {
@@ -143,10 +134,23 @@ namespace Game.Shared {
 
 
         /**
+         * Makes the monster move torwards a transform.
+         */
+        public void MoveTowards(Vector3 position) {
+            if (navigator.enabled) {
+                navigator.destination = position;
+                navigator.isStopped = false;
+            }
+        }
+
+
+        /**
          * Makes the monster stop from moving.
          */
         public void StopMoving() {
-            navigator.isStopped = true;
+            if (navigator.enabled) {
+                navigator.isStopped = true;
+            }
         }
 
 
@@ -154,17 +158,19 @@ namespace Game.Shared {
          * Damage this monster.
          */
         public override void Damage() {
-            if (isAlive) {
-                if (healthPoints < 2 && rewardPrefab != null) {
-                    isRunner = true;
-                }
+            if (isAlive == false) {
+                return;
+            }
 
-                if (healthPoints > 1) {
-                    context.SetState(context.PAIN);
-                    healthPoints -= 1;
-                } else {
-                    Kill();
-                }
+            if (healthPoints < 2 && rewardPrefab != null) {
+                isRunner = true;
+            }
+
+            if (healthPoints > 1) {
+                context.SetState(context.PAIN);
+                healthPoints -= 1;
+            } else {
+                Kill();
             }
         }
 
@@ -176,6 +182,7 @@ namespace Game.Shared {
             if (isAlive) {
                 RewardPlayer();
                 context.SetState(context.DIE);
+                healthPoints = 0;
                 base.Kill();
             }
         }
@@ -189,7 +196,7 @@ namespace Game.Shared {
                 Vector3 position = transform.position;
                 GameObject reward = Instantiate(rewardPrefab);
 
-                position.x += 2.75f;
+                position.x += 1.75f;
                 position.y += 0.75f;
                 reward.transform.position = position;
             }

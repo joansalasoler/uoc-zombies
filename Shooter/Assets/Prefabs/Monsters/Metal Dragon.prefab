@@ -149,7 +149,7 @@ MonoBehaviour:
   isRunner: 0
   healthPoints: 1
   eyesHeight: 1.5
-  sightRadius: 20
+  sightRadius: 30
   sightAngle: 70
   rotationSpeed: 6
   attackSpeed: 1.5

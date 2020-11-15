@@ -43,6 +43,7 @@ namespace Game.Shared {
          */
         public override void OnTriggerExit(MonsterController monster, Collider collider) {
             if (collider.gameObject.CompareTag("Player")) {
+                monster.context.SetState(monster.context.PATROL);
                 playerIsNear = false;
             }
         }
