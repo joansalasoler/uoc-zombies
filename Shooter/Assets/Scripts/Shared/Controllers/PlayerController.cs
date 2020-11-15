@@ -53,8 +53,11 @@ namespace Game.Shared {
                 weaponsController.ToggleWeapon();
             }
 
-            if (status.HasMunition() && Input.GetButton("Fire1")) {
-                if (weaponsController.ShootWeapon()) {
+            if (Input.GetButton("Fire1") && weaponsController.CanShootWeapon()) {
+                if (status.HasMunition() == false) {
+                    weaponsController.ShootNothing();
+                } else {
+                    weaponsController.ShootWeapon();
                     status.DecreaseWater();
                 }
             }

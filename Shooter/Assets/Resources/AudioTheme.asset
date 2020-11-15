@@ -41,3 +41,5 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: f66519164332eb06aa75271db5b22f77, type: 3}
   - name: Player Die
     clip: {fileID: 8300000, guid: f083a09bf8dd7d2c881566a2fea1bdd3, type: 3}
+  - name: Shot Blocked
+    clip: {fileID: 8300000, guid: a458e39a73c22c11a84d37b65966faf5, type: 3}

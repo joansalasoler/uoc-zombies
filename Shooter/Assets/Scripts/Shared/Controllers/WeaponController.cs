@@ -115,15 +115,39 @@ namespace Game.Shared {
          * Checks if the weapon can be shot.
          */
         public bool CanShootWeapon() {
-            bool canShoot = false;
+            return HasActiveWeapon() && IsInShotRate();
+        }
 
-            if (HasActiveWeapon()) {
-                float rateOfFire = activeWeapon.rateOfFire;
-                float timeSinceShot = Time.time - lastShotTime;
-                canShoot = rateOfFire < timeSinceShot;
-            }
 
-            return canShoot;
+        /**
+         * Checks if the rate of fire period elapsed.
+         */
+        public bool IsInShotRate() {
+            float rateOfFire = activeWeapon.rateOfFire;
+            float timeSinceShot = Time.time - lastShotTime;
+            bool inShotRate = rateOfFire < timeSinceShot;
+
+            return inShotRate;
+        }
+
+
+        /**
+         * Animate the gun and clear the last shot time.
+         */
+        public void ShootNothing() {
+            AudioService.PlayOneShot(gameObject, "Shot Blocked");
+            animator.SetTrigger("shoot");
+            lastShotTime = Time.time;
+        }
+
+
+        /**
+         * Animate the gun and clear the last shot time.
+         */
+        public void ShootWater() {
+            AudioService.PlayOneShot(gameObject, "Weapon Shot");
+            animator.SetTrigger("shoot");
+            lastShotTime = Time.time;
         }
 
 
@@ -134,10 +158,6 @@ namespace Game.Shared {
             if (CanShootWeapon() == false) {
                 return false;
             }
-
-            AudioService.PlayOneShot(gameObject, "Weapon Shot");
-            animator.SetTrigger("shoot");
-            lastShotTime = Time.time;
 
             RaycastHit hit;
             Vector3 deviaiton = GetShootDeviation();
@@ -151,6 +171,8 @@ namespace Game.Shared {
                     EmbedImpactDecal(hit);
                 }
             }
+
+            ShootWater();
 
             return true;
         }
