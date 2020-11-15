@@ -21,6 +21,9 @@ namespace Game.Shared {
         /** Layers affected by player shoots */
         [HideInInspector] public LayerMask layerMask;
 
+        /** Force of the water impactin with objects */
+        public float pushForce = 100.0f;
+
         /** Weapon game object instances */
         private List<GameObject> instances = null;
 
@@ -169,6 +172,10 @@ namespace Game.Shared {
                     hit.collider.GetComponent<ActorController>().Damage();
                 } else {
                     EmbedImpactDecal(hit);
+
+                    if (hit.collider.CompareTag("Moveable")) {
+                        PushColliderBody(hit);
+                    }
                 }
             }
 
@@ -209,6 +216,17 @@ namespace Game.Shared {
 
 
         /**
+         * Push a moveable object if it was shot.
+         */
+        private void PushColliderBody(RaycastHit hit) {
+            Debug.Log("Push!");
+            Vector3 force = pushForce * Vector3.one;
+            Rigidbody body = hit.collider.attachedRigidbody;
+            body.AddForceAtPosition(force, hit.point);
+        }
+
+
+        /**
          * Embed an impact decal into a hit position.
          */
         private void EmbedImpactDecal(RaycastHit hit) {
@@ -218,7 +236,7 @@ namespace Game.Shared {
             GameObject decal = Instantiate(prefab, position, rotation, hit.transform);
 
             Vector3 s = hit.transform.lossyScale;
-            decal.transform.localScale = new Vector3(1f / s.x, 1f / s.y, 1f / s.z);
+            decal.transform.localScale = Vector3.one * (1f / s.x);
         }
 
 
