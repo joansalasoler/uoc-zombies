@@ -20,6 +20,9 @@ public class PlayerStatusView : MonoBehaviour {
     /** Golden key indicator object */
     [SerializeField] private GameObject goldKey = null;
 
+    /** Red key indicator object */
+    [SerializeField] private GameObject redKey = null;
+
     /** Silver key indicator object */
     [SerializeField] private GameObject silverKey = null;
 
@@ -81,6 +84,7 @@ public class PlayerStatusView : MonoBehaviour {
         UpdateShieldIndicators(status);
         UpdateHealthIndicators(status);
 
+        redKey.SetActive(status.redKey);
         goldKey.SetActive(status.goldKey);
         silverKey.SetActive(status.silverKey);
     }

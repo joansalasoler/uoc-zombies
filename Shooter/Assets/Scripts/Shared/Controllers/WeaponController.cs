@@ -221,7 +221,6 @@ namespace Game.Shared {
          * Push a moveable object if it was shot.
          */
         private void PushColliderBody(RaycastHit hit) {
-            Debug.Log("Push!");
             Vector3 force = pushForce * Vector3.one;
             Rigidbody body = hit.collider.attachedRigidbody;
             body.AddForceAtPosition(force, hit.point);

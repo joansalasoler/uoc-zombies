@@ -16,6 +16,9 @@ namespace Game.Shared {
         /** If the player collected a golden key */
         public bool goldKey = false;
 
+        /** If the player collected a red key */
+        public bool redKey = false;
+
         /** If the player collected a silver key */
         public bool silverKey = false;
 
@@ -50,6 +53,7 @@ namespace Game.Shared {
          * Reset this player status to defaults.
          */
         public void Reset() {
+            redKey = false;
             goldKey = false;
             silverKey = false;
             shieldPoints = 3;
@@ -67,6 +71,15 @@ namespace Game.Shared {
          */
         public void CollectGoldKey() {
             goldKey = true;
+            NotifyStatusChange();
+        }
+
+
+        /**
+         * Collect a spaceship key.
+         */
+        public void CollectRedKey() {
+            redKey = true;
             NotifyStatusChange();
         }
 
