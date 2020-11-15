@@ -8,6 +8,7 @@ TagManager:
   - Platform
   - Moveable
   - Monster
+  - Reward
   layers:
   - Default
   - TransparentFX

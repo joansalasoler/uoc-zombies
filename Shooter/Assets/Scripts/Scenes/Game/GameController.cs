@@ -17,12 +17,16 @@ public class GameController : MonoBehaviour {
     /** Game over overlay controller */
     public EndgameController endgame;
 
+    /** Message overlay controller */
+    public MessageController message;
+
 
     /**
      * Initialize the game.
      */
     private void Start() {
         player.status.Reset();
+        message.ShowMessage("OH, GOSH! WHAT AM I DOING HERE?");
     }
 
 
@@ -31,14 +35,6 @@ public class GameController : MonoBehaviour {
      */
     public void LoadMainScene() {
         SceneManager.LoadScene("Main");
-    }
-
-
-    /**
-     * Shows the congratulations overlay.
-     */
-    public void ShowCongratsOverlay() {
-        endgame.ShowCongratsOverlay();
     }
 
 

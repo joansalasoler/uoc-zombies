@@ -178,6 +178,9 @@ namespace Game.Shared {
                     if (hit.collider.CompareTag("Moveable")) {
                         PushColliderBody(hit);
                     }
+
+                    var trigger = hit.collider.gameObject.GetComponent<OnShotTrigger>();
+                    if (trigger != null) trigger.OnShotTriggerEnter(hit.collider);
                 }
             }
 
@@ -210,7 +213,7 @@ namespace Game.Shared {
          * Mask to use for the weapon shooting raycasts.
          */
         public LayerMask GetShootLayerMask() {
-            int filter = LayerMask.GetMask("Player", "Player Dome", "Monster Dome");
+            int filter = LayerMask.GetMask("Players", "Player Dome", "Monster Dome");
             int mask = Physics.DefaultRaycastLayers & ~filter;
 
             return mask;
