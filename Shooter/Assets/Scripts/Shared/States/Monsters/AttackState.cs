@@ -57,10 +57,11 @@ namespace Game.Shared {
             float shootSeconds = monster.attackSpeed - 0.2f;
 
             while (monster.player.isAlive) {
-                AudioService.PlayOneShot(monster.gameObject, "Monster Shot");
                 monster.animator.SetTrigger("attack");
                 yield return new WaitForSeconds(0.2f);
 
+                monster.ShootAtPlayer();
+                AudioService.PlayOneShot(monster.gameObject, "Monster Shot");
                 monster.player.Damage();
                 yield return new WaitForSeconds(shootSeconds);
             }

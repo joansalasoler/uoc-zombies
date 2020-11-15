@@ -114,6 +114,8 @@ MonoBehaviour:
   navigator: {fileID: 2782442162489126954}
   waypath: {fileID: 0}
   rewardPrefab: {fileID: 0}
+  projectilePrefab: {fileID: 2414005872180761744, guid: fdd7754422502e8a7b564e465ba2f8c7,
+    type: 3}
   isRunner: 0
   healthPoints: 3
   eyesHeight: 1.5

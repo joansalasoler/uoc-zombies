@@ -28,6 +28,9 @@ namespace Game.Shared {
         /** Reward for killing the monster */
         public GameObject rewardPrefab = null;
 
+        /** Projectile that the monster shots */
+        public GameObject projectilePrefab = null;
+
         /** Wether the monster will panic when alerted */
         public bool isRunner = false;
 
@@ -185,6 +188,19 @@ namespace Game.Shared {
                 healthPoints = 0;
                 base.Kill();
             }
+        }
+
+
+        /**
+         * Shoot a projectile towards the player's camera.
+         */
+        public void ShootAtPlayer() {
+            var projectile = Instantiate(projectilePrefab);
+            var controller = projectile.GetComponent<ProjectileController>();
+
+            Vector3 height = (eyesHeight - 0.2f) * Vector3.up;
+            projectile.transform.position = height + transform.position;
+            controller.MoveTowards(Camera.main.transform.position);
         }
 
 
