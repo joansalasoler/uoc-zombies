@@ -67,3 +67,7 @@ https://freesound.org/people/jorickhoofd/sounds/180344/
 https://freesound.org/people/nicktermer/sounds/320247/
 
 https://freesound.org/people/MTJohnson/sounds/426314/
+
+https://assetstore.unity.com/packages/3d/environments/low-poly-rock-pack-57874
+
+https://assetstore.unity.com/packages/3d/vegetation/plants/lowpoly-flowers-47083

@@ -60,10 +60,8 @@ namespace Game.Shared {
                     monster.context.SetState(monster.context.PANIC);
                 } else if (playerIsNear && playerOnSight) {
                     monster.context.SetState(monster.context.ATTACK);
-                } else if (!playerIsNear || monster.player.speed < 0.2f) {
-                    monster.context.SetState(monster.context.PATROL);
                 } else {
-                    monster.LookTowards(monster.player.transform.position);
+                    monster.context.SetState(monster.context.PATROL);
                 }
             }
         }

@@ -171,7 +171,9 @@ namespace Game.Shared {
                 if (hit.collider.CompareTag("Monster")) {
                     hit.collider.GetComponent<ActorController>().Damage();
                 } else {
-                    EmbedImpactDecal(hit);
+                    if (!hit.collider.CompareTag("Player")) {
+                        EmbedImpactDecal(hit);
+                    }
 
                     if (hit.collider.CompareTag("Moveable")) {
                         PushColliderBody(hit);
