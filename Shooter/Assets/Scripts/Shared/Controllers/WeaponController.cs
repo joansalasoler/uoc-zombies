@@ -192,7 +192,11 @@ namespace Game.Shared {
         private void EmbedImpactDecal(RaycastHit hit) {
             Vector3 position = 0.01f * hit.normal + hit.point;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
-            Instantiate(activeWeapon.impactPrefab, position, rotation, hit.transform);
+            GameObject prefab = activeWeapon.impactPrefab;
+            GameObject decal = Instantiate(prefab, position, rotation, hit.transform);
+
+            Vector3 s = hit.transform.lossyScale;
+            decal.transform.localScale = new Vector3(1f / s.x, 1f / s.y, 1f / s.z);
         }
 
 
