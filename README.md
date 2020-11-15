@@ -57,3 +57,11 @@ https://freesound.org/people/alexo400/sounds/543404/
 https://freesound.org/people/dersuperanton/sounds/437650/
 
 https://freesound.org/people/sonidotv/sounds/240355/
+
+https://freesound.org/people/hykenfreak/sounds/331621/
+
+https://freesound.org/people/Michel88/sounds/76960/
+
+https://freesound.org/people/jorickhoofd/sounds/180344/
+
+https://freesound.org/people/nicktermer/sounds/320247/

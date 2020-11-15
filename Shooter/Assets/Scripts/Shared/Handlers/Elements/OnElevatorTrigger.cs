@@ -35,7 +35,7 @@ namespace Game.Shared {
          * Move the elevator in the up direction.
          */
         public void MoveUp() {
-            direction = Vector3.up;
+            direction = speed * Vector3.up;
             isStopped = false;
         }
 
@@ -44,7 +44,7 @@ namespace Game.Shared {
          * Move the elevator in the down direction.
          */
         public void MoveDown() {
-            direction = Vector3.down;
+            direction = speed * Vector3.down;
             isStopped = false;
         }
 
@@ -77,19 +77,20 @@ namespace Game.Shared {
                 direction = Vector3.zero;
             }
 
-            float y = transform.position.y;
+            Vector3 origin = transform.position;
+            Vector3 target = origin + direction * Time.fixedDeltaTime;
 
-            if (isDown && y >= top) {
+            body.MovePosition(target);
+
+            if (isDown && target.y >= top) {
                 direction = Vector3.zero;
                 isStopped = true;
                 isDown = false;
-            } else if (!isDown && y <= bottom) {
+            } else if (!isDown && target.y <= bottom) {
                 direction = Vector3.zero;
                 isStopped = true;
                 isDown = true;
             }
-
-            body.velocity = speed * direction;
         }
     }
 }
