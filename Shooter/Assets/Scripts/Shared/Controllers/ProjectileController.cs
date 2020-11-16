@@ -31,7 +31,7 @@ namespace Game.Shared {
             if (target != Vector3.zero) {
                 float step = speed * Time.deltaTime;
                 Vector3 origin = transform.position;
-                transform.position = Vector3.MoveTowards(origin, target, step);
+                transform.position = Vector3.Slerp(origin, target, step);
 
                 if (Vector3.Distance(origin, target) < 0.001f) {
                     Destroy(gameObject);
