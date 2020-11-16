@@ -83,7 +83,10 @@ namespace Game.Shared {
          * Checks if a monster is currently at a waypoint.
          */
         public bool IsAtWaypoint() {
-            return navigator.remainingDistance <= navigator.stoppingDistance;
+            bool isPending = navigator.pathPending;
+            bool isAtPoint = navigator.remainingDistance <= navigator.stoppingDistance;
+
+            return isAtPoint && !isPending;
         }
 
 
@@ -151,7 +154,7 @@ namespace Game.Shared {
          */
         public void MoveTowards(Vector3 position) {
             if (navigator.enabled) {
-                navigator.destination = position;
+                navigator.SetDestination(position);
                 navigator.isStopped = false;
             }
         }
