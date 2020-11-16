@@ -10,11 +10,18 @@ namespace Game.Shared {
         /** Wether the player is still on the action radius */
         private bool playerIsNear = false;
 
+        /** Maximum seconds the dragon can be on this state */
+        private float maximumTime = 5.0f;
+
+        /** Time this state was entered */
+        private float startTime = 0.0f;
+
 
         /**
          * Invoked when this state is activated.
          */
         public override void OnStateEnter(MonsterController monster) {
+            startTime = Time.time;
             monster.LookTowards(monster.player.transform.position);
             monster.StopMoving();
         }
@@ -53,7 +60,13 @@ namespace Game.Shared {
          * Search for a player and change to the attack state if found.
          */
         public override void OnUpdate(MonsterController monster) {
-            if (monster.IsLookingAtTarget()) {
+            if (monster.isAlive == false) {
+                return;
+            }
+
+            bool timeIsElapsed = (Time.time - startTime) > maximumTime;
+
+            if (timeIsElapsed || monster.IsLookingAtTarget()) {
                 bool playerOnSight = monster.IsPlayerOnSight();
                 monster.StopLooking();
 

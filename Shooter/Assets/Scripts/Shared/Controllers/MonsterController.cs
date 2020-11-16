@@ -10,6 +10,12 @@ namespace Game.Shared {
      */
     public class MonsterController : ActorController {
 
+        /** Layers affected by dragon raycasts */
+        [HideInInspector] public LayerMask layerMask;
+
+        /** If dragon raycasts must hit triggers */
+        [HideInInspector] public QueryTriggerInteraction hitTriggers;
+
         /** Current player reference */
         [HideInInspector] public PlayerController player = null;
 
@@ -65,6 +71,8 @@ namespace Game.Shared {
         private void Start() {
             GameObject playerObject = GameObject.FindWithTag("Player");
             player = playerObject.GetComponent<PlayerController>();
+            hitTriggers = QueryTriggerInteraction.Ignore;
+            layerMask = GetRaycastLayerMask();
 
             context = new MonsterContext(this);
             context.SetState(context.WAIT);
@@ -75,7 +83,10 @@ namespace Game.Shared {
          * Checks if a monster is currently at a waypoint.
          */
         public bool IsAtWaypoint() {
-            return navigator.remainingDistance <= navigator.stoppingDistance;
+            bool isPending = navigator.pathPending;
+            bool isAtPoint = navigator.remainingDistance <= navigator.stoppingDistance;
+
+            return isAtPoint && !isPending;
         }
 
 
@@ -106,10 +117,11 @@ namespace Game.Shared {
             Vector3 origin = transform.position;
             Vector3 position = eyesHeight * Vector3.up + origin;
             Vector3 direction = -eyesHeight * Vector3.up + target;
+            Ray ray = new Ray(position, direction);
 
             Debug.DrawRay(position, direction);
 
-            if (Physics.Raycast(position, direction, out hit, sightRadius)) {
+            if (Physics.Raycast(ray, out hit, sightRadius, layerMask, hitTriggers)) {
                 if (hit.collider.gameObject.CompareTag("Player")) {
                     return true;
                 }
@@ -123,7 +135,8 @@ namespace Game.Shared {
          * Makes the monster look at a certain point.
          */
         public void LookTowards(Vector3 position) {
-            lookAtTarget = position - transform.position;
+            Vector3 target = position - transform.position;
+            lookAtTarget = new Vector3(target.x, 0, target.z);
             lookAtIsActive = true;
         }
 
@@ -141,7 +154,7 @@ namespace Game.Shared {
          */
         public void MoveTowards(Vector3 position) {
             if (navigator.enabled) {
-                navigator.destination = position;
+                navigator.SetDestination(position);
                 navigator.isStopped = false;
             }
         }
@@ -201,6 +214,17 @@ namespace Game.Shared {
             Vector3 height = (eyesHeight - 0.2f) * Vector3.up;
             projectile.transform.position = height + transform.position;
             controller.MoveTowards(Camera.main.transform.position);
+        }
+
+
+        /**
+         * Mask to use for the dragon's raycasts.
+         */
+        public LayerMask GetRaycastLayerMask() {
+            int filter = LayerMask.GetMask("Player Dome");
+            int mask = Physics.DefaultRaycastLayers & ~filter;
+
+            return mask;
         }
 
 
