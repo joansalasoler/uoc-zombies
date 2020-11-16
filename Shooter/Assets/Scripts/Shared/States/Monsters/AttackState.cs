@@ -61,9 +61,8 @@ namespace Game.Shared {
                 yield return new WaitForSeconds(0.2f);
 
                 if (monster.IsPlayerOnSight()) {
-                    monster.ShootAtPlayer();
                     AudioService.PlayOneShot(monster.gameObject, "Monster Shot");
-                    monster.player.Damage();
+                    monster.ShootAtPlayer();
                 }
 
                 yield return new WaitForSeconds(shootSeconds);

@@ -38,5 +38,26 @@ namespace Game.Shared {
                 }
             }
         }
+
+
+        /**
+         * Damage the player when impacted by a projectile.
+         */
+        private void OnTriggerEnter(Collider collider) {
+            Destroy(gameObject);
+
+            if (collider.gameObject.CompareTag("Player")) {
+                PlayerController player = GetPlayerController(collider);
+                player.Damage();
+            }
+        }
+
+
+        /**
+         * Obtain the player's controller from a collider.
+         */
+        private PlayerController GetPlayerController(Collider collider) {
+            return collider.GetComponent<PlayerController>();
+        }
     }
 }
