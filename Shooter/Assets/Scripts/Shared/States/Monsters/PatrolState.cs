@@ -46,11 +46,23 @@ namespace Game.Shared {
 
 
         /**
-         * Go into alert state if player is inside the action radius.
+         * Go into alert state when the player enters the action radius.
          */
         public override void OnTriggerEnter(MonsterController monster, Collider collider) {
             if (collider.gameObject.CompareTag("Player")) {
                 monster.context.SetState(monster.context.ALERT);
+            }
+        }
+
+
+        /**
+         * Go into alert state if the player is on front of the monster.
+         */
+        public override void OnTriggerStay(MonsterController monster, Collider collider) {
+            if (collider.gameObject.CompareTag("Player")) {
+                if (monster.IsPlayerOnSight()) {
+                    monster.context.SetState(monster.context.ALERT);
+                }
             }
         }
 
