@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -957590256337711088}
   - component: {fileID: 5642932006454873253}
   m_Layer: 0
-  m_Name: Projectile
+  m_Name: Mucus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +107,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: addc68f7e41ccf948bac8c67bdae94d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  impactPrefab: {fileID: 642982528901706339, guid: 1ce061bbb8d38b2f39a31d1e6be6e79e,
+    type: 3}
   speed: 20
 --- !u!95 &5642932006454873253
 Animator:
