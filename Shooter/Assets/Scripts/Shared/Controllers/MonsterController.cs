@@ -123,7 +123,8 @@ namespace Game.Shared {
          * Makes the monster look at a certain point.
          */
         public void LookTowards(Vector3 position) {
-            lookAtTarget = position - transform.position;
+            Vector3 target = position - transform.position;
+            lookAtTarget = new Vector3(target.x, 0, target.z);
             lookAtIsActive = true;
         }
 
