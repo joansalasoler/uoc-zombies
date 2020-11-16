@@ -60,9 +60,12 @@ namespace Game.Shared {
                 monster.animator.SetTrigger("attack");
                 yield return new WaitForSeconds(0.2f);
 
-                monster.ShootAtPlayer();
-                AudioService.PlayOneShot(monster.gameObject, "Monster Shot");
-                monster.player.Damage();
+                if (monster.IsPlayerOnSight()) {
+                    monster.ShootAtPlayer();
+                    AudioService.PlayOneShot(monster.gameObject, "Monster Shot");
+                    monster.player.Damage();
+                }
+
                 yield return new WaitForSeconds(shootSeconds);
             }
         }
