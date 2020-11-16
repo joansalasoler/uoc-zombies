@@ -20,6 +20,12 @@ namespace Game.Shared {
         /** Animation loop */
         private IEnumerator animation = null;
 
+        /** Maximum seconds the monster can stay without moving */
+        private float maxStuckTime = 5.0f;
+
+        /** Last time the monser's waypoint was changed */
+        private float lastChangeTime = 0.0f;
+
 
         /**
          * Invoked when this state is activated.
@@ -30,6 +36,7 @@ namespace Game.Shared {
             waypath = waypath ?? monster.waypath;
             waypoint = waypath.ClosestPoint(monster.transform.position);
             monster.MoveTowards(waypoint.transform.position);
+            lastChangeTime = Time.time;
 
             animation = AnimatePatrol(monster);
             monster.StartCoroutine(animation);
@@ -71,9 +78,9 @@ namespace Game.Shared {
          * Move to the next waypoint when a target is reached.
          */
         public override void OnUpdate(MonsterController monster) {
-            if (monster.navigator.velocity.magnitude < 0.5f) {
+            if (IsStuckWithoutMoving(monster)) {
                 direction = (Direction) (-((int) direction));
-            } else if (monster.IsAtWaypoint() == false) {
+            } else if (!monster.IsAtWaypoint()) {
                 return;
             }
 
@@ -87,6 +94,19 @@ namespace Game.Shared {
 
             waypoint = waypath.NextPoint(direction, waypoint);
             monster.MoveTowards(waypoint.transform.position);
+            lastChangeTime = Time.time;
+        }
+
+
+        /**
+         * Check if the monster has been stuck without moving.
+         */
+        private bool IsStuckWithoutMoving(MonsterController monster) {
+            bool isTimeElapsed = (Time.time - lastChangeTime >= maxStuckTime);
+            bool isSlowedDown = monster.navigator.velocity.magnitude < 0.5f;
+            bool isPending = monster.navigator.pathPending;
+
+            return isTimeElapsed && !isPending && isSlowedDown;
         }
 
 
