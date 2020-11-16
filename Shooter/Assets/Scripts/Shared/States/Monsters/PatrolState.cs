@@ -78,6 +78,10 @@ namespace Game.Shared {
          * Move to the next waypoint when a target is reached.
          */
         public override void OnUpdate(MonsterController monster) {
+            if (monster.isAlive == false) {
+                return;
+            }
+
             if (IsStuckWithoutMoving(monster)) {
                 direction = (Direction) (-((int) direction));
             } else if (!monster.IsAtWaypoint()) {

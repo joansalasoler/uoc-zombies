@@ -60,6 +60,10 @@ namespace Game.Shared {
          * Search for a player and change to the attack state if found.
          */
         public override void OnUpdate(MonsterController monster) {
+            if (monster.isAlive == false) {
+                return;
+            }
+
             bool timeIsElapsed = (Time.time - startTime) > maximumTime;
 
             if (timeIsElapsed || monster.IsLookingAtTarget()) {
