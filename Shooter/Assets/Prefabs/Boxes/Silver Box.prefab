@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 9133176856419099839}
   - component: {fileID: 8524962446486985846}
   - component: {fileID: 9133176856419099838}
+  - component: {fileID: 4524034299878188734}
   m_Layer: 8
   m_Name: Silver Box
   m_TagString: Untagged
@@ -167,3 +168,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!208 &4524034299878188734
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9133176856419099833}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
