@@ -4,7 +4,7 @@ using System.Collections;
 namespace Game.Shared {
 
     /**
-     *
+     * Simulates a streetlight that turns on after a delay.
      */
     public class Streetlight : MonoBehaviour {
 
@@ -35,7 +35,7 @@ namespace Game.Shared {
 
 
         /**
-         *
+         * Turn on the light.
          */
         private IEnumerator TurnOnLight() {
             yield return new WaitForSeconds(delay);
