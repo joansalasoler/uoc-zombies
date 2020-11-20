@@ -11,10 +11,10 @@ namespace Game.Shared {
     public class PlayerController : ActorController {
 
         /** Character controller instance */
-        [SerializeField] private CharacterController characterController = null;
+        // [SerializeField] private CharacterController characterController = null;
 
         /** Weapon controller instance */
-        [SerializeField] private WeaponController weaponsController = null;
+        // [SerializeField] private WeaponController weaponsController = null;
 
         /** Invoked when the player is damaged */
         public Action<PlayerController> playerDamaged;
@@ -33,8 +33,8 @@ namespace Game.Shared {
          * Disable the character controller.
          */
         public void DisableController() {
-            GetComponent<FirstPersonController>().enabled = false;
-            characterController.enabled = false;
+            // GetComponent<FirstPersonController>().enabled = false;
+            // characterController.enabled = false;
         }
 
 
@@ -42,25 +42,25 @@ namespace Game.Shared {
          * Handles the player input.
          */
         private void Update() {
-            if (isAlive == false) {
-                return;
-            }
-
-            speed = characterController.velocity.magnitude;
-            weaponsController.SetSpeed(speed);
-
-            if (Input.GetButtonUp("Fire2")) {
-                weaponsController.ToggleWeapon();
-            }
-
-            if (Input.GetButton("Fire1") && weaponsController.CanShootWeapon()) {
-                if (status.HasMunition() == false) {
-                    weaponsController.ShootNothing();
-                } else {
-                    weaponsController.ShootWeapon();
-                    status.DecreaseWater();
-                }
-            }
+            // if (isAlive == false) {
+            //     return;
+            // }
+            //
+            // speed = characterController.velocity.magnitude;
+            // weaponsController.SetSpeed(speed);
+            //
+            // if (Input.GetButtonUp("Fire2")) {
+            //     weaponsController.ToggleWeapon();
+            // }
+            //
+            // if (Input.GetButton("Fire1") && weaponsController.CanShootWeapon()) {
+            //     if (status.HasMunition() == false) {
+            //         weaponsController.ShootNothing();
+            //     } else {
+            //         weaponsController.ShootWeapon();
+            //         status.DecreaseWater();
+            //     }
+            // }
         }
 
 
@@ -93,7 +93,7 @@ namespace Game.Shared {
             }
 
             AudioService.PlayOneShot(gameObject, "Player Die");
-            weaponsController.SetAliveState(false);
+            // weaponsController.SetAliveState(false);
             base.Kill();
 
             if (playerKilled != null) {
