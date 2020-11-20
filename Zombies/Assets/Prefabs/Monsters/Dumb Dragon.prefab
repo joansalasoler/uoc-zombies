@@ -109,6 +109,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAlive: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  hitTriggers: 0
   player: {fileID: 0}
   animator: {fileID: 2782442163782624849}
   navigator: {fileID: 2782442162489126954}
@@ -181,7 +185,8 @@ AudioSource:
   m_GameObject: {fileID: 2782442162489126967}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -9194106201930774118, guid: ac6b70ba513e7c22381c1706bcb636a6,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
