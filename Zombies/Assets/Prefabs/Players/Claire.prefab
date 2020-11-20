@@ -11,12 +11,12 @@ GameObject:
   - component: {fileID: 4731907593468380361}
   - component: {fileID: 4731907593457408555}
   - component: {fileID: 4731907593457449487}
+  - component: {fileID: 4731907592977921543}
+  - component: {fileID: 4731907592977921540}
   - component: {fileID: 4731907593461305867}
   - component: {fileID: 4731907593473946909}
   - component: {fileID: 4731907593463789901}
   - component: {fileID: 4731907592977921542}
-  - component: {fileID: 4731907592977921540}
-  - component: {fileID: 4731907592977921543}
   m_Layer: 11
   m_Name: Claire
   m_TagString: Player
@@ -71,6 +71,34 @@ MonoBehaviour:
   m_MoveSpeedMultiplier: 1
   m_AnimSpeedMultiplier: 1
   m_GroundCheckDistance: 0.4
+--- !u!114 &4731907592977921543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4731907593468670285}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1755dc6b4015d3a429ccd602c4089208, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlive: 1
+  status: {fileID: 11400000, guid: f043eac25894e540aad63d2eb82ac37e, type: 2}
+  speed: 0
+--- !u!114 &4731907592977921540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4731907593468670285}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 763233c323fa8d0caada9bfae633c598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pushForce: 2
 --- !u!95 &4731907593461305867
 Animator:
   serializedVersion: 3
@@ -217,34 +245,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
---- !u!114 &4731907592977921540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4731907593468670285}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 763233c323fa8d0caada9bfae633c598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pushForce: 2
---- !u!114 &4731907592977921543
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4731907593468670285}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1755dc6b4015d3a429ccd602c4089208, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAlive: 1
-  status: {fileID: 11400000, guid: f043eac25894e540aad63d2eb82ac37e, type: 2}
-  speed: 0
 --- !u!1001 &4731907594315821468
 PrefabInstance:
   m_ObjectHideFlags: 0
