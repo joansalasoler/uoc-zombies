@@ -67,7 +67,6 @@ public class GameController : MonoBehaviour {
      */
     public void OnPlayerKilled(PlayerController player) {
         pause.enabled = false;
-        player.DisableController();
         AudioService.StopLoop(gameObject);
         Invoke("ShowGameOverOverlay", 1.5f);
         Invoke("LoadMainScene", 3.5f);

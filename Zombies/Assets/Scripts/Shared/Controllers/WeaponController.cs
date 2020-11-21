@@ -9,6 +9,9 @@ namespace Game.Shared {
      */
     public class WeaponController : MonoBehaviour {
 
+        /** Hand of the character */
+        [SerializeField] private Transform hand = null;
+
         /** Available weapons for the player */
         [SerializeField] private List<PlayerWeapon> weapons = null;
 
@@ -44,6 +47,7 @@ namespace Game.Shared {
          * Switch to the first weapon.
          */
         private void Start() {
+            transform.parent = hand;
             ToggleWeapon();
         }
 
@@ -54,7 +58,6 @@ namespace Game.Shared {
         private void Awake() {
             hitTriggers = QueryTriggerInteraction.Ignore;
             layerMask = GetShootLayerMask();
-            animator = GetComponent<Animator>();
             instances = new List<GameObject>();
 
             foreach (PlayerWeapon weapon in weapons) {
@@ -65,52 +68,10 @@ namespace Game.Shared {
 
 
         /**
-         * Sets the speed at which the weapons move.
-         */
-        public void SetSpeed(float speed) {
-            animator.SetFloat("speed", speed);
-        }
-
-
-        /**
-         * Sets if the player is still alive.
-         */
-        public void SetAliveState(bool alive) {
-            animator.SetBool("isAlive", alive);
-        }
-
-
-        /**
          * Check if a weapon is currently active.
          */
         public bool HasActiveWeapon() {
             return activeWeapon != null;
-        }
-
-
-        /**
-         * Switch to the next weapon.
-         */
-        public void ToggleWeapon() {
-            animator.SetBool("rearming", true);
-        }
-
-
-        /**
-         * Aram a weapon given its index.
-         */
-        private void ArmWeapon(int index) {
-            instances[index].SetActive(true);
-            activeIndex = index;
-        }
-
-
-        /**
-         * Disarm the current weapon.
-         */
-        private void DisarmWeapon() {
-            instances[activeIndex].SetActive(false);
-            activeIndex = -1;
         }
 
 
@@ -135,11 +96,38 @@ namespace Game.Shared {
 
 
         /**
+         * Aram a weapon given its index.
+         */
+        private void ArmWeapon(int index = 0) {
+            animator = instances[index].GetComponentInChildren<Animator>();
+            instances[index].SetActive(true);
+            activeIndex = index;
+        }
+
+
+        /**
+         * Disarm the current weapon.
+         */
+        private void DisarmWeapon() {
+            instances[activeIndex].SetActive(false);
+            activeIndex = -1;
+        }
+
+
+        /**
+         * Switch to the next weapon.
+         */
+        public void ToggleWeapon() {
+            OnToggleWeapon();
+            OnRearmFinished();
+        }
+
+
+        /**
          * Animate the gun and clear the last shot time.
          */
         public void ShootNothing() {
             AudioService.PlayOneShot(gameObject, "Shot Blocked");
-            animator.SetTrigger("shoot");
             lastShotTime = Time.time;
         }
 
@@ -149,7 +137,7 @@ namespace Game.Shared {
          */
         public void ShootWater() {
             AudioService.PlayOneShot(gameObject, "Weapon Shot");
-            animator.SetTrigger("shoot");
+            animator.SetTrigger("Fire");
             lastShotTime = Time.time;
         }
 
@@ -267,7 +255,6 @@ namespace Game.Shared {
         private void OnRearmFinished() {
             lastShotTime = 0.0f;
             activeWeapon = weapons[activeIndex];
-            animator.SetBool("rearming", false);
         }
     }
 }
