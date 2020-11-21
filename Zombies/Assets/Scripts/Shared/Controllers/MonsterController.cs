@@ -83,6 +83,10 @@ namespace Game.Shared {
          * Checks if a monster is currently at a waypoint.
          */
         public bool IsAtWaypoint() {
+            if (navigator.enabled == false) {
+                return false;
+            }
+
             bool isPending = navigator.pathPending;
             bool isAtPoint = navigator.remainingDistance <= navigator.stoppingDistance;
 
