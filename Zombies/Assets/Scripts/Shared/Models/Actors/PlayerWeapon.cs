@@ -16,6 +16,15 @@ namespace Game.Shared {
         /** Weapon impact prefab */
         public GameObject impactPrefab = null;
 
+        /** Audio clip to play when the weapon is shot */
+        public AudioClip shotSound = null;
+
+        /** Audio clip to play when the weapon has no bullets */
+        public AudioClip clickSound = null;
+
+        /** Vertical local position from which to shut */
+        public float shootHeight = 1.0f;
+
         /** Maximum distance reached by a shoot */
         [Range(1.0f, 100.0f)] public float shootDistance = 10.0f;
 

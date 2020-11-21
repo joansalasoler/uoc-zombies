@@ -61,9 +61,17 @@ namespace Game.Shared {
          */
         public static void PlayOneShot(GameObject o, string name) {
             if (clips.ContainsKey(name) && clips[name] != null) {
-                AudioSource source = o.GetComponentInChildren<AudioSource>();
-                source.PlayOneShot(clips[name]);
+                PlayClip(o, clips[name]);
             }
+        }
+
+
+        /**
+         * Plays a sound clip on a game object's audio source.
+         */
+        public static void PlayClip(GameObject o, AudioClip clip) {
+            AudioSource source = o.GetComponentInChildren<AudioSource>();
+            source.PlayOneShot(clip);
         }
     }
 }

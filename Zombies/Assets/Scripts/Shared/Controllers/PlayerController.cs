@@ -31,6 +31,7 @@ namespace Game.Shared {
          */
         private void Start() {
             animator = GetComponent<Animator>();
+            weaponController.onImpact += OnShotImpact;
         }
 
 
@@ -38,11 +39,7 @@ namespace Game.Shared {
          * Handles the player input.
          */
         private void Update() {
-            if (isAlive == false) {
-                return;
-            }
-
-            if (Input.GetButtonUp("Fire1")) {
+            if (isAlive && Input.GetButtonUp("Fire1")) {
                 animator.SetTrigger("Fire");
             }
         }
@@ -52,14 +49,20 @@ namespace Game.Shared {
          * Invoked on the weapon animation on the shot frame.
          */
         private void OnWeaponShot() {
-            if (weaponController.CanShootWeapon()) {
-                if (status.HasMunition() == false) {
-                    weaponController.ShootNothing();
-                } else {
-                    weaponController.ShootWeapon();
-                    status.DecreaseWater();
-                }
+            if (!weaponController.CanShootWeapon()) {
+                return;
             }
+
+            if (!status.HasMunition()) {
+                weaponController.Click();
+                return;
+            }
+
+            Vector3 origin = transform.position;
+            Vector3 direction = transform.forward;
+
+            weaponController.Shoot(origin, direction);
+            status.DecreaseWater();
         }
 
 
@@ -71,14 +74,15 @@ namespace Game.Shared {
                 return;
             }
 
-            if (status.DamagePlayer()) {
-                AudioService.PlayOneShot(gameObject, "Damage Player");
+            if (!status.DamagePlayer()) {
+                this.Kill();
+                return;
+            }
 
-                if (playerDamaged != null) {
-                    playerDamaged.Invoke(this);
-                }
-            } else {
-                Kill();
+            AudioService.PlayOneShot(gameObject, "Damage Player");
+
+            if (playerDamaged != null) {
+                playerDamaged.Invoke(this);
             }
         }
 
@@ -91,11 +95,22 @@ namespace Game.Shared {
                 return;
             }
 
-            AudioService.PlayOneShot(gameObject, "Player Die");
             base.Kill();
+            AudioService.PlayOneShot(gameObject, "Player Die");
 
             if (playerKilled != null) {
                 playerKilled.Invoke(this);
+            }
+        }
+
+
+        /**
+         * Damage the monsters when a shot impacts them.
+         */
+        public void OnShotImpact(RaycastHit hit) {
+            if (hit.collider.CompareTag("Monster")) {
+                var actor = hit.collider.GetComponent<ActorController>();
+                actor.Damage();
             }
         }
     }

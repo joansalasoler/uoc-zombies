@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,8 +10,17 @@ namespace Game.Shared {
      */
     public class WeaponController : MonoBehaviour {
 
+        /** Invoked when the shot impacts an object */
+        public Action<RaycastHit> onImpact = null;
+
         /** Hand of the character */
         [SerializeField] private Transform hand = null;
+
+        /** Layers affected by player shoots */
+        [SerializeField] private LayerMask layerMask = Physics.DefaultRaycastLayers;
+
+        /** Force of the bullets impacts on objects */
+        [SerializeField] private float impactForce = 100.0f;
 
         /** Available weapons for the player */
         [SerializeField] private List<PlayerWeapon> weapons = null;
@@ -21,20 +31,11 @@ namespace Game.Shared {
         /** If shots must hit triggers */
         [HideInInspector] public QueryTriggerInteraction hitTriggers;
 
-        /** Layers affected by player shoots */
-        [HideInInspector] public LayerMask layerMask;
-
-        /** Force of the water impactin with objects */
-        public float pushForce = 100.0f;
-
         /** Weapon game object instances */
         private List<GameObject> instances = null;
 
         /** Weapon animator instance */
         private Animator animator = null;
-
-        /** Center of the camera */
-        private Vector3 center = new Vector3(0.5f, 0.5f, 0.0f);
 
         /** Last time the weapon was shot */
         private float lastShotTime = 0.0f;
@@ -57,7 +58,6 @@ namespace Game.Shared {
          */
         private void Awake() {
             hitTriggers = QueryTriggerInteraction.Ignore;
-            layerMask = GetShootLayerMask();
             instances = new List<GameObject>();
 
             foreach (PlayerWeapon weapon in weapons) {
@@ -79,14 +79,14 @@ namespace Game.Shared {
          * Checks if the weapon can be shot.
          */
         public bool CanShootWeapon() {
-            return HasActiveWeapon() && IsInShotRate();
+            return HasActiveWeapon() && IsInsideShotRate();
         }
 
 
         /**
          * Checks if the rate of fire period elapsed.
          */
-        public bool IsInShotRate() {
+        public bool IsInsideShotRate() {
             float rateOfFire = activeWeapon.rateOfFire;
             float timeSinceShot = Time.time - lastShotTime;
             bool inShotRate = rateOfFire < timeSinceShot;
@@ -96,11 +96,32 @@ namespace Game.Shared {
 
 
         /**
+         * Vertical position of the shot.
+         */
+        public Vector3 GetShootHeight(PlayerWeapon weapon) {
+            return weapon.shootHeight * Vector3.up;
+        }
+
+
+        /**
+         * Deviation direction of the shot.
+         */
+        public Vector3 GetShootDeviation(PlayerWeapon weapon) {
+            Vector3 random = UnityEngine.Random.insideUnitCircle.normalized;
+            Vector3 deviation = weapon.deviation * random;
+
+            return deviation;
+        }
+
+
+        /**
          * Aram a weapon given its index.
          */
         private void ArmWeapon(int index = 0) {
+            lastShotTime = 0.0f;
             animator = instances[index].GetComponentInChildren<Animator>();
             instances[index].SetActive(true);
+            activeWeapon = weapons[index];
             activeIndex = index;
         }
 
@@ -110,6 +131,7 @@ namespace Game.Shared {
          */
         private void DisarmWeapon() {
             instances[activeIndex].SetActive(false);
+            activeWeapon = null;
             activeIndex = -1;
         }
 
@@ -118,129 +140,9 @@ namespace Game.Shared {
          * Switch to the next weapon.
          */
         public void ToggleWeapon() {
-            OnToggleWeapon();
-            OnRearmFinished();
-        }
-
-
-        /**
-         * Animate the gun and clear the last shot time.
-         */
-        public void ShootNothing() {
-            AudioService.PlayOneShot(gameObject, "Shot Blocked");
-            lastShotTime = Time.time;
-        }
-
-
-        /**
-         * Animate the gun and clear the last shot time.
-         */
-        public void ShootWater() {
-            AudioService.PlayOneShot(gameObject, "Weapon Shot");
-            animator.SetTrigger("Fire");
-            lastShotTime = Time.time;
-        }
-
-
-        /**
-         * Shoots the active weapon from the center of the camera.
-         */
-        public bool ShootWeapon() {
-            if (CanShootWeapon() == false) {
-                return false;
-            }
-
-            RaycastHit hit;
-            Vector3 deviaiton = GetShootDeviation();
-            Ray ray = GetShootOriginRay(center + deviaiton);
-            float distance = activeWeapon.shootDistance;
-
-            if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
-                if (hit.collider.CompareTag("Monster")) {
-                    hit.collider.GetComponent<ActorController>().Damage();
-                } else {
-                    if (!hit.collider.CompareTag("Player")) {
-                        EmbedImpactDecal(hit);
-                    }
-
-                    if (hit.collider.CompareTag("Moveable")) {
-                        PushColliderBody(hit);
-                    }
-
-                    var trigger = hit.collider.gameObject.GetComponent<OnShotTrigger>();
-                    if (trigger != null) trigger.OnShotTriggerEnter(hit.collider);
-                }
-            }
-
-            ShootWater();
-
-            return true;
-        }
-
-
-        /**
-         * Origin and direction of the shoots.
-         */
-        public Ray GetShootOriginRay(Vector3 center) {
-            return Camera.main.ViewportPointToRay(center);
-        }
-
-
-        /**
-         * Deviation direction of the weapon.
-         */
-        public Vector3 GetShootDeviation() {
-            Vector3 random = Random.insideUnitCircle.normalized;
-            Vector3 deviation = activeWeapon.deviation * random;
-
-            return deviation;
-        }
-
-
-        /**
-         * Mask to use for the weapon shooting raycasts.
-         */
-        public LayerMask GetShootLayerMask() {
-            int filter = LayerMask.GetMask("Players", "Player Dome", "Monster Dome");
-            int mask = Physics.DefaultRaycastLayers & ~filter;
-
-            return mask;
-        }
-
-
-        /**
-         * Push a moveable object if it was shot.
-         */
-        private void PushColliderBody(RaycastHit hit) {
-            Vector3 force = pushForce * Vector3.one;
-            Rigidbody body = hit.collider.attachedRigidbody;
-            body.AddForceAtPosition(force, hit.point);
-        }
-
-
-        /**
-         * Embed an impact decal into a hit position.
-         */
-        private void EmbedImpactDecal(RaycastHit hit) {
-            Vector3 position = 0.01f * hit.normal + hit.point;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
-            GameObject prefab = activeWeapon.impactPrefab;
-            GameObject decal = Instantiate(prefab, position, rotation, hit.transform);
-
-            Vector3 s = hit.transform.lossyScale;
-            decal.transform.localScale = Vector3.one * (1f / s.x);
-        }
-
-
-        /**
-         * Invoked by the animator when the current weapon is hidden from
-         * view. Disarms the current weapon and arms the next.
-         */
-        private void OnToggleWeapon() {
             int nextIndex = (1 + activeIndex) % instances.Count;
 
             if (activeWeapon != null) {
-                activeWeapon = null;
                 DisarmWeapon();
             }
 
@@ -249,12 +151,70 @@ namespace Game.Shared {
 
 
         /**
-         * Invoked when the rearm animation finishes. This effectively
-         * activates the weapon.
+         * Makes a click sound and resets the shot time.
          */
-        private void OnRearmFinished() {
-            lastShotTime = 0.0f;
-            activeWeapon = weapons[activeIndex];
+        public void Click() {
+            AudioService.PlayClip(gameObject, activeWeapon.clickSound);
+            lastShotTime = Time.time;
+        }
+
+
+        /**
+         * Shoots the active weapon on the given direction.
+         */
+        public bool Shoot(Vector3 position, Vector3 direction) {
+            if (CanShootWeapon() == false) {
+                return false;
+            }
+
+            RaycastHit hit;
+
+            Vector3 height = GetShootHeight(activeWeapon);
+            Vector3 deviation = GetShootDeviation(activeWeapon);
+            Vector3 origin = position + height + deviation;
+            float distance = activeWeapon.shootDistance;
+
+            Ray ray = new Ray(origin, direction);
+            Debug.DrawRay(origin, distance * direction, Color.red);
+
+            if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
+                if (onImpact != null) onImpact.Invoke(hit);
+                PushShotCollider(hit);
+                EmbedImpact(hit);
+            }
+
+            AudioService.PlayClip(gameObject, activeWeapon.shotSound);
+            animator.SetTrigger("Fire");
+            lastShotTime = Time.time;
+
+            return true;
+        }
+
+
+        /**
+         * Push a moveable object if it was shot.
+         */
+        private void PushShotCollider(RaycastHit hit) {
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            if (body != null) {
+                Vector3 force = impactForce * Vector3.one;
+                body.AddForceAtPosition(force, hit.point);
+            }
+        }
+
+
+        /**
+         * Embed an impact decal into a hit position.
+         */
+        private void EmbedImpact(RaycastHit hit) {
+            Vector3 position = 0.01f * hit.normal + hit.point;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
+            GameObject prefab = activeWeapon.impactPrefab;
+            GameObject decal = Instantiate(prefab, position, rotation, hit.transform);
+
+            Vector3 s = hit.transform.lossyScale;
+            decal.transform.localScale = Vector3.one * (1f / s.x);
         }
     }
 }

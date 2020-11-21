@@ -16,6 +16,9 @@ MonoBehaviour:
     type: 3}
   impactPrefab: {fileID: 642982528901706339, guid: b3333dcebf00e9771bd03e9acbf8c410,
     type: 3}
-  shootDistance: 30
+  shotSound: {fileID: 8300000, guid: 3d90384e6ce9a543a81a4a07bc402c20, type: 3}
+  clickSound: {fileID: 8300000, guid: a458e39a73c22c11a84d37b65966faf5, type: 3}
+  shootHeight: 2
+  shootDistance: 35
   rateOfFire: 0.6
   deviation: 0
