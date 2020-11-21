@@ -47,3 +47,9 @@ https://freesound.org/people/freemaster2/sounds/187669/
 
 Wood Creak
 https://freesound.org/people/cclaretc/sounds/346140/
+
+GunShot
+https://freesound.org/people/okieactor/sounds/415912/
+
+Bullet Hole
+https://picsart.com/i/sticker-art-hole-268803725027211
