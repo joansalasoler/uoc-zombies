@@ -17,10 +17,13 @@ namespace Game.Shared {
         [SerializeField] private Transform hand = null;
 
         /** Layers affected by player shoots */
-        [SerializeField] private LayerMask layerMask = Physics.DefaultRaycastLayers;
+        [SerializeField] private LayerMask shootLayers = Physics.DefaultRaycastLayers;
+
+        /** Layers that receive an impact when they are hit */
+        [SerializeField] private LayerMask impactLayers = Physics.DefaultRaycastLayers;
 
         /** Force of the bullets impacts on objects */
-        [SerializeField] private float impactForce = 100.0f;
+        [SerializeField] private float impactForce = 50.0f;
 
         /** Available weapons for the player */
         [SerializeField] private List<PlayerWeapon> weapons = null;
@@ -177,10 +180,17 @@ namespace Game.Shared {
             Ray ray = new Ray(origin, direction);
             Debug.DrawRay(origin, distance * direction, Color.red);
 
-            if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
-                if (onImpact != null) onImpact.Invoke(hit);
-                PushShotCollider(hit);
-                EmbedImpact(hit);
+            if (Physics.Raycast(ray, out hit, distance, shootLayers, hitTriggers)) {
+                if (onImpact != null) {
+                    onImpact.Invoke(hit);
+                }
+
+                int layer = hit.collider.gameObject.layer;
+
+                if (impactLayers == (impactLayers | (1 << layer))) {
+                    PushShotCollider(hit);
+                    EmbedImpact(hit);
+                }
             }
 
             AudioService.PlayClip(gameObject, activeWeapon.shotSound);
