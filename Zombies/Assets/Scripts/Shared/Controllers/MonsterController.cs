@@ -240,7 +240,6 @@ namespace Game.Shared {
                 Vector3 position = transform.position;
                 GameObject reward = Instantiate(rewardPrefab);
 
-                position.x += 1.75f;
                 position.y += 0.75f;
                 reward.transform.position = position;
             }
