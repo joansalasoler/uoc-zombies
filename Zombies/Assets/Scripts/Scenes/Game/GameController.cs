@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
      */
     private void Start() {
         player.status.Reset();
-        message.ShowMessage("OH, GOSH! WHAT AM I DOING HERE?");
+        message.ShowMessage("GOTTA FIND THE BOOKS BEFORE IT GETS TOO LATE");
     }
 
 

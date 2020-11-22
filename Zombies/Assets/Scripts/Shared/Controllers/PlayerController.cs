@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityStandardAssets.Characters.FirstPerson;
+using UnityStandardAssets.Characters.ThirdPerson;
 
 namespace Game.Shared {
 
@@ -96,11 +96,22 @@ namespace Game.Shared {
             }
 
             base.Kill();
+            DisableCharacter();
+            animator.SetTrigger("Die");
             AudioService.PlayOneShot(gameObject, "Player Die");
 
             if (playerKilled != null) {
                 playerKilled.Invoke(this);
             }
+        }
+
+
+        /**
+         * Disables the character and user controllers.
+         */
+        private void DisableCharacter() {
+            GetComponent<ThirdPersonUserControl>().enabled = false;
+            GetComponent<ThirdPersonCharacter>().enabled = false;
         }
 
 
