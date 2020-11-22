@@ -62,7 +62,7 @@ namespace Game.Shared {
             Vector3 direction = transform.forward;
 
             weaponController.Shoot(origin, direction);
-            status.DecreaseWater();
+            status.DecreaseMunition();
         }
 
 

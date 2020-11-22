@@ -15,7 +15,7 @@ namespace Game.Shared {
             if (collider.gameObject.CompareTag("Player")) {
                 PlayerController player = GetPlayerController(collider);
 
-                if (player.status.RefillHealth()) {
+                if (player.status.IncreaseHealth()) {
                     AudioService.PlayOneShot(collider.gameObject, "Collect Reward");
                     Destroy(gameObject, 0.5f);
                 }

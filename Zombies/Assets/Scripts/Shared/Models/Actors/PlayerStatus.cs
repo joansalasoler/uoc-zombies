@@ -23,29 +23,29 @@ namespace Game.Shared {
         public bool silverKey = false;
 
         /** Current shield points */
-        public int shieldPoints = 3;
+        public int shieldPoints = 0;
 
         /** Current health points */
-        public int healthPoints = 10;
+        public int healthPoints = 12;
 
-        /** Water drops that can be shot */
-        public int waterDrops = 5;
+        /** Bullets that can be shot */
+        public int munitionLeft = 5;
 
         /** Maximum number of shield points */
-        public int shieldSlots = 3;
+        public int shieldSlots = 4;
 
         /** Maximum number of health points */
-        public int healthSlots = 10;
+        public int healthSlots = 12;
 
-        /** Water drops that can be collected */
-        public int waterSlots = 10;
+        /** Bullets that can be collected */
+        public int munitionSlots = 15;
 
 
         /**
-         * Check if the player has water drops.
+         * Check if the player has bullets.
          */
         public bool HasMunition() {
-            return waterDrops > 0;
+            return munitionLeft > 0;
         }
 
 
@@ -56,12 +56,12 @@ namespace Game.Shared {
             redKey = false;
             goldKey = false;
             silverKey = false;
-            shieldPoints = 3;
-            healthPoints = 10;
-            waterDrops = 5;
-            shieldSlots = 3;
-            healthSlots = 10;
-            waterSlots = 10;
+            shieldPoints = 0;
+            healthPoints = 12;
+            munitionLeft = 5;
+            shieldSlots = 4;
+            healthSlots = 12;
+            munitionSlots = 15;
             NotifyStatusChange();
         }
 
@@ -109,6 +109,21 @@ namespace Game.Shared {
 
 
         /**
+         * Refill the health by two units.
+         */
+        public bool IncreaseHealth() {
+            bool canIncrease = (healthPoints < healthSlots);
+
+            if (canIncrease == true) {
+                healthPoints = Mathf.Min(healthPoints + 2, healthSlots);
+                NotifyStatusChange();
+            }
+
+            return canIncrease;
+        }
+
+
+        /**
          * Refill the shield reserve fully.
          */
         public bool RefillShield() {
@@ -124,13 +139,28 @@ namespace Game.Shared {
 
 
         /**
-         * Refill the water tank fully.
+         * Refill the shield by one unit.
          */
-        public bool RefillWater() {
-            bool canRefill = (waterDrops < waterSlots);
+        public bool IncreaseShield() {
+            bool canIncrease = (shieldPoints < shieldSlots);
+
+            if (canIncrease == true) {
+                shieldPoints += 1;
+                NotifyStatusChange();
+            }
+
+            return canIncrease;
+        }
+
+
+        /**
+         * Refill the munition slots fully.
+         */
+        public bool RefillMunition() {
+            bool canRefill = (munitionLeft < munitionSlots);
 
             if (canRefill == true) {
-                waterDrops = waterSlots;
+                munitionLeft = munitionSlots;
                 NotifyStatusChange();
             }
 
@@ -139,13 +169,13 @@ namespace Game.Shared {
 
 
         /**
-         * Decrease the water tank by one drop.
+         * Decrease the left munition by one unit.
          */
-        public bool DecreaseWater() {
-            bool canDecrease = (waterDrops > 0);
+        public bool DecreaseMunition() {
+            bool canDecrease = (munitionLeft > 0);
 
             if (canDecrease == true) {
-                waterDrops -= 1;
+                munitionLeft -= 1;
                 NotifyStatusChange();
             }
 
@@ -154,13 +184,13 @@ namespace Game.Shared {
 
 
         /**
-         * Refill the water tank by one drop.
+         * Refill the munition by one unit.
          */
-        public bool InreaseWater() {
-            bool canIncrease = (waterDrops < waterSlots);
+        public bool InreaseMunition() {
+            bool canIncrease = (munitionLeft < munitionSlots);
 
             if (canIncrease == true) {
-                waterDrops += 1;
+                munitionLeft += 1;
                 NotifyStatusChange();
             }
 

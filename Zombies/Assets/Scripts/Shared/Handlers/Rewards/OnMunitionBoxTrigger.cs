@@ -4,18 +4,18 @@ using UnityEngine;
 namespace Game.Shared {
 
     /**
-     * Handles collisions with water box rewards.
+     * Handles collisions with munition box rewards.
      */
-    public class OnWaterBoxTrigger: MonoBehaviour {
+    public class OnMunitionBoxTrigger: MonoBehaviour {
 
         /**
-         * Fill the player's water reserve tank if empty.
+         * Fill the player's munition reserve if empty.
          */
         private void OnTriggerEnter(Collider collider) {
             if (collider.gameObject.CompareTag("Player")) {
                 PlayerController player = GetPlayerController(collider);
 
-                if (player.status.RefillWater()) {
+                if (player.status.RefillMunition()) {
                     AudioService.PlayOneShot(collider.gameObject, "Collect Reward");
                     Destroy(gameObject, 0.5f);
                 }

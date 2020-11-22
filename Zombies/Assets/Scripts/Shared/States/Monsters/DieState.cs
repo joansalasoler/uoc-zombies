@@ -27,7 +27,7 @@ namespace Game.Shared {
             Rigidbody body = monster.GetComponent<Rigidbody>();
             Vector3 center = collider.center;
 
-            collider.center = new Vector3(center.x, 0.4f, center.z);
+            collider.center = new Vector3(center.x, 0.35f, center.z);
             body.isKinematic = false;
         }
     }

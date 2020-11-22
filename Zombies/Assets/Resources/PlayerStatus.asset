@@ -17,7 +17,7 @@ MonoBehaviour:
   silverKey: 0
   shieldPoints: 3
   healthPoints: 10
-  waterDrops: 5
+  munitionLeft: 5
   shieldSlots: 3
   healthSlots: 10
-  waterSlots: 10
+  munitionSlots: 10

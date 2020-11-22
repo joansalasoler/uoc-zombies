@@ -7,15 +7,15 @@ using Game.Shared;
 
 /**
  * Player status overlay controller. Shows the remaining health, shield
- * and water munitions of the player.
+ * and munitions of the player.
  */
 public class PlayerStatusView : MonoBehaviour {
 
     /** Container for health and shield indicators */
     [SerializeField] private Transform healthContainer = null;
 
-    /** Container forwater munition indicators */
-    [SerializeField] private Transform waterContainer = null;
+    /** Container for munition indicators */
+    [SerializeField] private Transform munitionContainer = null;
 
     /** Golden key indicator object */
     [SerializeField] private GameObject goldKey = null;
@@ -32,8 +32,8 @@ public class PlayerStatusView : MonoBehaviour {
     /** Shield indicator template */
     [SerializeField] private GameObject shieldPrefab = null;
 
-    /** Water indicator template */
-    [SerializeField] private GameObject waterPrefab = null;
+    /** Munition indicator template */
+    [SerializeField] private GameObject munitionPrefab = null;
 
     /** Ordered health indicator controllers */
     private List<StatusIndicator> healthIcons = new List<StatusIndicator>();
@@ -41,8 +41,8 @@ public class PlayerStatusView : MonoBehaviour {
     /** Ordered shield indicator controllers */
     private List<StatusIndicator> shieldIcons = new List<StatusIndicator>();
 
-    /** Ordered water indicator controllers */
-    private List<StatusIndicator> waterIcons = new List<StatusIndicator>();
+    /** Ordered munition indicator controllers */
+    private List<StatusIndicator> munitionIcons = new List<StatusIndicator>();
 
     /** Player controller */
     private PlayerController player = null;
@@ -77,10 +77,10 @@ public class PlayerStatusView : MonoBehaviour {
      * Update the view when the player status changes.
      */
     private void OnPlayerStatusChanged(PlayerStatus status) {
-        CreateWaterIndicators(status);
+        CreateMunitionIndicators(status);
         CreateHealthIndicators(status);
         CreateShieldIndicators(status);
-        UpdateWaterIndicators(status);
+        UpdateMunitionIndicators(status);
         UpdateShieldIndicators(status);
         UpdateHealthIndicators(status);
 
@@ -91,12 +91,12 @@ public class PlayerStatusView : MonoBehaviour {
 
 
     /**
-     * Create the water indicators and add them to the container.
+     * Create the munition indicators and add them to the container.
      */
-    private void CreateWaterIndicators(PlayerStatus status) {
-        while (waterIcons.Count < status.waterSlots) {
-            GameObject instance = Instantiate(waterPrefab, waterContainer);
-            waterIcons.Add(instance.GetComponent<StatusIndicator>());
+    private void CreateMunitionIndicators(PlayerStatus status) {
+        while (munitionIcons.Count < status.munitionSlots) {
+            GameObject instance = Instantiate(munitionPrefab, munitionContainer);
+            munitionIcons.Add(instance.GetComponent<StatusIndicator>());
         }
     }
 
@@ -126,14 +126,14 @@ public class PlayerStatusView : MonoBehaviour {
 
 
     /**
-     * Update the status of all the water indicators.
+     * Update the status of all the munition indicators.
      */
-    private void UpdateWaterIndicators(PlayerStatus status) {
-        for (int i = 0; i < waterIcons.Count; i++) {
-            if (i < status.waterDrops) {
-                waterIcons[i].ChangeToFull();
+    private void UpdateMunitionIndicators(PlayerStatus status) {
+        for (int i = 0; i < munitionIcons.Count; i++) {
+            if (i < status.munitionLeft) {
+                munitionIcons[i].ChangeToFull();
             } else {
-                waterIcons[i].ChangeToEmpty();
+                munitionIcons[i].ChangeToEmpty();
             }
         }
     }
