@@ -4,9 +4,9 @@ using UnityEngine;
 namespace Game.Shared {
 
     /**
-     * Base controller for the surrounding ocean.
+     * Makes the ocean move to simulate waves.
      */
-    public class OceanController : MonoBehaviour {
+    public class Ocean : MonoBehaviour {
 
         /** Maximum position on the Y axis */
         public float topPosition = 1.24f;

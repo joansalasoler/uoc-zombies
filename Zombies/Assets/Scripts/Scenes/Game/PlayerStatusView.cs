@@ -17,15 +17,6 @@ public class PlayerStatusView : MonoBehaviour {
     /** Container for munition indicators */
     [SerializeField] private Transform munitionContainer = null;
 
-    /** Golden key indicator object */
-    [SerializeField] private GameObject goldKey = null;
-
-    /** Red key indicator object */
-    [SerializeField] private GameObject redKey = null;
-
-    /** Silver key indicator object */
-    [SerializeField] private GameObject silverKey = null;
-
     /** Health indicator template */
     [SerializeField] private GameObject healthPrefab = null;
 
@@ -83,10 +74,6 @@ public class PlayerStatusView : MonoBehaviour {
         UpdateMunitionIndicators(status);
         UpdateShieldIndicators(status);
         UpdateHealthIndicators(status);
-
-        redKey.SetActive(status.redKey);
-        goldKey.SetActive(status.goldKey);
-        silverKey.SetActive(status.silverKey);
     }
 
 
