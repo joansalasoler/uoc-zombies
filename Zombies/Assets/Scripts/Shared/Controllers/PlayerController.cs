@@ -116,7 +116,7 @@ namespace Game.Shared {
 
 
         /**
-         * Damage the monsters when a shot impacts them.
+         * Damage the dragons when a shot impacts them.
          */
         public void OnShotImpact(RaycastHit hit) {
             if (hit.collider.CompareTag("Monster")) {

@@ -6,9 +6,27 @@ using System.Collections;
 namespace Game.Shared {
 
     /**
-     * Generic controller for monsters.
+     * Generic controller for dragons.
      */
-    public class MonsterController : ActorController {
+    public class DragonController : ActorController {
+
+        /** Monster heard the player */
+        public readonly ActorState ALERT = new AlertState();
+
+        /** Monster was murdered by the player */
+        public readonly ActorState DIE = new DieState();
+
+        /** Monster was damaged by the player */
+        public readonly ActorState PAIN = new PainState();
+
+        /** Monster is running away from the player */
+        public readonly ActorState PANIC = new PanicState();
+
+        /** Monster is moving around the scene */
+        public readonly ActorState PATROL = new PatrolState();
+
+        /** Monster is waiting for commands */
+        public readonly ActorState WAIT = new WaitState();
 
         /** Layers affected by dragon raycasts */
         [HideInInspector] public LayerMask layerMask;
@@ -19,28 +37,19 @@ namespace Game.Shared {
         /** Current player reference */
         [HideInInspector] public PlayerController player = null;
 
-        /** State context of the monster */
-        [HideInInspector] public MonsterContext context = null;
-
         /** Monster animator reference */
         public Animator animator;
 
         /** Monster mesh agent reference */
         public NavMeshAgent navigator;
 
-        /** Current patrol waypath of the monster */
+        /** Current patrol waypath of the dragon */
         public Waypath waypath;
 
-        /** Reward for killing the monster */
+        /** Reward for killing the dragon */
         public GameObject rewardPrefab = null;
 
-        /** Projectile that the monster shots */
-        public GameObject projectilePrefab = null;
-
-        /** Wether the monster will panic when alerted */
-        public bool isRunner = false;
-
-        /** Number of hits the monster takes before dying */
+        /** Number of hits the dragon takes before dying */
         public int healthPoints = 1;
 
         /** Height at which the character has the eyes */
@@ -61,7 +70,7 @@ namespace Game.Shared {
         /** Position torwards which to roate */
         private Vector3 lookAtTarget;
 
-        /** If monster must rotate towards a target */
+        /** If dragon must rotate towards a target */
         private bool lookAtIsActive = false;
 
 
@@ -73,14 +82,12 @@ namespace Game.Shared {
             player = playerObject.GetComponent<PlayerController>();
             hitTriggers = QueryTriggerInteraction.Ignore;
             layerMask = GetRaycastLayerMask();
-
-            context = new MonsterContext(this);
-            context.SetState(context.WAIT);
+            SetState(WAIT);
         }
 
 
         /**
-         * Checks if a monster is currently at a waypoint.
+         * Checks if a dragon is currently at a waypoint.
          */
         public bool IsAtWaypoint() {
             if (navigator.enabled == false) {
@@ -95,7 +102,7 @@ namespace Game.Shared {
 
 
         /**
-         * Check if the monster is rotated toward the look at target.
+         * Check if the dragon is rotated toward the look at target.
          */
         public bool IsLookingAtTarget() {
             return Vector3.Angle(lookAtTarget, transform.forward) < 5.0f;
@@ -103,9 +110,9 @@ namespace Game.Shared {
 
 
         /**
-         * Check if the player is visible on front of the monster.
+         * Check if the player is visible on front of the dragon.
          *
-         * That is, if on front of the monster inside the angle of vision and a
+         * That is, if on front of the dragon inside the angle of vision and a
          * ray can be traced from the monser's eyes to the player.
          */
         public bool IsPlayerOnSight() {
@@ -136,7 +143,7 @@ namespace Game.Shared {
 
 
         /**
-         * Makes the monster look at a certain point.
+         * Makes the dragon look at a certain point.
          */
         public void LookTowards(Vector3 position) {
             Vector3 target = position - transform.position;
@@ -146,7 +153,7 @@ namespace Game.Shared {
 
 
         /**
-         * Makes the monster stop rotating towards a target.
+         * Makes the dragon stop rotating towards a target.
          */
         public void StopLooking() {
             lookAtIsActive = false;
@@ -154,7 +161,7 @@ namespace Game.Shared {
 
 
         /**
-         * Makes the monster move torwards a transform.
+         * Makes the dragon move torwards a transform.
          */
         public void MoveTowards(Vector3 position) {
             if (navigator.enabled) {
@@ -165,7 +172,7 @@ namespace Game.Shared {
 
 
         /**
-         * Makes the monster stop from moving.
+         * Makes the dragon stop from moving.
          */
         public void StopMoving() {
             if (navigator.enabled) {
@@ -175,19 +182,15 @@ namespace Game.Shared {
 
 
         /**
-         * Damage this monster.
+         * Damage this dragon.
          */
         public override void Damage() {
             if (isAlive == false) {
                 return;
             }
 
-            if (healthPoints < 2 && rewardPrefab != null) {
-                isRunner = true;
-            }
-
             if (healthPoints > 1) {
-                context.SetState(context.PAIN);
+                SetState(PAIN);
                 healthPoints -= 1;
             } else {
                 Kill();
@@ -196,28 +199,15 @@ namespace Game.Shared {
 
 
         /**
-         * Kill this monster.
+         * Kill this dragon.
          */
         public override void Kill() {
             if (isAlive) {
                 RewardPlayer();
-                context.SetState(context.DIE);
+                SetState(DIE);
                 healthPoints = 0;
                 base.Kill();
             }
-        }
-
-
-        /**
-         * Shoot a projectile towards the player's camera.
-         */
-        public void ShootAtPlayer() {
-            var projectile = Instantiate(projectilePrefab);
-            var controller = projectile.GetComponent<ProjectileController>();
-
-            Vector3 height = (eyesHeight - 0.2f) * Vector3.up;
-            projectile.transform.position = height + transform.position;
-            controller.MoveTowards(Camera.main.transform.position);
         }
 
 
@@ -233,7 +223,7 @@ namespace Game.Shared {
 
 
         /**
-         * Reward the player for killing this monster.
+         * Reward the player for killing this dragon.
          */
         private void RewardPlayer() {
             if (rewardPrefab != null) {
@@ -250,7 +240,7 @@ namespace Game.Shared {
          * Invoked on each frame update.
          */
         private void Update() {
-            context.GetState().OnUpdate(this);
+            state.OnUpdate(this);
 
             if (lookAtIsActive == false) {
                 return;
@@ -269,31 +259,31 @@ namespace Game.Shared {
          * Invoked on each physics update.
          */
         private void FixedUpdate() {
-            context.GetState().OnFixedUpdate(this);
+            state.OnFixedUpdate(this);
         }
 
 
         /**
-         * An object entered this monster's action radius.
+         * An object entered this dragon's action radius.
          */
         private void OnTriggerEnter(Collider collider) {
-            context.GetState().OnTriggerEnter(this, collider);
+            state.OnTriggerEnter(this, collider);
         }
 
 
         /**
-         * An object is on this monster's action radius.
+         * An object is on this dragon's action radius.
          */
         private void OnTriggerStay(Collider collider) {
-            context.GetState().OnTriggerStay(this, collider);
+            state.OnTriggerStay(this, collider);
         }
 
 
         /**
-         * An object left this monster's action radius.
+         * An object left this dragon's action radius.
          */
         private void OnTriggerExit(Collider collider) {
-            context.GetState().OnTriggerExit(this, collider);
+            state.OnTriggerExit(this, collider);
         }
     }
 }
