@@ -23,7 +23,7 @@ namespace Game.Shared {
         public readonly ActorState PANIC = new PanicState();
 
         /** Monster is moving around the scene */
-        public readonly ActorState PATROL = new PatrolState();
+        public readonly ActorState PATROL = new DragonPatrolState();
 
         /** Monster is waiting for commands */
         public readonly ActorState WAIT = new WaitState();
@@ -83,6 +83,14 @@ namespace Game.Shared {
             hitTriggers = QueryTriggerInteraction.Ignore;
             layerMask = GetRaycastLayerMask();
             SetState(WAIT);
+        }
+
+
+        /**
+         * Set the state of the dragon.
+         */
+        public void SetDragonState(ActorState state) {
+            SetState(state);
         }
 
 
@@ -239,8 +247,8 @@ namespace Game.Shared {
         /**
          * Invoked on each frame update.
          */
-        private void Update() {
-            state.OnUpdate(this);
+        protected override void Update() {
+            base.Update();
 
             if (lookAtIsActive == false) {
                 return;
@@ -252,38 +260,6 @@ namespace Game.Shared {
             Vector3 current = transform.forward;
             Vector3 rotation = Vector3.RotateTowards(current, target, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(rotation);
-        }
-
-
-        /**
-         * Invoked on each physics update.
-         */
-        private void FixedUpdate() {
-            state.OnFixedUpdate(this);
-        }
-
-
-        /**
-         * An object entered this dragon's action radius.
-         */
-        private void OnTriggerEnter(Collider collider) {
-            state.OnTriggerEnter(this, collider);
-        }
-
-
-        /**
-         * An object is on this dragon's action radius.
-         */
-        private void OnTriggerStay(Collider collider) {
-            state.OnTriggerStay(this, collider);
-        }
-
-
-        /**
-         * An object left this dragon's action radius.
-         */
-        private void OnTriggerExit(Collider collider) {
-            state.OnTriggerExit(this, collider);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Game.Shared {
     /**
      * A actor is in panic.
      */
-    public class PanicState : ActorState {
+    public class PanicState : BaseState {
 
         /**
          * Invoked when this state is activated.
@@ -42,7 +42,7 @@ namespace Game.Shared {
          */
         private IEnumerator ExitPanicState(DragonController dragon) {
             yield return new WaitForSeconds(5.0f);
-            dragon.SetState(dragon.PATROL);
+            dragon.SetDragonState(dragon.PATROL);
         }
     }
 }

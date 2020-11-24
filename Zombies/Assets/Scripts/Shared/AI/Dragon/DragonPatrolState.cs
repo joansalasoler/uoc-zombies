@@ -6,10 +6,10 @@ namespace Game.Shared {
     /**
      * A actor is patroling a path.
      */
-    public class PatrolState : ActorState {
+    public class DragonPatrolState : BaseState {
 
         /** Current waypoint direction to follow */
-        private Direction direction = Direction.FORWARD;
+        private Direction direction = Direction.Forward;
 
         /** Current path we are moving on */
         private Waypath waypath = null;
@@ -59,7 +59,7 @@ namespace Game.Shared {
         public override void OnTriggerEnter(ActorController actor, Collider collider) {
             if (collider.gameObject.CompareTag("Player")) {
                 DragonController dragon = (DragonController) actor;
-                actor.SetState(dragon.ALERT);
+                dragon.SetDragonState(dragon.ALERT);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Game.Shared {
                 DragonController dragon = (DragonController) actor;
 
                 if (dragon.IsPlayerOnSight()) {
-                    actor.SetState(dragon.ALERT);
+                    dragon.SetDragonState(dragon.ALERT);
                 }
             }
         }

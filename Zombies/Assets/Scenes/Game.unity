@@ -5236,14 +5236,15 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 65ed88e209356c7508e4f4bd170654e4,
         type: 3}
       propertyPath: m_Name
-      value: theboss
+      value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 65ed88e209356c7508e4f4bd170654e4,
         type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5866666021909216657, guid: 65ed88e209356c7508e4f4bd170654e4, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 65ed88e209356c7508e4f4bd170654e4, type: 3}
 --- !u!4 &381197087 stripped
 Transform:
@@ -28287,21 +28288,37 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4122801973199586014}
+  - component: {fileID: 3638048824861595749}
+  - component: {fileID: 3638048824861595750}
+  - component: {fileID: 3638048824861595752}
   - component: {fileID: 3638048824861595757}
   - component: {fileID: 3638048824861595756}
   - component: {fileID: 3638048824861595755}
   - component: {fileID: 3638048824861595754}
   - component: {fileID: 3638048824861595753}
-  - component: {fileID: 3638048824861595752}
-  - component: {fileID: 3638048824861595751}
-  - component: {fileID: 3638048824861595750}
   m_Layer: 0
-  m_Name: Boss
+  m_Name: Boss Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!114 &3638048824861595749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3638048824861595748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ac0c26516b47727a97b57fc9519998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAlive: 1
+  PatrolState:
+    direction: 1
+    waypath: {fileID: 179980569}
 --- !u!114 &3638048824861595750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28316,37 +28333,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 3638048824861595753}
   agent: {fileID: 3638048824861595752}
---- !u!114 &3638048824861595751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3638048824861595748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd2b5c8f5e018c8c3a6c6aa8ddb4ceea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAlive: 1
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  hitTriggers: 0
-  player: {fileID: 0}
-  animator: {fileID: 3638048824861595753}
-  navigator: {fileID: 3638048824861595752}
-  waypath: {fileID: 179980569}
-  rewardPrefab: {fileID: 9133176856419099833, guid: 56acd4c37c14440589c10bae9a521a52,
-    type: 3}
-  projectilePrefab: {fileID: 2414005872180761744, guid: fdd7754422502e8a7b564e465ba2f8c7,
-    type: 3}
-  healthPoints: 1
-  eyesHeight: 1.5
-  sightRadius: 20
-  sightAngle: 70
-  rotationSpeed: 6
-  attackSpeed: 1.5
 --- !u!195 &3638048824861595752
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ namespace Game.Shared {
         /**
          * Handles the player input.
          */
-        private void Update() {
+        protected override void Update() {
             if (isAlive && Input.GetButtonUp("Fire1")) {
                 animator.SetTrigger("Fire");
             }

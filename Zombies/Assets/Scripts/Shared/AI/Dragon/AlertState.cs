@@ -5,7 +5,7 @@ namespace Game.Shared {
     /**
      * A actor was alerted by the player presence.
      */
-    public class AlertState : ActorState {
+    public class AlertState : BaseState {
 
         /** Maximum seconds the dragon can be on this state */
         private float maximumTime = 5.0f;
@@ -51,9 +51,9 @@ namespace Game.Shared {
                 dragon.StopLooking();
 
                 if (playerOnSight) {
-                    actor.SetState(dragon.PANIC);
+                    dragon.SetDragonState(dragon.PANIC);
                 } else {
-                    actor.SetState(dragon.PATROL);
+                    dragon.SetDragonState(dragon.PATROL);
                 }
             }
         }

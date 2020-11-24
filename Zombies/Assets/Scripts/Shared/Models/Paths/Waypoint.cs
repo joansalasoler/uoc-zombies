@@ -24,7 +24,7 @@ namespace Game.Shared {
          * Index of the last path on a direction.
          */
         private int GetEndPathIndex(Direction direction) {
-            return (direction == Direction.FORWARD) ? paths.Length - 1 : 0;
+            return (direction == Direction.Forward) ? paths.Length - 1 : 0;
         }
 
 

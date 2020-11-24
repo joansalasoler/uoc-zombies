@@ -49,7 +49,7 @@ namespace Game.Shared {
          * Index of the last point of the path on a direction.
          */
         private int GetEndPointIndex(Direction direction) {
-            return (direction == Direction.FORWARD) ? points.Length - 1 : 0;
+            return (direction == Direction.Forward) ? points.Length - 1 : 0;
         }
 
 

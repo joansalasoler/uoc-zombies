@@ -5,7 +5,7 @@ namespace Game.Shared {
     /**
      * A actor was damaged by the player.
      */
-    public class PainState : ActorState {
+    public class PainState : BaseState {
 
         /**
          * Invoked when this state is activated.
@@ -14,7 +14,7 @@ namespace Game.Shared {
             DragonController dragon = (DragonController) actor;
             AudioService.PlayOneShot(actor.gameObject, "Damage Monster");
             dragon.animator.SetTrigger("damage");
-            actor.SetState(dragon.ALERT);
+            dragon.SetDragonState(dragon.ALERT);
         }
     }
 }
