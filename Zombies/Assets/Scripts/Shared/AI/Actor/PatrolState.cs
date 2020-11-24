@@ -41,7 +41,6 @@ namespace Game.Shared {
             agent.SetDestination(waypoint.transform.position);
             agent.isStopped = false;
             this.waypoint = waypoint;
-            Debug.Log("Move towards = " + waypoint);
         }
 
 
