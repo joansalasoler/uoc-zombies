@@ -50,9 +50,11 @@ namespace Game.Shared {
          * Makes the actor move torwards a point.
          */
         private void MoveTowards(Waypoint waypoint) {
-            agent.SetDestination(waypoint.transform.position);
-            agent.isStopped = false;
-            this.waypoint = waypoint;
+            if (agent.enabled) {
+                agent.SetDestination(waypoint.transform.position);
+                agent.isStopped = false;
+                this.waypoint = waypoint;
+            }
         }
 
 
@@ -60,7 +62,9 @@ namespace Game.Shared {
          * Makes the actor stop from moving.
          */
         private void StopMoving() {
-            agent.isStopped = true;
+            if (agent.enabled) {
+                agent.isStopped = true;
+            }
         }
 
 

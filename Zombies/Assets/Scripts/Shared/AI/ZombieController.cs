@@ -14,6 +14,9 @@ namespace Game.Shared {
         [SerializeField] private OnPlayerTrigger PlayerListener = null;
 
         /** Minimum delay between attacks to the player */
+        [SerializeField, Range(1, 20)] private int healthPoints = 1;
+
+        /** Minimum delay between attacks to the player */
         [SerializeField, Range(0.5f, 10.0f)] private float attackDelay = 2.5f;
 
         /** If the zombie start state is patroling */
@@ -78,6 +81,21 @@ namespace Game.Shared {
 
             SetState(patrolOnStart ? PatrolState : IdleState);
             SetDamagersEnabled(false);
+        }
+
+
+        /**
+         * Cause damage to this actor.
+         */
+        public override void Damage(Vector3 point) {
+            if (healthPoints <= 1) {
+                this.Kill();
+            } else if (isAlive) {
+                healthPoints -= 1;
+                animator.SetFloat("DamageX", point.x);
+                animator.SetFloat("DamageZ", point.z);
+                animator.SetTrigger("Damage");
+            }
         }
 
 

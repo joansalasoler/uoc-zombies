@@ -15,9 +15,9 @@ MonoBehaviour:
   goldKey: 0
   redKey: 0
   silverKey: 0
-  shieldPoints: 3
-  healthPoints: 10
-  munitionLeft: 5
-  shieldSlots: 3
-  healthSlots: 10
-  munitionSlots: 10
+  shieldPoints: 0
+  healthPoints: 12
+  munitionLeft: 3
+  shieldSlots: 4
+  healthSlots: 12
+  munitionSlots: 15

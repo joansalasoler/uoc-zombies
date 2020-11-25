@@ -121,7 +121,8 @@ namespace Game.Shared {
         public void OnShotImpact(RaycastHit hit) {
             if (hit.collider.CompareTag("Monster")) {
                 var actor = hit.collider.GetComponent<ActorController>();
-                actor.Damage(hit.point);
+                var point = hit.collider.transform.InverseTransformPoint(hit.point);
+                actor.Damage(point);
             }
         }
     }
