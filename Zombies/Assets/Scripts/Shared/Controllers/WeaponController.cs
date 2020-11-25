@@ -249,10 +249,8 @@ namespace Game.Shared {
          * Embed an impact decal into a hit position.
          */
         private void EmbedBloodExplosion(RaycastHit hit) {
-            Vector3 position = 0.01f * hit.normal + hit.point;
-            Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
             GameObject prefab = activeWeapon.bloodPrefab;
-            GameObject decal = Instantiate(prefab, position, rotation);
+            Instantiate(prefab, hit.point, hit.collider.transform.rotation);
         }
 
 

@@ -13,6 +13,9 @@ namespace Game.Shared {
         /** Weapon controller instance */
         [SerializeField] private WeaponController weaponController = null;
 
+        /** Player's blood template */
+        [SerializeField] private GameObject bloodPrefab = null;
+
         /** Animator for the player's character */
         private Animator animator = null;
 
@@ -74,6 +77,8 @@ namespace Game.Shared {
                 return;
             }
 
+            EmbedBloodExplosion(point);
+
             if (!status.DamagePlayer()) {
                 this.Kill();
                 return;
@@ -130,6 +135,14 @@ namespace Game.Shared {
                 Vector3 damagePoint = transform.InverseTransformPoint(hit.point);
                 actor.Damage(damagePoint);
             }
+        }
+
+
+        /**
+         * Embed an impact decal into a hit position.
+         */
+        private void EmbedBloodExplosion(Vector3 point) {
+            Instantiate(bloodPrefab, point, transform.rotation);
         }
     }
 }
