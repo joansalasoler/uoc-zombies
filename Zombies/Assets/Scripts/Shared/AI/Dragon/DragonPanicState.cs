@@ -6,7 +6,7 @@ namespace Game.Shared {
     /**
      * A actor is in panic.
      */
-    public class PanicState : BaseState {
+    public class DragonPanicState : BaseState {
 
         /**
          * Invoked when this state is activated.
@@ -23,7 +23,7 @@ namespace Game.Shared {
             dragon.MoveTowards(target);
             dragon.animator.SetTrigger("panic");
             dragon.navigator.speed *= 2.0f;
-            actor.StartCoroutine(ExitPanicState(dragon));
+            actor.StartCoroutine(ExitDragonPanicState(dragon));
         }
 
 
@@ -40,7 +40,7 @@ namespace Game.Shared {
         /**
          * Moves back to the patrol state after 5 seconds.
          */
-        private IEnumerator ExitPanicState(DragonController dragon) {
+        private IEnumerator ExitDragonPanicState(DragonController dragon) {
             yield return new WaitForSeconds(5.0f);
             dragon.SetDragonState(dragon.PATROL);
         }

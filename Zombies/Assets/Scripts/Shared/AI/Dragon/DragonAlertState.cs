@@ -5,7 +5,7 @@ namespace Game.Shared {
     /**
      * A actor was alerted by the player presence.
      */
-    public class AlertState : BaseState {
+    public class DragonAlertState : BaseState {
 
         /** Maximum seconds the dragon can be on this state */
         private float maximumTime = 5.0f;

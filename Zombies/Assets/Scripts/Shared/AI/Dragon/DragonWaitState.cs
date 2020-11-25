@@ -5,7 +5,7 @@ namespace Game.Shared {
     /**
      * A dragon is waiting.
      */
-    public class WaitState : BaseState {
+    public class DragonWaitState : BaseState {
 
         /**
          * Invoked when this state is activated.

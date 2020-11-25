@@ -11,19 +11,19 @@ namespace Game.Shared {
     public class DragonController : ActorController {
 
         /** Monster heard the player */
-        public readonly ActorState ALERT = new AlertState();
+        public readonly ActorState ALERT = new DragonAlertState();
 
         /** Monster was murdered by the player */
         public readonly ActorState DIE = new DragonDieState();
 
         /** Monster is running away from the player */
-        public readonly ActorState PANIC = new PanicState();
+        public readonly ActorState PANIC = new DragonPanicState();
 
         /** Monster is moving around the scene */
         public readonly ActorState PATROL = new DragonPatrolState();
 
         /** Monster is waiting for commands */
-        public readonly ActorState WAIT = new WaitState();
+        public readonly ActorState WAIT = new DragonWaitState();
 
         /** Layers affected by dragon raycasts */
         [HideInInspector] public LayerMask layerMask;
