@@ -14,7 +14,7 @@ namespace Game.Shared {
         public readonly ActorState ALERT = new AlertState();
 
         /** Monster was murdered by the player */
-        public readonly ActorState DIE = new DieState();
+        public readonly ActorState DIE = new DragonDieState();
 
         /** Monster is running away from the player */
         public readonly ActorState PANIC = new PanicState();

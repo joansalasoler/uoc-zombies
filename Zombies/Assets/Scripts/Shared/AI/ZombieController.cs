@@ -25,6 +25,9 @@ namespace Game.Shared {
         /** Navigating to a concrete target */
         public ChaseState ChaseState = new ChaseState();
 
+        /** Something killed the zombie */
+        public DieState DieState = new DieState();
+
         /** Navigating from on waypoint to another */
         public PatrolState PatrolState = new PatrolState();
 
@@ -52,6 +55,16 @@ namespace Game.Shared {
 
 
         /**
+         * Set the enabled status of the damaging colliders.
+         */
+        private void SetDamagersEnabled(bool enabled) {
+            foreach (var damager in damagers) {
+                damager.enabled = enabled;
+            }
+        }
+
+
+        /**
          * Initialization.
          */
         private void Start() {
@@ -69,11 +82,13 @@ namespace Game.Shared {
 
 
         /**
-         * Set the enabled status of the damaging colliders.
+         * Kills this actor.
          */
-        private void SetDamagersEnabled(bool enabled) {
-            foreach (var damager in damagers) {
-                damager.enabled = enabled;
+        public override void Kill() {
+            if (isAlive) {
+                base.Kill();
+                SetState(DieState);
+                animator.SetTrigger("Die");
             }
         }
 

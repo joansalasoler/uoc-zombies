@@ -5,7 +5,7 @@ namespace Game.Shared {
     /**
      * A actor was killed.
      */
-    public class DieState : BaseState {
+    public class DragonDieState : BaseState {
 
         /**
          * Invoked when this state is activated.

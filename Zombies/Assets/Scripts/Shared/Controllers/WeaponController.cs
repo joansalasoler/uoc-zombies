@@ -60,7 +60,7 @@ namespace Game.Shared {
          * Instantiate the weapons.
          */
         private void Awake() {
-            hitTriggers = QueryTriggerInteraction.Ignore;
+            hitTriggers = QueryTriggerInteraction.Collide;
             instances = new List<GameObject>();
 
             foreach (PlayerWeapon weapon in weapons) {
