@@ -54,31 +54,6 @@ namespace Game.Shared {
 
 
         /**
-         * Go into alert state when the player enters the action radius.
-         */
-        public override void OnTriggerEnter(ActorController actor, Collider collider) {
-            if (collider.gameObject.CompareTag("Player")) {
-                DragonController dragon = (DragonController) actor;
-                dragon.SetDragonState(dragon.ALERT);
-            }
-        }
-
-
-        /**
-         * Go into alert state if the player is on front of the actor.
-         */
-        public override void OnTriggerStay(ActorController actor, Collider collider) {
-            if (collider.gameObject.CompareTag("Player")) {
-                DragonController dragon = (DragonController) actor;
-
-                if (dragon.IsPlayerOnSight()) {
-                    dragon.SetDragonState(dragon.ALERT);
-                }
-            }
-        }
-
-
-        /**
          * Move to the next waypoint when a target is reached.
          */
         public override void OnUpdate(ActorController actor) {

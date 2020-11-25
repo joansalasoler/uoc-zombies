@@ -10,6 +10,9 @@ namespace Game.Shared {
      */
     public class DragonController : ActorController {
 
+        /** Delegate triggered when the player is near the zombie */
+        [SerializeField] private OnPlayerTrigger PlayerListener = null;
+
         /** Monster heard the player */
         public readonly ActorState ALERT = new DragonAlertState();
 
@@ -76,6 +79,10 @@ namespace Game.Shared {
          */
         private void Start() {
             GameObject playerObject = GameObject.FindWithTag("Player");
+
+            PlayerListener.onTriggerEnter += OnPlayerTriggerEnter;
+            PlayerListener.onTriggerExit += OnPlayerTriggerExit;
+
             player = playerObject.GetComponent<PlayerController>();
             hitTriggers = QueryTriggerInteraction.Ignore;
             layerMask = GetRaycastLayerMask();
@@ -240,6 +247,22 @@ namespace Game.Shared {
             Vector3 current = transform.forward;
             Vector3 rotation = Vector3.RotateTowards(current, target, step, 0.0f);
             transform.rotation = Quaternion.LookRotation(rotation);
+        }
+
+
+        /**
+         * A player entered this zombie's action radius.
+         */
+        private void OnPlayerTriggerEnter(Collider collider) {
+            if (isAlive) SetDragonState(ALERT);
+        }
+
+
+        /**
+         * A player left this zombie's action radius.
+         */
+        private void OnPlayerTriggerExit(Collider collider) {
+            if (isAlive) SetDragonState(PATROL);
         }
     }
 }

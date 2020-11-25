@@ -17,7 +17,7 @@ MonoBehaviour:
   silverKey: 0
   shieldPoints: 0
   healthPoints: 12
-  munitionLeft: 3
+  munitionLeft: 975
   shieldSlots: 4
   healthSlots: 12
   munitionSlots: 15

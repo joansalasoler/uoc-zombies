@@ -21,6 +21,7 @@ namespace Game.Shared {
          */
         public override void OnStateEnter(ActorController actor) {
             DisableNavMeshAgent(actor);
+            DisableTargetCollider(actor);
             actor.StartCoroutine(EnableRagdoll(actor));
         }
 
@@ -40,6 +41,15 @@ namespace Game.Shared {
         private void DisableAnimator(ActorController actor) {
             var animator = actor.GetComponentInChildren<Animator>();
             if (animator != null) animator.enabled = false;
+        }
+
+
+        /**
+         * Disable the shooting target collider if it exists.
+         */
+        private void DisableTargetCollider(ActorController actor) {
+            var collider = actor.GetComponent<Collider>();
+            if (collider != null) collider.enabled = false;
         }
 
 

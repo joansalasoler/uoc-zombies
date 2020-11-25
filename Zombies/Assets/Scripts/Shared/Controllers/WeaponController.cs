@@ -19,6 +19,9 @@ namespace Game.Shared {
         /** Layers affected by player shoots */
         [SerializeField] private LayerMask shootLayers = Physics.DefaultRaycastLayers;
 
+        /** Layers that bleed when impacted by shoots */
+        [SerializeField] private LayerMask bleedingLayers = Physics.DefaultRaycastLayers;
+
         /** Layers that receive an impact when they are hit */
         [SerializeField] private LayerMask impactLayers = Physics.DefaultRaycastLayers;
 
@@ -170,47 +173,61 @@ namespace Game.Shared {
                 return false;
             }
 
-            RaycastHit hit;
-
-            Vector3 height = GetShootHeight(activeWeapon);
-            Vector3 deviation = GetShootDeviation(activeWeapon);
-            Vector3 origin = position + height + deviation;
-            float distance = activeWeapon.shootDistance;
-
-            Ray ray = new Ray(origin, direction);
-            Debug.DrawRay(origin, distance * direction, Color.red);
-
-            if (Physics.Raycast(ray, out hit, distance, shootLayers, hitTriggers)) {
-                if (onImpact != null) {
-                    onImpact.Invoke(hit);
-                }
-
-                int layer = hit.collider.gameObject.layer;
-
-                if (impactLayers == (impactLayers | (1 << layer))) {
-                    PushShotCollider(hit);
-                    EmbedImpact(hit);
-                }
-            }
-
             AudioService.PlayClip(gameObject, activeWeapon.shotSound);
             animator.SetTrigger("Fire");
             lastShotTime = Time.time;
+
+            RaycastHit hit;
+            RaycastHit head;
+
+            if (RaycastShot(position, direction, out hit) == false) {
+                return true;
+            }
+
+            int layer = hit.collider.gameObject.layer;
+
+            if (onImpact != null) {
+                onImpact.Invoke(hit);
+            }
+
+            // Embed a gunshot on the impact layers
+
+            if (impactLayers == (impactLayers | (1 << layer))) {
+                PushShotCollider(hit);
+                EmbedImpact(hit);
+            }
+
+            // Embed a blood explosion on the bleeding layers. A new
+            // ray is cast because we want to aim for the head.
+
+            if (bleedingLayers == (bleedingLayers | (1 << layer))) {
+                bool isHeadShot = RaycastShot(position, direction, out head, 0.5f);
+
+                if (isHeadShot && head.collider == hit.collider) {
+                    EmbedBloodExplosion(head);
+                } else {
+                    EmbedBloodExplosion(hit);
+                }
+            }
 
             return true;
         }
 
 
         /**
-         * Push a moveable object if it was shot.
+         * Raycast a shot for the current weapon. The last parameter allows
+         * incrementing the weapon shot height on a given percentage.
          */
-        private void PushShotCollider(RaycastHit hit) {
-            Rigidbody body = hit.collider.attachedRigidbody;
+        private bool RaycastShot(Vector3 position, Vector3 direction, out RaycastHit hit, float increment = 0.0f) {
+            Vector3 height = GetShootHeight(activeWeapon);
+            Vector3 deviation = GetShootDeviation(activeWeapon);
+            Vector3 origin = position + height + deviation + increment * height;
 
-            if (body != null) {
-                Vector3 force = impactForce * Vector3.one;
-                body.AddForceAtPosition(force, hit.point);
-            }
+            Ray ray = new Ray(origin, direction);
+            float distance = activeWeapon.shootDistance;
+            Debug.DrawRay(origin, distance * direction, Color.red);
+
+            return Physics.Raycast(ray, out hit, distance, shootLayers, hitTriggers);
         }
 
 
@@ -225,6 +242,30 @@ namespace Game.Shared {
 
             Vector3 s = hit.transform.lossyScale;
             decal.transform.localScale = Vector3.one * (1f / s.x);
+        }
+
+
+        /**
+         * Embed an impact decal into a hit position.
+         */
+        private void EmbedBloodExplosion(RaycastHit hit) {
+            Vector3 position = 0.01f * hit.normal + hit.point;
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
+            GameObject prefab = activeWeapon.bloodPrefab;
+            GameObject decal = Instantiate(prefab, position, rotation);
+        }
+
+
+        /**
+         * Push a moveable object if it was shot.
+         */
+        private void PushShotCollider(RaycastHit hit) {
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            if (body != null) {
+                Vector3 force = impactForce * Vector3.one;
+                body.AddForceAtPosition(force, hit.point);
+            }
         }
     }
 }

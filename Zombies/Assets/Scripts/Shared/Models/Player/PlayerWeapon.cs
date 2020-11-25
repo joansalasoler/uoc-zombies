@@ -16,6 +16,9 @@ namespace Game.Shared {
         /** Weapon impact prefab */
         public GameObject impactPrefab = null;
 
+        /** Weapon blood impact prefab */
+        public GameObject bloodPrefab = null;
+
         /** Audio clip to play when the weapon is shot */
         public AudioClip shotSound = null;
 
