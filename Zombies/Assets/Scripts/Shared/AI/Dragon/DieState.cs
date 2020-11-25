@@ -17,14 +17,14 @@ namespace Game.Shared {
             AudioService.PlayOneShot(actor.gameObject, "Monster Die");
             dragon.animator.SetTrigger("die");
             dragon.navigator.enabled = false;
-            EmableMonsterPhysics(dragon);
+            EnableMonsterPhysics(dragon);
         }
 
 
         /**
          * Enables the physics of the actor when dead.
          */
-        private void EmableMonsterPhysics(DragonController dragon) {
+        private void EnableMonsterPhysics(DragonController dragon) {
             CapsuleCollider collider = dragon.GetComponent<CapsuleCollider>();
             Rigidbody body = dragon.GetComponent<Rigidbody>();
             Vector3 center = collider.center;

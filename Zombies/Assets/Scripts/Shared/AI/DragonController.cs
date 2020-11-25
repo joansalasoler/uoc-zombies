@@ -16,9 +16,6 @@ namespace Game.Shared {
         /** Monster was murdered by the player */
         public readonly ActorState DIE = new DieState();
 
-        /** Monster was damaged by the player */
-        public readonly ActorState PAIN = new PainState();
-
         /** Monster is running away from the player */
         public readonly ActorState PANIC = new PanicState();
 
@@ -185,23 +182,6 @@ namespace Game.Shared {
         public void StopMoving() {
             if (navigator.enabled) {
                 navigator.isStopped = true;
-            }
-        }
-
-
-        /**
-         * Damage this dragon.
-         */
-        public override void Damage() {
-            if (isAlive == false) {
-                return;
-            }
-
-            if (healthPoints > 1) {
-                SetState(PAIN);
-                healthPoints -= 1;
-            } else {
-                Kill();
             }
         }
 

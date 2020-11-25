@@ -83,19 +83,17 @@ namespace Game.Shared {
          * this method may also change the path or the direction.
          */
         public override void OnUpdate(ActorController actor) {
-            if (IsAtWaypoint() == false) {
-                return;
-            }
+            if (actor.isAlive && agent.enabled && IsAtWaypoint()) {
+                if (waypoint.IsIntersection()) {
+                    waypath = waypoint.RandomPath();
+                }
 
-            if (waypoint.IsIntersection()) {
-                waypath = waypoint.RandomPath();
-            }
+                if (!waypath.HasNextPoint(direction, waypoint)) {
+                    direction = (Direction) (-((int) direction));
+                }
 
-            if (!waypath.HasNextPoint(direction, waypoint)) {
-                direction = (Direction) (-((int) direction));
+                MoveTowards(waypath.NextPoint(direction, waypoint));
             }
-
-            MoveTowards(waypath.NextPoint(direction, waypoint));
         }
     }
 }

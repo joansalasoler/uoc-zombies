@@ -17,18 +17,18 @@ namespace Game.Shared {
 
 
         /**
-         * Damage this actor (kills it by default).
-         */
-        public virtual void Damage() {
-            Kill();
-        }
-
-
-        /**
          * Kills this actor.
          */
         public virtual void Kill() {
             isAlive = false;
+        }
+
+
+        /**
+         * Damage this actor (kills it by default).
+         */
+        public virtual void Damage(Vector3 point) {
+            Kill();
         }
 
 
@@ -59,7 +59,7 @@ namespace Game.Shared {
 
 
         /**
-         * An object entered this dragon's action radius.
+         * An object entered this actor's action radius.
          */
         protected virtual void OnTriggerEnter(Collider collider) {
             state.OnTriggerEnter(this, collider);
@@ -67,7 +67,7 @@ namespace Game.Shared {
 
 
         /**
-         * An object is on this dragon's action radius.
+         * An object is on this actor's action radius.
          */
         protected virtual void OnTriggerStay(Collider collider) {
             state.OnTriggerStay(this, collider);
@@ -75,7 +75,7 @@ namespace Game.Shared {
 
 
         /**
-         * An object left this dragon's action radius.
+         * An object left this actor's action radius.
          */
         protected virtual void OnTriggerExit(Collider collider) {
             state.OnTriggerExit(this, collider);

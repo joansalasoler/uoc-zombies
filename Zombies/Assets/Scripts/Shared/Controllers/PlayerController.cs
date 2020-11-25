@@ -69,7 +69,7 @@ namespace Game.Shared {
         /**
          * Cause damage to this player.
          */
-        public override void Damage() {
+        public override void Damage(Vector3 point) {
             if (isAlive == false) {
                 return;
             }
@@ -121,7 +121,7 @@ namespace Game.Shared {
         public void OnShotImpact(RaycastHit hit) {
             if (hit.collider.CompareTag("Monster")) {
                 var actor = hit.collider.GetComponent<ActorController>();
-                actor.Damage();
+                actor.Damage(hit.point);
             }
         }
     }
