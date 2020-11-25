@@ -80,6 +80,11 @@ namespace Game.Shared {
             }
 
             AudioService.PlayOneShot(gameObject, "Damage Player");
+            Vector3 damagePoint = transform.InverseTransformPoint(point);
+
+            animator.SetFloat("DamageX", damagePoint.x);
+            animator.SetFloat("DamageZ", damagePoint.z);
+            animator.SetTrigger("Damage");
 
             if (playerDamaged != null) {
                 playerDamaged.Invoke(this);
@@ -120,9 +125,10 @@ namespace Game.Shared {
          */
         public void OnShotImpact(RaycastHit hit) {
             if (hit.collider.CompareTag("Monster")) {
-                var actor = hit.collider.GetComponent<ActorController>();
-                var point = hit.collider.transform.InverseTransformPoint(hit.point);
-                actor.Damage(point);
+                Transform transform = hit.collider.transform;
+                ActorController actor = hit.collider.GetComponent<ActorController>();
+                Vector3 damagePoint = transform.InverseTransformPoint(hit.point);
+                actor.Damage(damagePoint);
             }
         }
     }
