@@ -40,7 +40,7 @@ namespace Game.Shared {
             Rigidbody body = dragon.GetComponent<Rigidbody>();
             Vector3 center = collider.center;
 
-            collider.center = new Vector3(center.x, 0.35f, center.z);
+            collider.center = new Vector3(-0.17f, 0.38f, -0.35f);
             body.isKinematic = false;
         }
     }
