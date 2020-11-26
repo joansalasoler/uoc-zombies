@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Game.Shared {
 
@@ -18,6 +19,16 @@ namespace Game.Shared {
             dragon.animator.SetTrigger("die");
             dragon.navigator.enabled = false;
             EnableMonsterPhysics(dragon);
+            EnableNavMeshObstacle(dragon);
+        }
+
+
+        /**
+         * Enable the navmesh obstacle if it exists.
+         */
+        private void EnableNavMeshObstacle(ActorController actor) {
+            var obstacle = actor.GetComponentInChildren<NavMeshObstacle>();
+            if (obstacle != null) obstacle.enabled = true;
         }
 
 

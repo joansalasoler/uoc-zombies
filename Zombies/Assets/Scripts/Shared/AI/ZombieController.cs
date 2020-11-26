@@ -107,6 +107,7 @@ namespace Game.Shared {
                 base.Kill();
                 SetState(DieState);
                 animator.SetTrigger("Die");
+                SetDamagersEnabled(false);
             }
         }
 

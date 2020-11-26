@@ -54,6 +54,15 @@ namespace Game.Shared {
 
 
         /**
+         * Enable the navmesh obstacle if it exists.
+         */
+        private void EnableNavMeshObstacle(ActorController actor) {
+            var obstacle = actor.GetComponentInChildren<NavMeshObstacle>();
+            if (obstacle != null) obstacle.enabled = true;
+        }
+
+
+        /**
          * Disable the animator and set the rigidbodies as non-kinematic
          * after the configured ragdoll delay time.
          */
@@ -61,6 +70,7 @@ namespace Game.Shared {
             yield return new WaitForSeconds(ragdollDelay);
 
             DisableAnimator(actor);
+            EnableNavMeshObstacle(actor);
 
             foreach (var body in actor.GetComponentsInChildren<Rigidbody>()) {
                 body.isKinematic = false;
