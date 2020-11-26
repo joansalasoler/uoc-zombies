@@ -26,7 +26,7 @@ public class GameController : MonoBehaviour {
      */
     private void Start() {
         player.status.Reset();
-        message.ShowMessage("GOTTA FIND THE BOOKS BEFORE IT GETS TOO LATE");
+        message.PushMessage("GOTTA FIND THE BOOKS BEFORE IT GETS TOO LATE", 3.0f);
     }
 
 
