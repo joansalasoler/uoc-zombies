@@ -13,6 +13,12 @@ namespace Game.Shared {
         /** Weapon controller instance */
         [SerializeField] private WeaponController weaponController = null;
 
+        /** Clip to play when the player is damaged */
+        [SerializeField] private AudioClip damageClip = null;
+
+        /** Audio clip to play when the player is killed */
+        [SerializeField] private AudioClip dieClip = null;
+
         /** Player's blood template */
         [SerializeField] private GameObject bloodPrefab = null;
 
@@ -84,7 +90,7 @@ namespace Game.Shared {
                 return;
             }
 
-            AudioService.PlayOneShot(gameObject, "Damage Player");
+            AudioService.PlayClip(gameObject, damageClip);
             Vector3 damagePoint = transform.InverseTransformPoint(point);
 
             animator.SetFloat("DamageX", damagePoint.x);
@@ -108,7 +114,7 @@ namespace Game.Shared {
             base.Kill();
             DisableCharacter();
             animator.SetTrigger("Die");
-            AudioService.PlayOneShot(gameObject, "Player Die");
+            AudioService.PlayClip(gameObject, dieClip);
 
             if (playerKilled != null) {
                 playerKilled.Invoke(this);

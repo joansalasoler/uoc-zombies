@@ -28583,6 +28583,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1238670105864838964, guid: aeb39bb49c00cb3f0a77255a8d53e89a,
         type: 3}
+    - target: {fileID: 4731907592977921543, guid: 2e480b54ca6b55f0f8b9b8759dfdde42,
+        type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 565d3709ce460636c991a31ba00cd108, type: 3}
+    - target: {fileID: 4731907592977921543, guid: 2e480b54ca6b55f0f8b9b8759dfdde42,
+        type: 3}
+      propertyPath: dieClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f083a09bf8dd7d2c881566a2fea1bdd3, type: 3}
     - target: {fileID: 4731907593457449487, guid: 2e480b54ca6b55f0f8b9b8759dfdde42,
         type: 3}
       propertyPath: m_JumpPower

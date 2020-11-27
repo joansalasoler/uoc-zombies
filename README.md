@@ -56,3 +56,18 @@ https://picsart.com/i/sticker-art-hole-268803725027211
 
 Books
 https://assetstore.unity.com/packages/3d/props/interior/books-3356
+
+quick female scream
+https://freesound.org/people/AmeAngelofSin/sounds/168725/
+
+pain: ouch
+https://freesound.org/people/AmeAngelofSin/sounds/234039/
+
+Short scared scream
+https://freesound.org/people/jorickhoofd/sounds/180344/
+
+Blood Hitting Window
+https://freesound.org/people/Rock%20Savage/sounds/81042/
+
+Zombie Voice
+https://freesound.org/people/PatrickLieberkind/sounds/213835/

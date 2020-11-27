@@ -13,6 +13,12 @@ namespace Game.Shared {
         /** Delegate triggered when the player is near the zombie */
         [SerializeField] private OnPlayerTrigger PlayerListener = null;
 
+        /** Clip to play when the zombie is damaged */
+        [SerializeField] private AudioClip damageClip = null;
+
+        /** Audio clip to play while the zombie is alive */
+        [SerializeField] private AudioClip moanClip = null;
+
         /** Minimum delay between attacks to the player */
         [SerializeField, Range(1, 20)] private int healthPoints = 1;
 
@@ -79,6 +85,7 @@ namespace Game.Shared {
             ChaseState.targetReached += OnChaseTargetReached;
             ChaseState.targetLost += OnChaseTargetLost;
 
+            AudioService.PlayClipLoop(gameObject, moanClip);
             SetState(patrolOnStart ? PatrolState : IdleState);
             SetDamagersEnabled(false);
         }
@@ -88,6 +95,8 @@ namespace Game.Shared {
          * Cause damage to this actor.
          */
         public override void Damage(Vector3 point) {
+            AudioService.PlayClip(gameObject, damageClip);
+
             if (healthPoints <= 1) {
                 this.Kill();
             } else if (isAlive) {
@@ -106,6 +115,7 @@ namespace Game.Shared {
             if (isAlive) {
                 base.Kill();
                 SetState(DieState);
+                AudioService.StopLoop(gameObject);
                 animator.SetTrigger("Die");
                 SetDamagersEnabled(false);
             }

@@ -278,6 +278,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAlive: 1
   PlayerListener: {fileID: 3453640791946060972}
+  damageClip: {fileID: 8300000, guid: 9d1c8f1380f1c363d99c786933e3d0b2, type: 3}
+  moanClip: {fileID: 8300000, guid: 71c3476a9d551a793a9f61bdb0afa775, type: 3}
   healthPoints: 3
   attackDelay: 2.5
   patrolOnStart: 1
@@ -354,9 +356,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.74465513
-  m_Height: 2.757409
+  m_Height: 3.543621
   m_Direction: 1
-  m_Center: {x: 0.0041947365, y: 2.3810163, z: 0.07824707}
+  m_Center: {x: 0.0041947365, y: 1.9879103, z: 0.07824707}
 --- !u!82 &2130552411529137180
 AudioSource:
   m_ObjectHideFlags: 0

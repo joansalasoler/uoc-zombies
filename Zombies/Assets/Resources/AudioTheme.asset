@@ -36,7 +36,7 @@ MonoBehaviour:
   - name: Monster Panic
     clip: {fileID: 8300000, guid: 8f7ec0b42dc5140c1bca02bd8dc414b0, type: 3}
   - name: Monster Die
-    clip: {fileID: 8300000, guid: 5214e901e37a71cbc85675a0f58b4e38, type: 3}
+    clip: {fileID: 8300000, guid: e5ac6554f48f0c27d874a8815b0543e4, type: 3}
   - name: Monster Shot
     clip: {fileID: 8300000, guid: f66519164332eb06aa75271db5b22f77, type: 3}
   - name: Player Die
