@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2478797654711588804}
   m_Layer: 14
   m_Name: Player Listener
-  m_TagString: Untagged
+  m_TagString: FieldOfView
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -662,6 +662,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6012261088162953844}
+  - component: {fileID: -5896763451761903144}
   - component: {fileID: 6012261088162953841}
   - component: {fileID: 6012261088162953840}
   - component: {fileID: 4400527381293630004}
@@ -691,6 +692,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!114 &-5896763451761903144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6012261088162953847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff500eb320347f9199bdbb0962a25b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: GRANDMA SAYS DRAGONS HAVE A HEALING POWER
 --- !u!114 &6012261088162953841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -713,7 +727,7 @@ MonoBehaviour:
   animator: {fileID: 6012261087592550686}
   navigator: {fileID: 6012261088162953840}
   waypath: {fileID: 0}
-  rewardPrefab: {fileID: 9133176856419099833, guid: 56acd4c37c14440589c10bae9a521a52,
+  rewardPrefab: {fileID: 9133176856419099833, guid: 91e393140efda38f9a23a337bd43a515,
     type: 3}
   healthPoints: 1
   eyesHeight: 1.5

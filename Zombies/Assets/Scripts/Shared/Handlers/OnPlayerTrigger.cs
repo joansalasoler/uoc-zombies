@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Shared {
 
     /**
-     * Delegate trigger events for collision with a player.
+     * Delegate trigger events for collisions with the player.
      */
     [RequireComponent(typeof(Collider))]
     public class OnPlayerTrigger: MonoBehaviour {

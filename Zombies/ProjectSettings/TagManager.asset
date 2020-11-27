@@ -9,6 +9,7 @@ TagManager:
   - Moveable
   - Monster
   - Reward
+  - FieldOfView
   layers:
   - Default
   - TransparentFX

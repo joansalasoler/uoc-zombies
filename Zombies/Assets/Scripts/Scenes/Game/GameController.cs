@@ -17,16 +17,13 @@ public class GameController : MonoBehaviour {
     /** Game over overlay controller */
     public EndgameController endgame;
 
-    /** Message overlay controller */
-    public MessageController message;
-
 
     /**
      * Initialize the game.
      */
     private void Start() {
         player.status.Reset();
-        message.PushMessage("GOTTA FIND THE BOOKS BEFORE IT GETS TOO LATE", 3.0f);
+        MessageService.Push("GOTTA FIND THE BOOKS BEFORE IT GETS TOO LATE", 1.0f);
     }
 
 
