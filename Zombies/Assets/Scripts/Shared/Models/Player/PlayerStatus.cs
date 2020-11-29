@@ -13,14 +13,8 @@ namespace Game.Shared {
         /** Invoked when a property on this status changes */
         public Action<PlayerStatus> statusChanged;
 
-        /** If the player collected a golden key */
-        public bool goldKey = false;
-
-        /** If the player collected a red key */
-        public bool redKey = false;
-
-        /** If the player collected a silver key */
-        public bool silverKey = false;
+        /** Number of books found */
+        public int booksFound = 0;
 
         /** Current shield points */
         public int shieldPoints = 0;
@@ -30,6 +24,9 @@ namespace Game.Shared {
 
         /** Bullets that can be shot */
         public int munitionLeft = 5;
+
+        /** Books that can be collected */
+        public int bookSlots = 5;
 
         /** Maximum number of shield points */
         public int shieldSlots = 4;
@@ -53,42 +50,14 @@ namespace Game.Shared {
          * Reset this player status to defaults.
          */
         public void Reset() {
-            redKey = false;
-            goldKey = false;
-            silverKey = false;
+            booksFound = 0;
             shieldPoints = 0;
             healthPoints = 12;
             munitionLeft = 5;
+            bookSlots = 5;
             shieldSlots = 4;
             healthSlots = 12;
-            munitionSlots = 15;
-            NotifyStatusChange();
-        }
-
-
-        /**
-         * Collect a golden key.
-         */
-        public void CollectGoldKey() {
-            goldKey = true;
-            NotifyStatusChange();
-        }
-
-
-        /**
-         * Collect a spaceship key.
-         */
-        public void CollectRedKey() {
-            redKey = true;
-            NotifyStatusChange();
-        }
-
-
-        /**
-         * Collect a silver key.
-         */
-        public void CollectSilverKey() {
-            silverKey = true;
+            munitionSlots = 10;
             NotifyStatusChange();
         }
 
@@ -146,6 +115,21 @@ namespace Game.Shared {
 
             if (canIncrease == true) {
                 shieldPoints += 1;
+                NotifyStatusChange();
+            }
+
+            return canIncrease;
+        }
+
+
+        /**
+         * Increae the books found by one unit.
+         */
+        public bool IncreaseBooks() {
+            bool canIncrease = (booksFound < bookSlots);
+
+            if (canIncrease == true) {
+                booksFound += 1;
                 NotifyStatusChange();
             }
 

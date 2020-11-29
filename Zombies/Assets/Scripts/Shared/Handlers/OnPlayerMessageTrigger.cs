@@ -13,7 +13,7 @@ namespace Game.Shared {
     public class OnPlayerMessageTrigger : MonoBehaviour {
 
         /** Set of all the messages */
-        private static HashSet<string> messages = new HashSet<string>();
+        private static Dictionary<string, bool> messages = new Dictionary<string, bool>();
 
         /** Text of the message */
         [SerializeField] private string text = string.Empty;
@@ -23,7 +23,9 @@ namespace Game.Shared {
          * Initialization.
          */
         private void Awake() {
-            messages.Add(text);
+            if (!messages.ContainsKey(text)) {
+                messages.Add(text, false);
+            }
         }
 
 
@@ -48,9 +50,9 @@ namespace Game.Shared {
          */
         private void OnFieldOfViewEnter(Collider collider) {
             if (enabled && gameObject == collider.gameObject) {
-                if (messages.Contains(text)) {
+                if (messages[text] == false) {
                     MessageService.Push(text);
-                    messages.Remove(text);
+                    messages[text] = true;
                 }
 
                 Destroy(this);
