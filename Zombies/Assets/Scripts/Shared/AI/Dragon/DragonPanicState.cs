@@ -15,10 +15,9 @@ namespace Game.Shared {
             DragonController dragon = (DragonController) actor;
 
             AudioService.PlayOneShot(actor.gameObject, "Monster Panic");
-            AudioService.PlayLoop(actor.gameObject, "Monster Walk");
             Vector3 origin = actor.transform.position;
             Vector3 direction = actor.transform.forward;
-            Vector3 target = -25.0f * direction + origin;
+            Vector3 target = -40.0f * direction + origin;
 
             dragon.MoveTowards(target);
             dragon.animator.SetTrigger("panic");
@@ -32,7 +31,6 @@ namespace Game.Shared {
          */
         public override void OnStateExit(ActorController actor) {
             DragonController dragon = (DragonController) actor;
-            AudioService.StopLoop(actor.gameObject);
             dragon.navigator.speed *= 0.5f;
         }
 
@@ -41,7 +39,7 @@ namespace Game.Shared {
          * Moves back to the patrol state after 5 seconds.
          */
         private IEnumerator ExitDragonPanicState(DragonController dragon) {
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(10.0f);
             dragon.SetDragonState(dragon.PATROL);
         }
     }

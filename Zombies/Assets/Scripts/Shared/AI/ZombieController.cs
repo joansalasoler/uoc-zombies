@@ -95,12 +95,11 @@ namespace Game.Shared {
          * Cause damage to this actor.
          */
         public override void Damage(Vector3 point) {
-            AudioService.PlayClip(gameObject, damageClip);
-
             if (healthPoints <= 1) {
                 this.Kill();
             } else if (isAlive) {
                 healthPoints -= 1;
+                AudioService.PlayClip(gameObject, damageClip);
                 animator.SetFloat("DamageX", point.x);
                 animator.SetFloat("DamageZ", point.z);
                 animator.SetTrigger("Damage");
@@ -114,7 +113,9 @@ namespace Game.Shared {
         public override void Kill() {
             if (isAlive) {
                 base.Kill();
+                healthPoints = 0;
                 SetState(DieState);
+                AudioService.PlayClip(gameObject, damageClip);
                 AudioService.StopLoop(gameObject);
                 animator.SetTrigger("Die");
                 SetDamagersEnabled(false);

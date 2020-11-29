@@ -10,7 +10,7 @@ namespace Game.Shared {
     public class ActorController : MonoBehaviour {
 
         /** Current state of the actor */
-        [SerializeField] public ActorState state = new BaseState();
+        protected ActorState state = new BaseState();
 
         /** Wether the actor is dead or alive */
         [HideInInspector] public bool isAlive = true;

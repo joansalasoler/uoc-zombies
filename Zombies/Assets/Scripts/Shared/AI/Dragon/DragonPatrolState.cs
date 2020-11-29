@@ -32,7 +32,6 @@ namespace Game.Shared {
          */
         public override void OnStateEnter(ActorController actor) {
             DragonController dragon = (DragonController) actor;
-            AudioService.PlayLoop(actor.gameObject, "Monster Walk");
 
             waypath = waypath ?? dragon.waypath;
             waypoint = waypath.ClosestPoint(actor.transform.position);
@@ -48,7 +47,6 @@ namespace Game.Shared {
          * Invoked when this state is deactivated.
          */
         public override void OnStateExit(ActorController actor) {
-            AudioService.StopLoop(actor.gameObject);
             actor.StopCoroutine(animation);
         }
 

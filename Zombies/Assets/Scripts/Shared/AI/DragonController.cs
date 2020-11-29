@@ -79,10 +79,7 @@ namespace Game.Shared {
          */
         private void Start() {
             GameObject playerObject = GameObject.FindWithTag("Player");
-
             PlayerListener.onTriggerEnter += OnPlayerTriggerEnter;
-            PlayerListener.onTriggerExit += OnPlayerTriggerExit;
-
             player = playerObject.GetComponent<PlayerController>();
             hitTriggers = QueryTriggerInteraction.Ignore;
             layerMask = GetRaycastLayerMask();
@@ -254,15 +251,9 @@ namespace Game.Shared {
          * A player entered this zombie's action radius.
          */
         private void OnPlayerTriggerEnter(Collider collider) {
-            if (isAlive) SetDragonState(ALERT);
-        }
-
-
-        /**
-         * A player left this zombie's action radius.
-         */
-        private void OnPlayerTriggerExit(Collider collider) {
-            if (isAlive) SetDragonState(PATROL);
+            if (isAlive && state == PATROL) {
+                SetDragonState(ALERT);
+            }
         }
     }
 }
