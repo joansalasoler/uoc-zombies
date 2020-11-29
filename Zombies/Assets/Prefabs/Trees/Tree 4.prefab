@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 2461999151269896258}
   - component: {fileID: 2461999151273287778}
   - component: {fileID: 2461999151272190626}
-  - component: {fileID: 2461999151270296256}
   - component: {fileID: 3207155640639207650}
+  - component: {fileID: 7394373148854201993}
+  - component: {fileID: 9202910021289729743}
+  - component: {fileID: 8865128455794509192}
   m_Layer: 0
   m_Name: Tree 4
   m_TagString: Untagged
@@ -81,20 +83,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &2461999151270296256
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2461999151270263906}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.82840335
-  m_Height: 4.930032
-  m_Direction: 1
-  m_Center: {x: 0.35872185, y: 2.4924102, z: 0.100000024}
 --- !u!205 &3207155640639207650
 LODGroup:
   m_ObjectHideFlags: 0
@@ -114,3 +102,45 @@ LODGroup:
     renderers:
     - renderer: {fileID: 2461999151272190626}
   m_Enabled: 1
+--- !u!136 &7394373148854201993
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461999151270263906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.2486059
+  m_Height: 1.4625986
+  m_Direction: 1
+  m_Center: {x: 0.049023703, y: 0.74238455, z: 0.02963429}
+--- !u!136 &9202910021289729743
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461999151270263906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.23865512
+  m_Height: 2.6017113
+  m_Direction: 1
+  m_Center: {x: -0.25461975, y: 2.7094288, z: 0.03889656}
+--- !u!136 &8865128455794509192
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2461999151270263906}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1881004
+  m_Height: 2.4523764
+  m_Direction: 1
+  m_Center: {x: 0.721072, y: 3.000453, z: 0.03484422}
