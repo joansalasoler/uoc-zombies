@@ -85,7 +85,6 @@ namespace Game.Shared {
             ChaseState.targetReached += OnChaseTargetReached;
             ChaseState.targetLost += OnChaseTargetLost;
 
-            AudioService.PlayClipLoop(gameObject, moanClip);
             SetState(patrolOnStart ? PatrolState : IdleState);
             SetDamagersEnabled(false);
         }
@@ -147,7 +146,10 @@ namespace Game.Shared {
          * A player entered this zombie's action radius.
          */
         private void OnPlayerTriggerEnter(Collider collider) {
-            if (isAlive) SetState(ChaseState);
+            if (isAlive) {
+                AudioService.PlayClipLoop(gameObject, moanClip);
+                SetState(ChaseState);
+            }
         }
 
 
@@ -155,7 +157,10 @@ namespace Game.Shared {
          * A player left this zombie's action radius.
          */
         private void OnPlayerTriggerExit(Collider collider) {
-            if (isAlive) SetState(PatrolState);
+            if (isAlive) {
+                AudioService.StopLoop(gameObject);
+                SetState(PatrolState);
+            }
         }
     }
 }
