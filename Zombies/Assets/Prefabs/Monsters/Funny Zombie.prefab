@@ -688,7 +688,7 @@ MonoBehaviour:
   PlayerListener: {fileID: 6001619824211561228}
   damageClip: {fileID: 8300000, guid: 9d1c8f1380f1c363d99c786933e3d0b2, type: 3}
   moanClip: {fileID: 8300000, guid: 71c3476a9d551a793a9f61bdb0afa775, type: 3}
-  healthPoints: 1
+  healthPoints: 2
   attackDelay: 2.5
   patrolOnStart: 1
   ChaseState:
