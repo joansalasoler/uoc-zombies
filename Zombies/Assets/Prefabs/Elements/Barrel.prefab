@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4190290755536400663}
   - component: {fileID: 4180888408935302447}
   - component: {fileID: 4202240093681897262}
-  - component: {fileID: 4202240093681897263}
   - component: {fileID: 4202240093681897261}
+  - component: {fileID: 5455011513301225946}
   m_Layer: 0
   m_Name: Mod_BigBarrel
   m_TagString: Moveable
@@ -98,19 +98,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &4202240093681897263
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4203325781301105927}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.89452386, y: 1.0234975, z: 0.89452344}
-  m_Center: {x: -0.00000013411045, y: 0.51174873, z: -0.00000014901161}
 --- !u!208 &4202240093681897261
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -127,6 +114,20 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0.512, z: 0}
   m_TimeToStationary: 0.5
+--- !u!64 &5455011513301225946
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4203325781301105927}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 8b85581628bc6564e85cd7162b3a6a9e, type: 3}
 --- !u!1 &4204006599333852181
 GameObject:
   m_ObjectHideFlags: 0
