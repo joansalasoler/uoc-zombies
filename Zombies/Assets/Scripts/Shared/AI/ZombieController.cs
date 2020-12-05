@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -8,6 +9,7 @@ namespace Game.Shared {
      * Controller for zombies.
      */
     [RequireComponent(typeof(Animator))]
+    [RequireComponent(typeof(NavMeshAgent))]
     public class ZombieController : ActorController {
 
         /** Delegate triggered when the player is near the zombie */
@@ -54,6 +56,37 @@ namespace Game.Shared {
 
 
         /**
+         * Initialization.
+         */
+        private void Start() {
+            animator = GetComponent<Animator>();
+            damagers = GetComponentsInChildren<OnPlayerDamageCollision>();
+
+            PlayerListener.onTriggerEnter += OnPlayerTriggerEnter;
+            PlayerListener.onTriggerExit += OnPlayerTriggerExit;
+            ChaseState.targetReached += OnChaseTargetReached;
+            ChaseState.targetLost += OnChaseTargetLost;
+
+            SetState(IdleState);
+            SetDamagersEnabled(false);
+
+            if (patrolOnStart) {
+                StartCoroutine(StartPatroling());
+            }
+        }
+
+
+        /**
+         * Start patroling after a random delay if the zombie is idle.
+         */
+        private IEnumerator StartPatroling() {
+            float delay = UnityEngine.Random.Range(0.5f, 5.0f);
+            yield return new WaitForSeconds(delay);
+            if (state == IdleState) SetState(PatrolState);
+        }
+
+
+        /**
          * Activate a random attack animation.
          */
         public void AnimateAttack() {
@@ -70,23 +103,6 @@ namespace Game.Shared {
             foreach (var damager in damagers) {
                 damager.enabled = enabled;
             }
-        }
-
-
-        /**
-         * Initialization.
-         */
-        private void Start() {
-            animator = GetComponent<Animator>();
-            damagers = GetComponentsInChildren<OnPlayerDamageCollision>();
-
-            PlayerListener.onTriggerEnter += OnPlayerTriggerEnter;
-            PlayerListener.onTriggerExit += OnPlayerTriggerExit;
-            ChaseState.targetReached += OnChaseTargetReached;
-            ChaseState.targetLost += OnChaseTargetLost;
-
-            SetState(patrolOnStart ? PatrolState : IdleState);
-            SetDamagersEnabled(false);
         }
 
 

@@ -57,7 +57,7 @@ namespace Game.Shared {
             bookSlots = 5;
             shieldSlots = 4;
             healthSlots = 12;
-            munitionSlots = 10;
+            munitionSlots = 15;
             NotifyStatusChange();
         }
 

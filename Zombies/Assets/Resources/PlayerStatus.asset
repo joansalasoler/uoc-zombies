@@ -12,12 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3153b9f7c8b70c3cb951dafd4a400de1, type: 3}
   m_Name: PlayerStatus
   m_EditorClassIdentifier: 
-  goldKey: 0
-  redKey: 0
-  silverKey: 0
+  booksFound: 0
   shieldPoints: 0
   healthPoints: 12
-  munitionLeft: 975
+  munitionLeft: 5
+  bookSlots: 5
   shieldSlots: 4
   healthSlots: 12
   munitionSlots: 15
