@@ -49,7 +49,7 @@ namespace Game.Shared {
          * Index of the last point of the path on a direction.
          */
         private int GetEndPointIndex(Direction direction) {
-            return (direction == Direction.FORWARD) ? points.Length - 1 : 0;
+            return (direction == Direction.Forward) ? points.Length - 1 : 0;
         }
 
 
@@ -58,8 +58,7 @@ namespace Game.Shared {
          */
         public Waypoint NextPoint(Direction direction, Waypoint point) {
             if (isRandom == true) {
-                int randomIndex = UnityEngine.Random.Range(0, points.Length);
-                return points[randomIndex];
+                return GetNextRandomWaypoint(point);
             }
 
             int index = Array.IndexOf(points, point);
@@ -87,6 +86,20 @@ namespace Game.Shared {
             }
 
             return closestPoint;
+        }
+
+
+        /**
+         * Obtains another random point on the path.
+         */
+        public Waypoint GetNextRandomWaypoint(Waypoint point) {
+            int index = UnityEngine.Random.Range(0, points.Length);
+
+            while (points[index] == point && points.Length > 0) {
+                index = UnityEngine.Random.Range(0, points.Length);
+            }
+
+            return points[index];
         }
     }
 }

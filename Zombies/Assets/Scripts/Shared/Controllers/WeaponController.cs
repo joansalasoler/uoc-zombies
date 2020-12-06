@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,24 @@ namespace Game.Shared {
      */
     public class WeaponController : MonoBehaviour {
 
+        /** Invoked when the shot impacts an object */
+        public Action<RaycastHit> onImpact = null;
+
+        /** Hand of the character */
+        [SerializeField] private Transform hand = null;
+
+        /** Layers affected by player shoots */
+        [SerializeField] private LayerMask shootLayers = Physics.DefaultRaycastLayers;
+
+        /** Layers that bleed when impacted by shoots */
+        [SerializeField] private LayerMask bleedingLayers = Physics.DefaultRaycastLayers;
+
+        /** Layers that receive an impact when they are hit */
+        [SerializeField] private LayerMask impactLayers = Physics.DefaultRaycastLayers;
+
+        /** Force of the bullets impacts on objects */
+        [SerializeField] private float impactForce = 50.0f;
+
         /** Available weapons for the player */
         [SerializeField] private List<PlayerWeapon> weapons = null;
 
@@ -18,20 +37,11 @@ namespace Game.Shared {
         /** If shots must hit triggers */
         [HideInInspector] public QueryTriggerInteraction hitTriggers;
 
-        /** Layers affected by player shoots */
-        [HideInInspector] public LayerMask layerMask;
-
-        /** Force of the water impactin with objects */
-        public float pushForce = 100.0f;
-
         /** Weapon game object instances */
         private List<GameObject> instances = null;
 
         /** Weapon animator instance */
         private Animator animator = null;
-
-        /** Center of the camera */
-        private Vector3 center = new Vector3(0.5f, 0.5f, 0.0f);
 
         /** Last time the weapon was shot */
         private float lastShotTime = 0.0f;
@@ -44,6 +54,7 @@ namespace Game.Shared {
          * Switch to the first weapon.
          */
         private void Start() {
+            transform.parent = hand;
             ToggleWeapon();
         }
 
@@ -52,31 +63,13 @@ namespace Game.Shared {
          * Instantiate the weapons.
          */
         private void Awake() {
-            hitTriggers = QueryTriggerInteraction.Ignore;
-            layerMask = GetShootLayerMask();
-            animator = GetComponent<Animator>();
+            hitTriggers = QueryTriggerInteraction.Collide;
             instances = new List<GameObject>();
 
             foreach (PlayerWeapon weapon in weapons) {
                 GameObject prefab = weapon.weaponPrefab;
                 instances.Add(Instantiate(prefab, transform));
             }
-        }
-
-
-        /**
-         * Sets the speed at which the weapons move.
-         */
-        public void SetSpeed(float speed) {
-            animator.SetFloat("speed", speed);
-        }
-
-
-        /**
-         * Sets if the player is still alive.
-         */
-        public void SetAliveState(bool alive) {
-            animator.SetBool("isAlive", alive);
         }
 
 
@@ -89,43 +82,17 @@ namespace Game.Shared {
 
 
         /**
-         * Switch to the next weapon.
-         */
-        public void ToggleWeapon() {
-            animator.SetBool("rearming", true);
-        }
-
-
-        /**
-         * Aram a weapon given its index.
-         */
-        private void ArmWeapon(int index) {
-            instances[index].SetActive(true);
-            activeIndex = index;
-        }
-
-
-        /**
-         * Disarm the current weapon.
-         */
-        private void DisarmWeapon() {
-            instances[activeIndex].SetActive(false);
-            activeIndex = -1;
-        }
-
-
-        /**
          * Checks if the weapon can be shot.
          */
         public bool CanShootWeapon() {
-            return HasActiveWeapon() && IsInShotRate();
+            return HasActiveWeapon() && IsInsideShotRate();
         }
 
 
         /**
          * Checks if the rate of fire period elapsed.
          */
-        public bool IsInShotRate() {
+        public bool IsInsideShotRate() {
             float rateOfFire = activeWeapon.rateOfFire;
             float timeSinceShot = Time.time - lastShotTime;
             bool inShotRate = rateOfFire < timeSinceShot;
@@ -135,105 +102,139 @@ namespace Game.Shared {
 
 
         /**
-         * Animate the gun and clear the last shot time.
+         * Vertical position of the shot.
          */
-        public void ShootNothing() {
-            AudioService.PlayOneShot(gameObject, "Shot Blocked");
-            animator.SetTrigger("shoot");
-            lastShotTime = Time.time;
+        public Vector3 GetShootHeight(PlayerWeapon weapon) {
+            return weapon.shootHeight * Vector3.up;
         }
 
 
         /**
-         * Animate the gun and clear the last shot time.
+         * Deviation direction of the shot.
          */
-        public void ShootWater() {
-            AudioService.PlayOneShot(gameObject, "Weapon Shot");
-            animator.SetTrigger("shoot");
-            lastShotTime = Time.time;
-        }
-
-
-        /**
-         * Shoots the active weapon from the center of the camera.
-         */
-        public bool ShootWeapon() {
-            if (CanShootWeapon() == false) {
-                return false;
-            }
-
-            RaycastHit hit;
-            Vector3 deviaiton = GetShootDeviation();
-            Ray ray = GetShootOriginRay(center + deviaiton);
-            float distance = activeWeapon.shootDistance;
-
-            if (Physics.Raycast(ray, out hit, distance, layerMask, hitTriggers)) {
-                if (hit.collider.CompareTag("Monster")) {
-                    hit.collider.GetComponent<ActorController>().Damage();
-                } else {
-                    if (!hit.collider.CompareTag("Player")) {
-                        EmbedImpactDecal(hit);
-                    }
-
-                    if (hit.collider.CompareTag("Moveable")) {
-                        PushColliderBody(hit);
-                    }
-
-                    var trigger = hit.collider.gameObject.GetComponent<OnShotTrigger>();
-                    if (trigger != null) trigger.OnShotTriggerEnter(hit.collider);
-                }
-            }
-
-            ShootWater();
-
-            return true;
-        }
-
-
-        /**
-         * Origin and direction of the shoots.
-         */
-        public Ray GetShootOriginRay(Vector3 center) {
-            return Camera.main.ViewportPointToRay(center);
-        }
-
-
-        /**
-         * Deviation direction of the weapon.
-         */
-        public Vector3 GetShootDeviation() {
-            Vector3 random = Random.insideUnitCircle.normalized;
-            Vector3 deviation = activeWeapon.deviation * random;
+        public Vector3 GetShootDeviation(PlayerWeapon weapon) {
+            Vector3 random = UnityEngine.Random.insideUnitCircle.normalized;
+            Vector3 deviation = weapon.deviation * random;
 
             return deviation;
         }
 
 
         /**
-         * Mask to use for the weapon shooting raycasts.
+         * Aram a weapon given its index.
          */
-        public LayerMask GetShootLayerMask() {
-            int filter = LayerMask.GetMask("Players", "Player Dome", "Monster Dome");
-            int mask = Physics.DefaultRaycastLayers & ~filter;
-
-            return mask;
+        private void ArmWeapon(int index = 0) {
+            lastShotTime = 0.0f;
+            animator = instances[index].GetComponentInChildren<Animator>();
+            instances[index].SetActive(true);
+            activeWeapon = weapons[index];
+            activeIndex = index;
         }
 
 
         /**
-         * Push a moveable object if it was shot.
+         * Disarm the current weapon.
          */
-        private void PushColliderBody(RaycastHit hit) {
-            Vector3 force = pushForce * Vector3.one;
-            Rigidbody body = hit.collider.attachedRigidbody;
-            body.AddForceAtPosition(force, hit.point);
+        private void DisarmWeapon() {
+            instances[activeIndex].SetActive(false);
+            activeWeapon = null;
+            activeIndex = -1;
+        }
+
+
+        /**
+         * Switch to the next weapon.
+         */
+        public void ToggleWeapon() {
+            int nextIndex = (1 + activeIndex) % instances.Count;
+
+            if (activeWeapon != null) {
+                DisarmWeapon();
+            }
+
+            ArmWeapon(nextIndex);
+        }
+
+
+        /**
+         * Makes a click sound and resets the shot time.
+         */
+        public void Click() {
+            AudioService.PlayClip(gameObject, activeWeapon.clickSound);
+            lastShotTime = Time.time;
+        }
+
+
+        /**
+         * Shoots the active weapon on the given direction.
+         */
+        public bool Shoot(Vector3 position, Vector3 direction) {
+            if (CanShootWeapon() == false) {
+                return false;
+            }
+
+            AudioService.PlayClip(gameObject, activeWeapon.shotSound);
+            animator.SetTrigger("Fire");
+            lastShotTime = Time.time;
+
+            RaycastHit hit;
+            RaycastHit head;
+
+            if (RaycastShot(position, direction, out hit) == false) {
+                return true;
+            }
+
+            int layer = hit.collider.gameObject.layer;
+
+            if (onImpact != null) {
+                onImpact.Invoke(hit);
+            }
+
+            // Embed a gunshot on the impact layers
+
+            if (impactLayers == (impactLayers | (1 << layer))) {
+                PushShotCollider(hit);
+                EmbedImpact(hit);
+            }
+
+            // Embed a blood explosion on the bleeding layers. A new
+            // ray is cast because we want to aim for the head.
+
+            if (bleedingLayers == (bleedingLayers | (1 << layer))) {
+                bool isHeadShot = RaycastShot(position, direction, out head, 0.5f);
+
+                if (isHeadShot && head.collider == hit.collider) {
+                    EmbedBloodExplosion(head);
+                } else {
+                    EmbedBloodExplosion(hit);
+                }
+            }
+
+            return true;
+        }
+
+
+        /**
+         * Raycast a shot for the current weapon. The last parameter allows
+         * incrementing the weapon shot height on a given percentage.
+         */
+        private bool RaycastShot(Vector3 position, Vector3 direction, out RaycastHit hit, float increment = 0.0f) {
+            Vector3 height = GetShootHeight(activeWeapon);
+            Vector3 deviation = GetShootDeviation(activeWeapon);
+            Vector3 origin = position + height + deviation + increment * height;
+
+            Ray ray = new Ray(origin, direction);
+            float distance = activeWeapon.shootDistance;
+            Debug.DrawRay(origin, distance * direction, Color.red);
+
+            return Physics.Raycast(ray, out hit, distance, shootLayers, hitTriggers);
         }
 
 
         /**
          * Embed an impact decal into a hit position.
          */
-        private void EmbedImpactDecal(RaycastHit hit) {
+        private void EmbedImpact(RaycastHit hit) {
             Vector3 position = 0.01f * hit.normal + hit.point;
             Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, -hit.normal);
             GameObject prefab = activeWeapon.impactPrefab;
@@ -245,29 +246,24 @@ namespace Game.Shared {
 
 
         /**
-         * Invoked by the animator when the current weapon is hidden from
-         * view. Disarms the current weapon and arms the next.
+         * Embed an impact decal into a hit position.
          */
-        private void OnToggleWeapon() {
-            int nextIndex = (1 + activeIndex) % instances.Count;
-
-            if (activeWeapon != null) {
-                activeWeapon = null;
-                DisarmWeapon();
-            }
-
-            ArmWeapon(nextIndex);
+        private void EmbedBloodExplosion(RaycastHit hit) {
+            GameObject prefab = activeWeapon.bloodPrefab;
+            Instantiate(prefab, hit.point, hit.collider.transform.rotation);
         }
 
 
         /**
-         * Invoked when the rearm animation finishes. This effectively
-         * activates the weapon.
+         * Push a moveable object if it was shot.
          */
-        private void OnRearmFinished() {
-            lastShotTime = 0.0f;
-            activeWeapon = weapons[activeIndex];
-            animator.SetBool("rearming", false);
+        private void PushShotCollider(RaycastHit hit) {
+            Rigidbody body = hit.collider.attachedRigidbody;
+
+            if (body != null) {
+                Vector3 force = impactForce * Vector3.one;
+                body.AddForceAtPosition(force, hit.point);
+            }
         }
     }
 }

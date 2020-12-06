@@ -39,11 +39,19 @@ namespace Game.Shared {
          */
         public static void PlayLoop(GameObject o, string name) {
             if (clips.ContainsKey(name) && clips[name] != null) {
-                AudioSource source = o.GetComponentInChildren<AudioSource>();
-                source.loop = true;
-                source.clip = clips[name];
-                source.Play();
+                PlayClipLoop(o, clips[name]);
             }
+        }
+
+
+        /**
+         * Plays an audio clip in a loop.
+         */
+        public static void PlayClipLoop(GameObject o, AudioClip clip) {
+            AudioSource source = o.GetComponentInChildren<AudioSource>();
+            source.loop = true;
+            source.clip = clip;
+            source.Play();
         }
 
 
@@ -61,9 +69,17 @@ namespace Game.Shared {
          */
         public static void PlayOneShot(GameObject o, string name) {
             if (clips.ContainsKey(name) && clips[name] != null) {
-                AudioSource source = o.GetComponentInChildren<AudioSource>();
-                source.PlayOneShot(clips[name]);
+                PlayClip(o, clips[name]);
             }
+        }
+
+
+        /**
+         * Plays a sound clip on a game object's audio source.
+         */
+        public static void PlayClip(GameObject o, AudioClip clip) {
+            AudioSource source = o.GetComponentInChildren<AudioSource>();
+            source.PlayOneShot(clip);
         }
     }
 }

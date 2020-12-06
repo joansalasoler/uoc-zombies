@@ -9,6 +9,7 @@ TagManager:
   - Moveable
   - Monster
   - Reward
+  - FieldOfView
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - Shared Dome
   - Players
   - Monsters
-  - 
-  - 
+  - Camera
+  - Player Listener
   - 
   - 
   - 

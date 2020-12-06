@@ -17,16 +17,13 @@ public class GameController : MonoBehaviour {
     /** Game over overlay controller */
     public EndgameController endgame;
 
-    /** Message overlay controller */
-    public MessageController message;
-
 
     /**
      * Initialize the game.
      */
     private void Start() {
         player.status.Reset();
-        message.ShowMessage("OH, GOSH! WHAT AM I DOING HERE?");
+        MessageService.Push("GOTTA FIND THE BOOKS BEFORE IT GETS TOO LATE", 1.0f);
     }
 
 
@@ -67,9 +64,8 @@ public class GameController : MonoBehaviour {
      */
     public void OnPlayerKilled(PlayerController player) {
         pause.enabled = false;
-        player.DisableController();
         AudioService.StopLoop(gameObject);
-        Invoke("ShowGameOverOverlay", 1.5f);
-        Invoke("LoadMainScene", 3.5f);
+        Invoke("ShowGameOverOverlay", 2.5f);
+        Invoke("LoadMainScene", 4.5f);
     }
 }
