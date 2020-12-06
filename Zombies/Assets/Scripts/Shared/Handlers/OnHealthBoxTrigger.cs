@@ -17,6 +17,7 @@ namespace Game.Shared {
 
                 if (player.status.IncreaseHealth()) {
                     AudioService.PlayOneShot(collider.gameObject, "Collect Reward");
+                    GetComponentInChildren<Renderer>().enabled = false;
                     Destroy(gameObject, 0.5f);
                 }
             }
